@@ -1,3 +1,6 @@
 title: 友情链接
 ---
-http://sarasoueidan.com/index.html
+[sarasoueidan](http://sarasoueidan.com)
+[Charlie](http://www.zggcl.com)
+
+
