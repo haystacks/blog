@@ -1,4 +1,5 @@
 title: 领导让我重新做一个微信H5页面，我拒绝了！
+date: 2015-11-24
 ---
 leader：我们需要做一个微信H5页面，效果如图，功能如描述，时间越快越好。  
 <!-- ![www.unofficial.cn](http://ww1.sinaimg.cn/mw690/e6cd2709gw1eyawzl2fgsj208w1ilq3u.jpg) -->
