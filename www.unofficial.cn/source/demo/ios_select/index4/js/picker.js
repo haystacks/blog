@@ -94,7 +94,7 @@
 	Picker.prototype.makeBody = function(li, detail) {
 		li.innerHTML = this.options.body;
 		li.children[0].className = ''.concat(this.options.className, '-rule');
-		li.children[1].className = ''.concat(this.options.className, '-selected-body');
+		li.children[1].className = ''.concat(this.options.className, '-option-body');
 
 		this.setOptionsData.call(this, li.children[1], detail);
 	}
@@ -105,6 +105,8 @@
 			var li = document.createElement('li');
 			li.textContent = option.text;
 			li.dataset.value = option.value;
+			// 添加当前选中值
+			option.isSelected && (li.className = 'checking');
 			// 追加元素
 			ul.appendChild(li);
 		}, this)
