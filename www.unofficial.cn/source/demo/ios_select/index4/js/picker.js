@@ -25,6 +25,8 @@
 		'popDirection': 'bottom',
 		'separator': '',
 		'typeName': 'value',
+		'height': 30,
+		'deg': 20,
 		'html': HTML,
 		'body': BODY,
 		'parentEle': document.querySelector('body')
@@ -101,16 +103,33 @@
 
 	// 设置一列下的可选选项元素
 	Picker.prototype.setOptionsData = function(ul, detail) {
-		detail.forEach(function(option) {
+		var defaultKey;
+		detail.forEach(function(option, key) {
 			var li = document.createElement('li');
 			li.textContent = option.text;
 			li.dataset.value = option.value;
 			// 添加当前选中值
-			option.isSelected && (li.className = 'checking');
+			option.isSelected && (li.className = 'checking') && (defaultKey = key);
+			// 设置样式
+			this.setStyle(li, key);
 			// 追加元素
 			ul.appendChild(li);
 		}, this)
-		var li = document.createElement('li');
+
+		// 选中
+		this.setCenter(ul, defaultKey);
+	}
+
+	// 设置样式：旋转角度以及Z轴轴向距离
+	Picker.prototype.setStyle = function(li, key) {
+		// 轴向距离
+		var translateZ = (this.options.height/2)/Math.tan((this.options.deg/2)*Math.PI/180);
+		li.style.transform = 'rotateX('+-this.options.deg*key+'deg) translate3d(0, 0, '+translateZ+'px)';
+	}
+
+	// 默认选中值居中
+	Picker.prototype.setCenter = function(ul, key) {
+		ul.style.transform = 'rotateX('+this.options.deg*key+'deg)';
 	}
 
 	// 获取当前元素的索引值

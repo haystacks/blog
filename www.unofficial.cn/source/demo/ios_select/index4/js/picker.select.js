@@ -14,8 +14,6 @@
 		this.options = this.parse(options);
 		// if data ? makeHtml
 		this.makeHtml();
-		// 
-		console.log('%O', document.querySelector('.select-option-body').firstElementChild);
 	}
 	// 继承Picker
 	Select.prototype = Object.create(root.Picker.prototype);
