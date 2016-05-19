@@ -50,4 +50,9 @@
     //     'ele'           : document.getElementById('areaTest')
     // });
 
+    
+    // 测试Event
+    new Somevent(document.getElementById('button'), 'tap', function() {
+        console.log(1234);
+    })
 }()
