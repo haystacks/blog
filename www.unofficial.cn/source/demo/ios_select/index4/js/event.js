@@ -22,13 +22,12 @@
 	// 触摸结束
 	Somevent.prototype.end = function() {
 		var self = this;
-		// this.ele.addEventListener('touchend', function(e) {
-		// 	console.log(this);
-		// 	console.log('end', e);
-		// 	//
+		this.ele.addEventListener('touchend', function(e) {
+			console.log('end', e);
+			//
 			
-		// })
-		self.dispatch();
+			self.dispatch();	
+		})
 	}			
 
 	// 派发事件
