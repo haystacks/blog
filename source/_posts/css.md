@@ -1,0 +1,218 @@
+title: css
+---
+### categorys
+* <a href="#boxes">盒模型</a>
+* <a href="#-containing-block">基本格式化-包含块 containing-block</a>
+* <a href="#floatfloatposition">float的使用，以及float与position的差异</a>
+* <a href="#position_1">position</a>
+* <a href="#_9">实现元素居中</a>
+* <a href="#css3">css3动画</a>
+* <a href="#_10">回顾总结</a>
+
+
+### 盒模型 Boxes
+
+盒模型是浏览器在展现一个元素的时候，元素所占用的空间大小。它由4部分组成：内容(content)，内边距(padding)，边框(border)，外边距(margin)。  
+> &lt;div&gt;&lt;/div&gt;
+
+![盒模型](http://ww1.sinaimg.cn/mw690/e6cd2709gw1f5617xpmvfj204h04kt8j.jpg)  
+
+#### box-sizing: content-box; /\* default value \*/
+现在给div添加一个width和height ``` <div style="width: 200px; height: 50px;"> </div> ``` ，内容宽度与高度分别为 ``` 200px ``` 和 ``` 50px ``` 。``` padding/border/margin ``` 默认值为 ``` 0 ```。  
+再给div添加``` <div style="width: 200px; height: 50px; border: 10px solid #333;"> </div> ```，div元素（上/右/下/左）边框值均分别为，``` border-width: 10px，border-style: solid，border-color: #333 ``` ，也可以只是单独设置某一个边的属性（ ``` border-top/border-right/border-bottom/border-left ``` ）。  
+也可以为div元素设置 ``` padding/margin ``` ，可以分别设置 ``` top/left/bottom/right ``` 的属性值，也可以同时设置 ``` top/left/bottom/right ``` 的属性值（ ``` padding: 3px 4px; padding: 3px 4px 3px 4px ``` ）。  
+![盒模型 content-box](http://ww3.sinaimg.cn/large/e6cd2709gw1f561ulkdo5j204t04i3yd.jpg)  
+> 盒模型的宽度是以内容为基础宽度  
+
+#### box-sizing: border-box;
+同样给div元素添加 ``` width: 200px，height: 50px;  ``` 。再设置一个 ``` padding: 10px; ``` 内容宽度就变成了 ``` 180px ``` 。相应的内容宽度左右分别缩小了 ``` 10px ``` 。再给div元素设置一个 ``` border: 10px solid #333; ``` 内容宽度左右分别会再缩小 ``` 10px ``` ，内容宽度就是 ``` 160px ``` 了。  
+![盒模型 border-box](http://ww4.sinaimg.cn/mw690/e6cd2709gw1f5626wncujj205704i3yd.jpg)
+> 盒模型的宽度是以边框内为基础宽度  
+
+#### <s>outline /\* other \*/  
+css轮廓属性，这个属性设置后的效果位置是紧紧挨着 ``` border ``` ，在 ``` margin ``` 空间内，不占用空间位置尺寸。  
+![outline](http://ww1.sinaimg.cn/mw690/e6cd2709gw1f562cuxy1kj20780320dz.jpg)  </s>
+
+
+### 基本格式化-包含块 containing-block
+格式化模型这部分知识也许实际工作中有使用，但是对于概念的理解一直是痛，这个真不能怪小学教语文的数学老师，是我没打好文字基础。下文中提到的概念都是结合理解摘自参考资料，对于下文中的知识更能说明不能脱离实践。  
+#### 包含块
+包含块是 **视觉格式化模型** 中的一个概念，一个框元素的尺寸和位置相对于一个特定的矩形框边缘来计算而得到，这个特定的矩形框称之为该框的 ** 包含块 **。（框的包含块是指框所处的包含块，并不是框产生的包含块，如上文提到的div元素位于body下，body应该就可以称之为div的包含块）框元素在包含块中，如果框元素说‘我要膨胀了啊’也可能溢出到包含块外并不受包含块限制，这样使用 ``` overflow ``` 就可以处理。  
+
+#### 框的包含块生成  
+框的包含块生成中会受到框的类型``` display ```的影响。  
+生成包含块的一些特殊场景：  
+
+由根元素生成的包含块叫做 **初始包含块**（initial containing block）。  
+对于其它元素，如果元素的 ``` position ``` 值是 ``` relative ``` 或者 ``` static ```，其包含块由最近的祖先 **块容器框** 的内容边界形成。  
+
+举个例子，td, th 就算有父容器 tr，但它们的包含块却是由 table 生成，因为 table 是 块容器框 而 tr 不是绝对定位元素的包含块由最近的定位（position 值非 static）祖先生成，如果不存在这样的祖先，则采用初始包含块；  
+
+固定定位元素（ ``` position: fixed ``` ）的包含块为当前屏幕的可视窗口；  
+##### 块级元素
+**块级元素** 是视觉上被格式化为块状的元素，也就是会换行的元素。给行内元素设置``` display ```属性值为 ``` block ```、``` list-item ```、``` table ```、``` flex ```, ``` grid ```都可以将元素变成块级元素。  
+**块元素** 是指给元素设置display为block的属性值。  
+
+##### 块级框
+块级框是参与块级格式化上下文的框，块级元素生成一个主要的块级框来包含子框与生成的内容。同时任何定位方式都会与这个主要的块级框有关。  
+某些块级元素还会在主要框之外产生额外的框：例如“list-item”元素。这些额外的框会相对于主要框来放置。 
+
+##### 块容器框
+块容器框只包含一个块级框或者一个行内级框，不能同时包含块级框与行内级框。  
+除了table框和可置换元素，一个块级框也是一个块容器框。 不可置换行内块与不可置换的单元格（``` table-cell ```）是块容器但不是块级框。    
+
+> 块级框 和 块容器框 的另外一个重要的区别：块级框 需要能够包含其生成的内容，但 块容器框 并不需要。  
+
+> 比如一个 iframe 其内容由 src 属性所决定，这可以当成是生成的内容，所以 iframe 是一个 块级框 但却不是 块容器框
+
+##### 块框
+块框是指是块容器的块级框。  
+
+##### 块级框 vs 块容器框 vs 块框
+![块级框 块容器框 块框](http://ww4.sinaimg.cn/mw690/e6cd2709gw1f56alxxu95j20dw08c751.jpg)  
+
+<s>更多概念待学习…  </s>   
+
+### float的使用，以及float与position的差异
+
+#### float
+接触比较多的应该就是浮动导致的页面布局问题。给元素添加浮动（``` float: left/right; ``` 元素不浮动 ``` float: none; ``` ）会让该元素脱离文档流，然后浮动在容器的左边或者右边，下文的文本或者行内元素会环绕四周。
+
+> DEMO:  
+
+<script async src="http://jsfiddle.net/unofficial/u9x3rybL/embed/html,css,result/"></script>
+
+* 浮动元素脱离文档流导致外层容器高度没有被撑开。
+	* 外层容器设置``` overflow: auto/hidden; ```，IE低版本会有一些问题
+	* 外层容器使用清除浮动（还有很多很多方式）
+    ```
+    .outbox::after {
+            clear: both;
+            content: "";
+            display: block;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+    }
+    ``` 
+    * 如果不希望下文继续受浮动影响围绕在浮动元素四周，清除浮动就可以使用 ``` clear: both; ```
+    * br标签也可以直接使用，br 有 ``` clear: all/left/right/none; ``` 属性
+    * <s>更多详情也可以参考</s>
+
+> DEMO:  
+
+<script async src="http://jsfiddle.net/unofficial/u9x3rybL/1/embed/html,css,result/"></script>
+
+#### position
+后文详解
+
+#### float vs position
+##### 相同点
+* 浮动或定位都会使元素脱离文档流
+
+##### 不同点
+* position 设置值为 absolute 或者 fixed 的时候不会占用文档空间，至于文档上层，下文元素接着未定位元素排列布局，float后的元素还是会占用空间，下文元素接着浮动元素排列布局
+
+### position
+通过给元素设置position属性值（ ``` static/relative/absolute/fixed ``` ）来确定布局的方式。
+* static 这个属性值使得这个元素处在文档流中它当前的布局位置，top/right/bottom/left 和 z-index 属性无效。
+* relative 视觉上设置了跟没设置定位是一样的，适应该元素的位置，并不改变布局（这样会在此元素原本所在的位置留下空白）
+* absolute 不为元素预留空间，元素位置通过指定其与它最近的非static定位的祖先元素的偏移来确定。绝对定位的元素可以设置外边距（margin），并且不会与其他边距合并
+* fixed 不为元素预留空间。通过指定相对于屏幕视窗的位置来指定元素的空间，并且该元素的位置在屏幕滚动时不会发生改变
+
+> DEMO:  
+
+<script async src="http://jsfiddle.net/unofficial/t672tk1v/embed/html,css,result/"></script>
+
+### 实现元素居中
+元素居中通常是需要水平居中，图片垂直居中等等
+* 水平居中
+    * 文本居中 ``` text-align: center; ```  
+    * 文档流中有宽度元素居中 ``` margin: 0 auto; ``` IE低版本还需要设置外层元素的文本居中属性   
+    * position定位元素居中，在文档流元素居中的基础上添加 ``` position: absolute/fixed; left: 0; right: 0; ```  
+
+* 垂直居中
+    * 固定高度单行文本居中 ``` line-height: 30px; ```  
+    * 多行文本未知高度居中 
+        ``` 
+            html:
+            <div class="wrapper">
+                <p class="content"></p>
+            </div>
+
+            css:
+            .wrapper {
+                display: table;
+                height: 222px;
+            }
+            .content {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        ```  
+    * 图片未知高度居中  
+    ```
+        html:
+        <div class="wrapper">
+            <img src="https://www.google.com.hk/images/nav_logo242.png" alt="">
+        </div>
+        css:
+        .wrapper {
+            width: 200px;
+            height: 300px;
+            border: 1px dashed #999;
+            padding: 3px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .wrapper img {
+            max-height: 60%;
+            margin: 0 auto;
+        }
+    ```
+
+暂时想起这些平时遇到的一些问题，实际情况或许比这些要复杂很多，但至少可以明白一个道理，水平居中通常我们借助于``` text-align: center ```、``` margin: 0 auto ```，垂直居中通常使用 ``` table ```属性下的 ``` vertical-align: middle ```；或者定位偏移，然后负边距回去；亦或者``` transform: translete(0, 50%)， ``` 然后负边距回去。  
+通过此处的整理只能说明平时的积累还不够，毕竟只有在实际开发中总结的经验才具有可收藏性。下次同样的问题可以借此参考，没有经过开发测试的代码到时还是会根据实际情况修改。就先到这里。  
+
+> DEMO:  
+
+<script async src="http://jsfiddle.net/unofficial/9xzm45oo/embed/html,css,result/"></script>
+
+### css3动画
+最开始在PC上写动画效果都是借助js，然后通过动态改变定位元素的top，left值，然后通过定时器来重复调用。后面接触到css3才逐渐学习到一些相关的知识。  
+#### transform
+transform 属性允许你修改CSS可视化模型的坐标空间。通过transform，可以让元素进行移动（translate）、旋转（rotate）、缩放（scale）、倾斜（skew）。  
+transition 属性可以设置过渡属性名称与过渡时间。  
+
+无知的我以为动画就是这样子的，我开始准备下山找墩子方面的工作了，可是当不借助js打辅助的时候这仅仅就是一个过渡效果，就像之前写过的侧菜单栏的弹出与恢复，为了更为满足需要，有谷歌了一下css3 动画，于是就有了后文。  
+
+> DEMO:  
+
+<script async src="http://jsfiddle.net/unofficial/2dnh3sc4/embed/"></script>
+
+#### keyframes
+keyframes动画能取代部分动态图片，js动画，flash动画，可以学的招式很多，最近学了一个简单的loding效果。  
+
+
+
+### 回顾总结
+上面的几点知识只能说做了皮毛的理解，单独就某一个知识点都可以独立成文，只是理解还只是停留在使用上。对于类似的知识点的学习或者框架的学习，就目前而言都是停留在what上，what的还不是很深入的时候，how也只能是按照文档来一步步操作，没有引导，没有同伴，更主要的是没有应用环境，想起来反复一次，想起来反复一次，一直停留或许还在倒退，但更新频繁的圈子，最后不得不还是要回到基础上来，深入理解夯实根基。  
+太多的知识点没注重积累，导致没遇到类似问题的时候如果记忆不起来，还是需要搜索，就目前遇到的问题能通过搜索解决的，最后都最好还是搜索解决，只是说需要一个方向不是那么盲目，毕竟工作方面应用到的知识点都是比较偏落后的。  
+后续多多总结基础知识，加深理解相关知识点，继续努力！  
+### 参考资料
+* http://www.cnblogs.com/pandaBrother/p/5606609.html
+* boxes
+    * https://www.w3.org/TR/CSS22/box.html
+	* https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Boxes
+* containing-block
+    * https://www.w3.org/TR/CSS22/visuren.html#containing-block
+    * http://blog.doyoe.com/2015/03/15/css/%E7%BD%AE%E6%8D%A2%E5%92%8C%E9%9D%9E%E7%BD%AE%E6%8D%A2%E5%85%83%E7%B4%A0/
+    * http://blog.doyoe.com/2015/03/09/css/%E8%A7%86%E8%A7%89%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%A1%86/
+    * http://hao.jser.com/archive/7472/
+* float
+    * http://www.iyunlu.com/view/css-xhtml/55.html
+* element center
+    * http://www.iyunlu.com/view/css-xhtml/77.html
+* animation
+    * https://github.com/ManrajGrover/SingleDivProject
