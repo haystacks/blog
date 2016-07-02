@@ -134,6 +134,112 @@ f.test(); // 来源于prototype的test方法
 ```
 调用f.add方法的后首先会在Foo中找add方法，找到了直接就调用add方法。test方法在实例中没有找到，就在原型链上找，能找到直接就执行，如果找不到会继续Object的原型上找，找不到才返回undefined  
 
+#### 原型属性
+当原型属性创建原型链的时候，任何类型都可以为它赋值，然而将原子类型的值赋值给它是被忽略。
+
+```
+// 用代码解释上面的话
+function Foo() {}
+// 可以赋值任何类型，比如说
+Foo.prototype = 1; // 但是直接赋值类型值只是会被忽略，不会报错，相应的如果后面继续给原型赋值也会被忽略。原型直接是赋值为Object.prototype
+
+console.log(new Foo()); // function Foo() {} 
+```
+如果直接赋值对象就会像上面的应用一样，创建原型链。通过这种方法可以创建私有方法与公共方法。  
+##### 性能
+由于上文提到的属性查找会从当前对象一直沿着原型链查找，如果找寻一个不存在的问题是需要遍历整个原型链。  
+``` for in ``` 循环遍历对象的属性时，原型链上的所有属性也都会被遍历。  
+#### 扩展内置类型
+虽然目前涉及到的应用环境不够复杂，对于复杂引用更多的类或者框架对于相应模块的封装的时候就需要用到原型来实现继承等等，但是不建议扩展内置类型的原型对象，这样会存在性能问题。  
+#### isPrototypeOf vs hasOwnProperty
+* isPrototypeOf() 方法测试一个对象是否存在于另一个对象的原型链上。
+ ``` prototype.isPrototypeOf(object) ``` 检查prototype对象是否存在object的原型链上
+
+```
+var Foo = function() {};
+var Bar = function() {};
+Bar.prototype = new Foo();
+var b = new Bar();
+
+Foo.prototype.isPrototypeOf(new Foo()); // true
+
+// 在b的原型链上查找对象Foo.prototype
+Foo.prototype.isPrototypeOf(b); // true
+```
+* isPrototypeOf vs instanceof
+ instanceof运算符可以用来判断某个构造函数的prototype属性所指向的對象是否存在于另外一个要检测对象的原型链上。  
+ ``` object instanceof constructor ```
+ 检查构造函数constructor的原型属性是不是存在object对象的原型链上
+ ```
+    var Foo = function() {};
+    var Bar = function() {};
+    var f = new Foo();
+    var b = new Bar();
+    f instanceof Foo; // true
+    f instanceof Bar; // false
+    Bar.prototype = new Foo();
+    var b1 = new Bar();
+    b1 instanceof Foo; // true
+ ```
+* hasOwnProperty 
+ hasOwnProperty用于判断一个对象上是否包含自定义属性，而不是原型链上的属性。hasOwnProperty继承自Object.prototype。
+
+ > 注意不能通过判断值为undefined来判断属性是否存在，因为该属性的值可能就是undefined
+
+ ```
+    var Foo = function() { 
+        this.name = 'unofficial';
+    }
+
+    Foo.prototype = function() {
+        return {
+            name: this.name,
+            age: undefined
+        };
+    }()
+
+    Foo.prototype.color;
+    var f = new Foo();
+    f.color; // undefined
+    f.hasOwnProperty('color'); true
+    f.hasOwnProperty('age'); true
+    f.hasOwnProperty('name'); // true
+ ```
+
+> 可以在循环遍历的时候用来判断属性是不是是当前对象的属性，而不是继承自原型链
+
+hasOwnProperty可以在当前对象中重写，如果如下例子：
+
+```
+    var Foo = function() {
+        this.hasOwnProperty = function() {
+            return false;
+        }
+
+        this.name = 'unofficial';
+    }
+    var f = new Foo();
+    name.hasOwnProperty(f); // false
+    
+    // 通过其他对象继承的Object.prototype的hasOwnProperty方法
+    ({}).hasOwnProperty.call(f, 'name'); //true
+```
+
+### ES6中方法如何实现类呢？
+ES6中添加了关键字 ``` class ``` ，表面上是的写法和其他语言的类是一样的写法，实际上只是实现了prototype的语法糖。  
+```
+'use strict';
+class Foo{
+    constructor() {
+        this.name = 'unofficial';
+    }
+    getName() {
+        return this.name;
+    }
+}
+let f = new Foo();
+console.log(f.getName());
+```
 
 ### 参考资料
 [JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
