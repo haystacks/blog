@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>prototype</title>
+</head>
+<body>
+	<script src="./prototype/lib/prototype.js"></script>
+	<script>
+	var Person = Class.create();
+	Person.prototype = {
+		initialize: function(name) {
+			this.name = name;
+		},
+		say: function(message) {
+			return this.name + ': ' + message;
+		}
+	};
+			
+	var guy = new Person('Miro');
+	console.log(guy.say('hi'));
+	</script>
+</body>
+</html>
