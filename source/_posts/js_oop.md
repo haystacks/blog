@@ -6,7 +6,7 @@ title: javascript 面向对象
 JavaScript本身是一门面向对象的语言，JavaScript所有变量都可以当作对象使用（这里是说可以当对象使用，并不是说均是对象，应该理解为可以通过点操作符来调用一些属性方法），除了两个例外 null 和 undefined。  
 
 #### 对象使用和属性
-看到这个描述的时候，我果断尝试了一下 ``` number ```类型的数字字面值（``` literals ```），敲下回车的一瞬间笑了，这话写错了啊。查阅了JavaScript 秘密花园的内容才知道问题所在，原来是JavaScript解析器把点操作符解析为了浮点字面量。可以通过一些方法让数字字面值看起来像对象，终究而言还是不能被称为对象。    
+看到这个描述的时候，我果断尝试了一下 ``` number ```类型的数字字面值（``` literals ```），敲下回车的一瞬间笑了，这话写错了啊。查阅了JavaScript 秘密花园的内容才知道问题所在，原来是JavaScript解析器把点操作符解析为了浮点字面量。可以通过一些方法让数字字面值看起来像对象，终究而言还是不能被称为对象。	
 
 ```
 1.toString(); // Uncaught SyntaxError: Invalid or unexpected token
@@ -373,18 +373,51 @@ console.log(dog.hasOwnProperty('speak')); // false
 参考github上prototype.js的[class.js](https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js)学习到：  
 ```
 var Class = (function() {
+	
+	// 子类
+	function Subclass() {
+
+	}
 
 	function create() {
 		// 处理传入的参数
 		var parent, properties = [].slice.call(arguments);
-    	properties && toString.call(properties) == '[object Array]' && (parent = properties.shift());
-
-
-
-		return function klass() {
+		properties && toString.call(properties) == '[object Array]' && (parent = properties.shift());
+		
+		// 构造类
+		function Klass() {
+			// this为实例对象
+			// 构造函数initialize
+			// this为类函数对象
+			// arguments 实例化时传入的参数
 			this.initialize.apply(this, arguments);
 		}
-		// Object.apply(this, Class.Methods);
+
+		// 对象继承添加方法
+		Klass.addMethods = addMethods;
+		// 父类
+		Klass.superclass = parent;
+		// 子类
+		Klass.Subclass= [];
+
+		if( parent ) {
+			// 子类的原型指针指向父类的原型
+			Subclass.prototype = parent.protorype;
+			// 当前类的原型
+			Klass.prototype = new Subclass();
+			// 当前类添加到父类的子类
+			parent.Subclass.push(Klass);
+		}
+
+		(properties[0] && properties[0].initialize) && (Klass.prototype.initialize = properties.initialize);
+
+		// 如果没有自定义构造函数设置默认空函数
+		!Klass.prototype.initialize && (Klass.prototype.initialize = function() {console.log(arguments)});
+
+		// 设置当前构造类函数为构造函数
+		Klass.prototype.constructor = Klass;
+
+		return Klass;
 	}
 
 	function addMethods() {
@@ -398,9 +431,15 @@ var Class = (function() {
 		}
 	}
 })()
-
-var gay = Class.create('humen');
-
+var Humen = Class.create();
+var Gay = Class.create(Humen, {
+	initialize: function(username) {
+		console.log(username, 123);
+		this.username = username;
+	}
+});
+var gay = new Gay('unofficial');
+console.log(gay.username);
 ```
 ### 参考资料
 [JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  
