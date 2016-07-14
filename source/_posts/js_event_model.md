@@ -462,7 +462,9 @@ fastclick的readme的描述说，fastclick就是为了解决物理设备点击�
 通过上文对于事件的学习，以及移动端事件的学习，实现一个简单的滑动库  
 这是一个不完整的demo，敲一会儿代码被一些事件耽搁一下，一会又被耽搁一下，思路也不清晰，找时间重新再写。毕竟之前也实现过都是可行的，只是这次是按照上面学习的知识点再综合理解来实现，结果还不如从前了，哈哈哈~  
 整理整理思路，重新再来！  
-<script async src="http://jsfiddle.net/unofficial/8gykht86/embed/"></script>
+<script async src="http://jsfiddle.net/unofficial/8gykht86/embed/"></script>  
+重写后还是有些小问题。  
+<iframe src="/js_event_model/swipe.html" frameborder="0"></iframe>
 ### 参考资料
 * [如何证明JavaScript是单线程的？](http://www.zhihu.com/question/31982417)
 * [EventLoop - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
