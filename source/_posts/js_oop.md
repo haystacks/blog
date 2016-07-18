@@ -1,6 +1,6 @@
 title: javascript 面向对象
 ---
-![beauty.jpg]()
+![beauty.jpg](http://ww4.sinaimg.cn/large/e6cd2709gw1f5xvfrii2nj20u00m2mzp.jpg)
 
 ### 对象
 JavaScript本身是一门面向对象的语言，JavaScript所有变量都可以当作对象使用（这里是说可以当对象使用，并不是说均是对象，应该理解为可以通过点操作符来调用一些属性方法），除了两个例外 null 和 undefined。  
@@ -170,17 +170,31 @@ Foo.prototype.isPrototypeOf(b); // true
  instanceof运算符可以用来判断某个构造函数的prototype属性所指向的對象是否存在于另外一个要检测对象的原型链上。  
  ``` object instanceof constructor ```
  检查构造函数constructor的原型属性是不是存在object对象的原型链上
+
+ Code one: 
  ```
     var Foo = function() {};
     var Bar = function() {};
     var f = new Foo();
     var b = new Bar();
     f instanceof Foo; // true
+    Foo.prototype.isPrototypeOf(f); // true
     f instanceof Bar; // false
     Bar.prototype = new Foo();
     var b1 = new Bar();
     b1 instanceof Foo; // true
+    Foo.prototype.isPrototypeOf(b1); // true
  ```
+
+ Code two:
+ ```
+    var human = {mortal: true};
+    var socrates = Object.create(human);
+    human.isPrototypeOf(socrates); //=> true
+    socrates instanceof human; //=> ERROR!
+ ```
+
+ > 综上所述：在存在构造函数的时候，instanceof 与 isPrototypeOf 是没有区别的，在没有构造函数的时候只能使用isPrototypeOf
 * hasOwnProperty 
  hasOwnProperty用于判断一个对象上是否包含自定义属性，而不是原型链上的属性。hasOwnProperty继承自Object.prototype。
 
@@ -193,7 +207,9 @@ Foo.prototype.isPrototypeOf(b); // true
 
     Foo.prototype = function() {
         return {
-            name: this.name,
+            getName: function() {
+                return this.name;
+            },
             age: undefined
         };
     }()
@@ -201,8 +217,8 @@ Foo.prototype.isPrototypeOf(b); // true
     Foo.prototype.color;
     var f = new Foo();
     f.color; // undefined
-    f.hasOwnProperty('color'); true
-    f.hasOwnProperty('age'); true
+    f.hasOwnProperty('color'); // false
+    f.hasOwnProperty('age'); // false
     f.hasOwnProperty('name'); // true
  ```
 
@@ -219,17 +235,20 @@ hasOwnProperty可以在当前对象中重写，如果如下例子：
         this.name = 'unofficial';
     }
     var f = new Foo();
-    name.hasOwnProperty(f); // false
+    f.hasOwnProperty('name'); // false
     
     // 通过其他对象继承的Object.prototype的hasOwnProperty方法
     ({}).hasOwnProperty.call(f, 'name'); //true
 ```
 
 ### ES6中方法如何实现类呢？
+
+> 以下内容均是在chrome最新版本中测试
+
 ES6中添加了关键字 ``` class ``` ，表面上是的写法和其他语言的类是一样的写法，实际上只是实现了prototype的语法糖。  
 ```
 'use strict';
-class Foo{
+class Foo {
     constructor() {
         this.name = 'unofficial';
     }
@@ -240,7 +259,141 @@ class Foo{
 let f = new Foo();
 console.log(f.getName());
 ```
+当我们使用``` console.log('%O', f) ```;时，返回的Foo对象和之前ES5通过function模拟的类实例的对象是一致的。  
+![ES6](http://ww4.sinaimg.cn/mw690/e6cd2709gw1f5xvfs74fhj20b4091t9a.jpg)  
 
+* ``` use strict ```   
+必须在严格模式下执行
+
+* ``` constructor ```  
+例子中已经使用了 ``` constructor ```，实例化Foo类的时候自动执行构造方法。构造方法必须唯一  
+
+* 原型方法  
+关键字 ``` get ``` , ``` set ``` 的使用。  
+
+```
+class Foo {
+    set username(value) {
+        this.name = value;
+    }
+
+    get username() {
+        return 'my name is ' + this.name;
+    }
+}
+let f = new Foo();
+f.username = 'unofficial';
+console.log(f.username);
+```
+
+* 静态方法  
+静态方法指不需要对类进行实例化就可以使用类名直接访问类里面的方法，``` static ```关键字用来定义类的静态方法。  
+
+```
+class Foo {
+    static info() {
+        console.log('随意写的内容');
+    }
+}
+Foo.info(); // 随意写的内容
+```
+
+* 继承
+
+```
+class Animal { 
+    constructor(name) {
+        this.name = name;
+    }
+  
+    speak() {
+        console.log(this.name + ' 发了个声');
+    }
+}
+
+class Dog extends Animal {
+    speak() {
+        console.log(this.name + '说自己饿了');
+    }
+}
+let cat = new Animal('kitty');
+cat.speak(); // Kitty 发了个声
+new Dog('哮天犬').speak(); // 哮天犬说自己饿了
+```
+``` dog ``` 类继承了 ``` Animal ``` 类，重写了父类的 ``` speak ``` 方法。
+
+* ``` super ``` 调用父类方法  
+```
+'use strict';
+class Animal { 
+    constructor(obj) {
+        var {name, food} = obj;
+        this.name = name;
+        this.food = food;
+    }
+  
+    speak() {
+        console.log(this.name + ' 发了个声');
+    }
+
+    eat() {
+        console.log(this.name + '喜欢' + this.food);
+    }
+}
+
+class Dog extends Animal {
+    speak() {
+        console.log(this.name + '说自己饿了');
+    }
+
+    eat() {
+        super.eat();
+        
+        if(this.food == '耗子') {
+            console.log('又闲的蛋疼了吧');
+        }
+    }
+}
+new Dog({name: '哮天犬', food: '耗子'}).eat(); // 哮天犬喜欢耗子 又闲的蛋疼了吧
+```
+* ``` isPrototypeOf ``` 的使用  
+就上面的例子使用 ``` isPrototypeOf ```  
+``` 
+let dog = new Dog({name: '哮天犬', food: '耗子'}); 
+console.log(Animal.prototype.isPrototypeOf(dog)); 
+```
+
+* ``` hasOwnProperty ``` 的使用
+```
+console.log(dog.hasOwnProperty('name')); // true
+console.log(dog.hasOwnProperty('speak')); // false
+```
+
+### prototy.js是怎么做的？  
+参考github上prototype.js的[class.js](https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js)学习到：  
+```
+var Class = (function() {
+
+    function create() {
+        Object.extend(this, Class.Methods);
+        console.log('这是create方法');
+    }
+
+    function addMethods() {
+        console.log('这是addMethods方法');
+    }
+
+    return {
+        create: create,
+        Methods: {
+            addMethods: addMethods
+        }
+    }
+})()
+```
 ### 参考资料
-[JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
-[强大的原型和原型链](http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)
+[JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  
+[强大的原型和原型链](http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)  
+[JavaScript isPrototypeOf vs instanceof usage](http://stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage)  
+[Classes in ECMAScript 6 (final semantics)](http://www.2ality.com/2015/02/es6-classes-final.html)  
+[prototype.js](https://github.com/sstephenson/prototype/tree/master)
