@@ -37,20 +37,20 @@ JavaScript没有类继承模型，而是使用 ``` prototype ```原型模型。�
 JavaScript对象有一个指向一个原型对象的链。当试图访问一个对象上的属性时，会先搜寻该对象的属性，再搜寻该对象的原型以及原型的原型，依次网上搜索，直到找到一个名字匹配的属性或者达到原型链的末尾。  
 * 原型的使用方式一
 ```
-    var F = function(x) {
-        this.x = x || 1;
-    }
-    F.prototype = {
-        add: function(y) {
-            return this.x + y;
-        }
-    }
+	var F = function(x) {
+		this.x = x || 1;
+	}
+	F.prototype = {
+		add: function(y) {
+			return this.x + y;
+		}
+	}
 
-    var f = new F();
-    f.add(2); // 3
+	var f = new F();
+	f.add(2); // 3
 
-    var f1 = new F(2);
-    f1.add(4); // 6
+	var f1 = new F(2);
+	f1.add(4); // 6
 ```
 定义了函数F模拟类，其函数表达式相当于构造函数 constructor 。函数也是对象，通过给F对象的 ``` prototype ``` 属性赋值对象字面量来设定F的原型。通过关键字new来实例化函数F，返回实例化对象，``` x ``` 为f对象的属性， ``` add ``` 为f对象的方法。  
 
@@ -59,17 +59,17 @@ JavaScript对象有一个指向一个原型对象的链。当试图访问一个�
 ```
 var F = function() {};
 F.prototype = function() {
-    var add = function(x, y) {
-        return x+y;
-    };
+	var add = function(x, y) {
+		return x+y;
+	};
 
-    var test = function() {
-        console.log('private');
-    };
+	var test = function() {
+		console.log('private');
+	};
 
-    return {
-        add: add
-    }
+	return {
+		add: add
+	}
 }()
 var f = new F();
 f.add(3, 3); // 6
@@ -81,10 +81,10 @@ f.test(); // f.test is not a function
 JavaScript使用原型链的继承方式，如下面的例子：  
 ```
 function Foo() {
-    this.name = 'unofficial';
+	this.name = 'unofficial';
 }
 Foo.prototype.who = function() {
-    return this.name;
+	return this.name;
 }
 
 function Bar() {}
@@ -100,12 +100,12 @@ var b = new Bar();
 /*
  * 原型链为
    b [Bar的实例]
-        bar.prototype [Foo的实例]
-            { foo: 'Hello world', name: 'unofficial' }
-            Foo.prototype
-                {method: ...}
-                Object.prototype
-                    {toString: ...}
+		bar.prototype [Foo的实例]
+			{ foo: 'Hello world', name: 'unofficial' }
+			Foo.prototype
+				{method: ...}
+				Object.prototype
+					{toString: ...}
  */
 
 ```
@@ -118,15 +118,15 @@ var b = new Bar();
 
 ```
 var Foo = function() {
-    this.add = function(x, y) {
-        return x + y;
-    }
+	this.add = function(x, y) {
+		return x + y;
+	}
 }
 Foo.prototype.add = function(x, y) {
-    return x + y;
+	return x + y;
 }
 Foo.prototype.test = function() {
-    console.log('来源于prototype的test方法');
+	console.log('来源于prototype的test方法');
 }
 var f = new Foo();
 console.log(f.add(1, 3)); // 4
@@ -173,25 +173,25 @@ Foo.prototype.isPrototypeOf(b); // true
 
  Code one: 
  ```
-    var Foo = function() {};
-    var Bar = function() {};
-    var f = new Foo();
-    var b = new Bar();
-    f instanceof Foo; // true
-    Foo.prototype.isPrototypeOf(f); // true
-    f instanceof Bar; // false
-    Bar.prototype = new Foo();
-    var b1 = new Bar();
-    b1 instanceof Foo; // true
-    Foo.prototype.isPrototypeOf(b1); // true
+	var Foo = function() {};
+	var Bar = function() {};
+	var f = new Foo();
+	var b = new Bar();
+	f instanceof Foo; // true
+	Foo.prototype.isPrototypeOf(f); // true
+	f instanceof Bar; // false
+	Bar.prototype = new Foo();
+	var b1 = new Bar();
+	b1 instanceof Foo; // true
+	Foo.prototype.isPrototypeOf(b1); // true
  ```
 
  Code two:
  ```
-    var human = {mortal: true};
-    var socrates = Object.create(human);
-    human.isPrototypeOf(socrates); //=> true
-    socrates instanceof human; //=> ERROR!
+	var human = {mortal: true};
+	var socrates = Object.create(human);
+	human.isPrototypeOf(socrates); //=> true
+	socrates instanceof human; //=> ERROR!
  ```
 
  > 综上所述：在存在构造函数的时候，instanceof 与 isPrototypeOf 是没有区别的，在没有构造函数的时候只能使用isPrototypeOf
@@ -201,25 +201,25 @@ Foo.prototype.isPrototypeOf(b); // true
  > 注意不能通过判断值为undefined来判断属性是否存在，因为该属性的值可能就是undefined
 
  ```
-    var Foo = function() { 
-        this.name = 'unofficial';
-    }
+	var Foo = function() { 
+		this.name = 'unofficial';
+	}
 
-    Foo.prototype = function() {
-        return {
-            getName: function() {
-                return this.name;
-            },
-            age: undefined
-        };
-    }()
+	Foo.prototype = function() {
+		return {
+			getName: function() {
+				return this.name;
+			},
+			age: undefined
+		};
+	}()
 
-    Foo.prototype.color;
-    var f = new Foo();
-    f.color; // undefined
-    f.hasOwnProperty('color'); // false
-    f.hasOwnProperty('age'); // false
-    f.hasOwnProperty('name'); // true
+	Foo.prototype.color;
+	var f = new Foo();
+	f.color; // undefined
+	f.hasOwnProperty('color'); // false
+	f.hasOwnProperty('age'); // false
+	f.hasOwnProperty('name'); // true
  ```
 
 > 可以在循环遍历的时候用来判断属性是不是是当前对象的属性，而不是继承自原型链
@@ -227,18 +227,18 @@ Foo.prototype.isPrototypeOf(b); // true
 hasOwnProperty可以在当前对象中重写，如果如下例子：
 
 ```
-    var Foo = function() {
-        this.hasOwnProperty = function() {
-            return false;
-        }
+	var Foo = function() {
+		this.hasOwnProperty = function() {
+			return false;
+		}
 
-        this.name = 'unofficial';
-    }
-    var f = new Foo();
-    f.hasOwnProperty('name'); // false
-    
-    // 通过其他对象继承的Object.prototype的hasOwnProperty方法
-    ({}).hasOwnProperty.call(f, 'name'); //true
+		this.name = 'unofficial';
+	}
+	var f = new Foo();
+	f.hasOwnProperty('name'); // false
+	
+	// 通过其他对象继承的Object.prototype的hasOwnProperty方法
+	({}).hasOwnProperty.call(f, 'name'); //true
 ```
 
 ### ES6中方法如何实现类呢？
@@ -249,12 +249,12 @@ ES6中添加了关键字 ``` class ``` ，表面上是的写法和其他语言�
 ```
 'use strict';
 class Foo {
-    constructor() {
-        this.name = 'unofficial';
-    }
-    getName() {
-        return this.name;
-    }
+	constructor() {
+		this.name = 'unofficial';
+	}
+	getName() {
+		return this.name;
+	}
 }
 let f = new Foo();
 console.log(f.getName());
@@ -273,13 +273,13 @@ console.log(f.getName());
 
 ```
 class Foo {
-    set username(value) {
-        this.name = value;
-    }
+	set username(value) {
+		this.name = value;
+	}
 
-    get username() {
-        return 'my name is ' + this.name;
-    }
+	get username() {
+		return 'my name is ' + this.name;
+	}
 }
 let f = new Foo();
 f.username = 'unofficial';
@@ -291,9 +291,9 @@ console.log(f.username);
 
 ```
 class Foo {
-    static info() {
-        console.log('随意写的内容');
-    }
+	static info() {
+		console.log('随意写的内容');
+	}
 }
 Foo.info(); // 随意写的内容
 ```
@@ -302,19 +302,19 @@ Foo.info(); // 随意写的内容
 
 ```
 class Animal { 
-    constructor(name) {
-        this.name = name;
-    }
+	constructor(name) {
+		this.name = name;
+	}
   
-    speak() {
-        console.log(this.name + ' 发了个声');
-    }
+	speak() {
+		console.log(this.name + ' 发了个声');
+	}
 }
 
 class Dog extends Animal {
-    speak() {
-        console.log(this.name + '说自己饿了');
-    }
+	speak() {
+		console.log(this.name + '说自己饿了');
+	}
 }
 let cat = new Animal('kitty');
 cat.speak(); // Kitty 发了个声
@@ -326,33 +326,33 @@ new Dog('哮天犬').speak(); // 哮天犬说自己饿了
 ```
 'use strict';
 class Animal { 
-    constructor(obj) {
-        var {name, food} = obj;
-        this.name = name;
-        this.food = food;
-    }
+	constructor(obj) {
+		var {name, food} = obj;
+		this.name = name;
+		this.food = food;
+	}
   
-    speak() {
-        console.log(this.name + ' 发了个声');
-    }
+	speak() {
+		console.log(this.name + ' 发了个声');
+	}
 
-    eat() {
-        console.log(this.name + '喜欢' + this.food);
-    }
+	eat() {
+		console.log(this.name + '喜欢' + this.food);
+	}
 }
 
 class Dog extends Animal {
-    speak() {
-        console.log(this.name + '说自己饿了');
-    }
+	speak() {
+		console.log(this.name + '说自己饿了');
+	}
 
-    eat() {
-        super.eat();
-        
-        if(this.food == '耗子') {
-            console.log('又闲的蛋疼了吧');
-        }
-    }
+	eat() {
+		super.eat();
+		
+		if(this.food == '耗子') {
+			console.log('又闲的蛋疼了吧');
+		}
+	}
 }
 new Dog({name: '哮天犬', food: '耗子'}).eat(); // 哮天犬喜欢耗子 又闲的蛋疼了吧
 ```
@@ -374,22 +374,33 @@ console.log(dog.hasOwnProperty('speak')); // false
 ```
 var Class = (function() {
 
-    function create() {
-        Object.extend(this, Class.Methods);
-        console.log('这是create方法');
-    }
+	function create() {
+		// 处理传入的参数
+		var parent, properties = [].slice.call(arguments);
+    	properties && toString.call(properties) == '[object Array]' && (parent = properties.shift());
 
-    function addMethods() {
-        console.log('这是addMethods方法');
-    }
 
-    return {
-        create: create,
-        Methods: {
-            addMethods: addMethods
-        }
-    }
+
+		return function klass() {
+			this.initialize.apply(this, arguments);
+		}
+		// Object.apply(this, Class.Methods);
+	}
+
+	function addMethods() {
+		console.log('这是addMethods方法');
+	}
+
+	return {
+		create: create,
+		Methods: {
+			addMethods: addMethods
+		}
+	}
 })()
+
+var gay = Class.create('humen');
+
 ```
 ### 参考资料
 [JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  

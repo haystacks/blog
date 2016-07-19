@@ -5,17 +5,19 @@
 	<title>prototype</title>
 </head>
 <body>
-	<script src="./prototype/lib/prototype.js"></script>
+	<script src="./prototype/lib/class.js"></script>
 	<script>
-	var Person = Class.create();
-	Person.prototype = {
+	var Humen = function() {
+	};
+	var Person = Class.create(Humen, {
 		initialize: function(name) {
 			this.name = name;
 		},
 		say: function(message) {
 			return this.name + ': ' + message;
 		}
-	};
+	});
+	console.log(Person);
 			
 	var guy = new Person('Miro');
 	console.log(guy.say('hi'));
