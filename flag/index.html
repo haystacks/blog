@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width" />
+        <style>
+            body {
+                text-align: center;
+                margin: 0;
+            }
+            #star {
+                background: rgba(200,200,200,1);
+                max-width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="star" width="650" height="150">您的浏览器不支持canvas！</canvas>
+        <div id="clearOther" style="width:100px; height:100px; background:#333; cursor:pointer;">清除</div>
+        <script>
+            (function() { //draw star
+                var starEle = document.getElementById("star"),
+                    clearOtherEle = document.getElementById("clearOther");
+                    starNum = 5,        //数量
+                    padding_top = 25,   //上边距
+                    padding_left = 25,  //左边距
+                    space = 25,         //间距
+                    bigRadius = 50,     //半径
+                    lineWidth = 2.0,    //边宽
+                    lineColor = "#FFF", //边颜色
+                    width = starEle.width,
+                    height = starEle.height,
+                    drawStar = function() {
+                        var i,
+                            j,
+                            radius,
+                            moveToX = bigRadius + Math.cos(Math.PI / 10) * bigRadius + padding_left,
+                            moveToY = bigRadius - Math.sin(Math.PI / 10) * bigRadius + padding_top,
+                            smallRadius = bigRadius * Math.sin(Math.PI / 10) / Math.cos(Math.PI / 5),
+                            centerSpace = space + 2 * bigRadius;
+                        for(i = 0; i < starNum; i++) {
+                            ctx.beginPath();
+                            ctx.moveTo(moveToX, moveToY);
+                            for(j = 1; j < 10; j++) {
+                                radius = j % 2 == 0 ? bigRadius : smallRadius;
+                                ctx.lineTo(bigRadius + Math.cos(Math.PI * (1 + 2 * j) / 10) * radius + padding_left + centerSpace * i, bigRadius - Math.sin(Math.PI * (1 + 2 * j) / 10) * radius + padding_top);
+                            }
+                            ctx.closePath();
+                            ctx.lineWidth = lineWidth;
+                            ctx.fillStyle = lineColor;
+                            ctx.fill();
+                            moveToX = moveToX + space + 2 * bigRadius;//下一个起点
+                        }
+                    },
+                    clearOther = function() {
+                        ctx.clearRect(0, 0, width, height);
+                        drawStar();
+                    };
+                if(starEle.getContext) {
+                    var ctx = starEle.getContext('2d');
+                    drawStar();
+                    //clear
+                    clearOtherEle.addEventListener("click", clearOther, false);
+                    starEle.addEventListener("mousemove", function(e) {
+                        var mouseX = e.offsetX || e.layerX;
+                        var mouseY = e.offsetY || e.layerY;
+                        console.log(e);
+                        console.log(mouseX +"---"+ mouseY);
+                    }, false)
+                }
+            }())
+        </script>
+    </body>
+</html>

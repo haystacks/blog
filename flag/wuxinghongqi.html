@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width" />
+		<style>
+			body {
+				text-align: center;
+				margin: 0;
+			}
+			#star {
+				background: rgba(200,200,200,1);
+				max-width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+<canvas id="star" width="600" height="400">您的浏览器不支持canvas！</canvas>
+		<script>
+			(function() { //draw star
+				var starEle = document.getElementById("star"),
+					starNum = 5,			//数量
+					padding_top = 40,   	//上边距
+					padding_left = 40,  	//左边距
+					bigRadius = 60,	 		//大星星半径
+					otherBigRadius = 20,	//小星星半径
+					bgColor = "#D62209",
+					starColor = "#F6D700",	//星颜色
+					width = starEle.width,
+					height = starEle.height,
+					drawBg = function() {
+						ctx.fillStyle = bgColor;
+						ctx.fillRect(0, 0, width, height);
+					},
+					drawStar = function(a,b,c,d) {
+						var j,
+							smallRadius = a * Math.sin(Math.PI / 10) / Math.cos(Math.PI / 5),
+							radius,
+							moveToX = a + Math.cos(Math.PI * d / 10) * a + b,
+							moveToY = a - Math.sin(Math.PI * d / 10) * a + c;
+							ctx.beginPath();
+							ctx.moveTo(moveToX, moveToY);
+							for(j = 1; j < 10; j++) {
+								radius = j % 2 == 0 ? a : smallRadius;
+								ctx.lineTo(a + Math.cos(Math.PI * (d + 2 * j) / 10) * radius + b, a - Math.sin(Math.PI * (d + 2 * j) / 10) * radius + c);
+							}
+							ctx.closePath();
+							ctx.fillStyle = starColor;
+							ctx.fill();
+					};
+				if(starEle.getContext) {
+					var i,
+						starBigRadius,
+						padding_left,
+						otherPadding_left,
+						otherPadding_top,
+						angle,
+						ctx = starEle.getContext('2d');
+					drawBg();
+					for(i = 0; i < 5; i++) {
+						starBigRadius = i > 0 ? otherBigRadius : bigRadius;
+						switch(i) {
+							case 0:
+								otherPadding_left = padding_left;
+								otherPadding_top = padding_top;
+								angle = 1;
+								break;
+							case 1:
+								otherPadding_left = padding_left + 140;
+								otherPadding_top = padding_top - 20;
+								angle = 1 - (0.3 - Math.atan(3 / 5) / Math.PI)*10;
+								break;
+							case 2:
+								otherPadding_left = padding_left + 180;
+								otherPadding_top = padding_top + 20;
+								angle = 1 - (0.3 - Math.atan(1 / 7) / Math.PI)*10;
+								break;
+							case 3:
+								otherPadding_left = padding_left + 180;
+								otherPadding_top = padding_top + 80;
+								angle = 1 - (0.1 - Math.atan(2 / 7) / Math.PI)*10;
+								break;
+							case 4:
+								otherPadding_left = padding_left + 140;
+								otherPadding_top = padding_top + 120;
+								angle = 1 - (Math.atan(4 / 5) / Math.PI - 0.1)*10;
+								break;
+						}
+						//100 100 40 200
+						drawStar(starBigRadius,otherPadding_left,otherPadding_top,angle);
+					}
+				}
+			}())
+		</script>
+	</body>
+</html>
