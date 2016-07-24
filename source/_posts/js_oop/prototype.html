@@ -7,75 +7,12 @@
 <body>
 	<script src="prototype/lib/prototype.js"></script>
 	<script>
-	// var Class = (function() {
-		
-	// 	// 子类
-	// 	function Subclass() {
-
-	// 	}
-
-	// 	function create() {
-	// 		// 处理传入的参数
-	// 		var parent, properties = [].slice.call(arguments);
-	// 		properties && toString.call(properties[0]) == '[object Function]' && (parent = properties.shift());
-
-	// 		// 构造类
-	// 		function Klass() {
-	// 			// this为实例对象
-	// 			// 构造函数initialize
-	// 			// this为类函数对象
-	// 			// arguments 实例化时传入的参数
-	// 			this.initialize.apply(this, arguments);
-	// 		}
-
-	// 		// 对象继承添加方法
-	// 		Klass.addMethods = addMethods;
-	// 		// 父类
-	// 		Klass.superclass = parent;
-	// 		// 子类
-	// 		Klass.Subclass= [];
-
-	// 		if( parent ) {
-	// 			// 子类的原型指针指向父类的原型
-	// 			Subclass.prototype = parent.prototype;
-	// 			// 当前类的原型
-	// 			Klass.prototype = new Subclass();
-	// 			console.log('%O', new Klass);
-	// 			// 当前类添加到父类的子类
-	// 			parent.Subclass.push(Klass);
-	// 		}
-
-	// 		// (properties[0] && properties[0].initialize) && (Klass.prototype.initialize = properties[0].initialize);
-
-	// 		properties[0] && Klass.addMethods(properties[0]);
-
-	// 		// 如果没有自定义构造函数设置默认空函数
-	// 		!Klass.prototype.initialize && (Klass.prototype.initialize = function() { });
-
-	// 		// 设置当前构造类函数为构造函数
-	// 		Klass.prototype.constructor = Klass;
-
-	// 		return Klass;
-	// 	}
-
-	// 	function addMethods(properties) {
-	// 		// super暂时没看懂
-	// 		this.prototype = properties;
-	// 		return this;
-	// 	}
-
-	// 	return {
-	// 		create: create,
-	// 		Methods: {
-	// 			addMethods: addMethods
-	// 		}
-	// 	}
-	// })()
 	var Humen = Class.create({
 		introduce: function() {
 			console.log(this.username +'今年已经'+ this.age +'岁啦')
 		}
 	});
+	console.log('Humen类', Humen);
 
 	var Gay = Class.create(Humen, {
 		initialize: function() {
@@ -85,9 +22,10 @@
 		}
 	});
 	var gay = new Gay('unofficial', '1');
-	// 调用继承父类的方法
-	// 这里暂时报错了 2016-7-20 23:07:49
+
 	console.log('%O', gay);
+
+	// 调用父类Humen的introduce方法
 	gay.introduce();
 	</script>
 </body>

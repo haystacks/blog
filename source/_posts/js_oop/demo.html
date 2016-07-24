@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>demo</title>
+</head>
+<body>
+	<script>
+	var Class = (function() {
+		
+		// 子类
+		function subclass() { }
+
+		function create() {
+			// 处理传入的参数
+			var parent, properties = [].slice.call(arguments);
+			properties && toString.call(properties[0]) == '[object Function]' && (parent = properties.shift());
+
+			// 构造类
+			function klass() {
+				// this为实例对象
+				// 构造函数initialize
+				// this为类函数对象
+				// arguments 实例化时传入的参数
+				this.initialize.apply(this, arguments);
+			}
+
+			// 对象继承添加方法
+			extend.call(klass, Class.Methods);
+			// 父类
+			klass.superclass = parent;
+			// 子类
+			klass.subclass= [];
+
+			if( parent ) {
+				// 子类的原型指针指向父类的原型
+				subclass.prototype = parent.prototype;
+				// 当前类的原型
+				klass.prototype = new subclass;
+				// 当前类添加到父类的子类
+				parent.subclass.push(klass);
+			}
+
+			(properties[0] && properties[0].initialize) && (klass.prototype.initialize = properties[0].initialize);
+
+			properties[0] && klass.addMethods(properties[0]);
+
+			// 如果没有自定义构造函数设置默认空函数
+			!klass.prototype.initialize && (klass.prototype.initialize = function() { });
+
+			// 设置当前构造类函数为构造函数
+			klass.prototype.constructor = klass;
+
+			return klass;
+		}
+
+		// 对象继承方法
+		function extend(src) {
+			for( var property in src) {
+				this[property] = src[property];
+			}
+			return this;
+		}
+
+		function addMethods(properties) {
+			// super暂时没看懂
+			this.prototype = properties;
+			return this;
+		}
+
+		return {
+			create: create,
+			Methods: {
+				addMethods: addMethods
+			}
+		}
+	})()
+
+	var Humen = Class.create({
+		initialize: function() {
+			var args = [].slice.call(arguments);
+			this.username = args[0];
+			this.age = args[1];
+		},
+		introduce: function() {
+			console.log(this.username +'今年已经'+ this.age +'岁啦')
+		}
+	});
+	var h = new Humen('ul', '123');
+	h.introduce();
+
+	var Gay = Class.create(Humen, {
+		initialize: function() {
+			var args = [].slice.call(arguments);
+			this.username = args[0];
+			this.age = args[1];
+		}
+	});
+	var gay = new Gay('unofficial', '1');
+
+	console.log('%O', gay);
+
+	// 调用父类Humen的introduce方法
+	// gay.introduce();
+	</script>
+</body>
+</html>
