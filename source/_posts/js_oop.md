@@ -370,77 +370,53 @@ console.log(dog.hasOwnProperty('speak')); // false
 ```
 
 ### prototy.js是怎么做的？  
-参考github上prototype.js的[class.js](https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js)学习到：  
+参考github上prototype.js的文档以及[class.js](https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/class.js)可以学习到，如何创建一个类？  
+```
+	var Humen = Class.create();
+	// or
+	var Humen = Class.create({
+		// 这里可以自定义类方法
+	});
+```
+理解class.js时，Class是一个 立即执行的函数表达式 ，不成名的规定就是函数名大写作为类名。  
 ```
 var Class = (function() {
-	
-	// 子类
-	function Subclass() {
-
-	}
-
-	function create() {
-		// 处理传入的参数
-		var parent, properties = [].slice.call(arguments);
-		properties && toString.call(properties) == '[object Array]' && (parent = properties.shift());
-		
-		// 构造类
-		function Klass() {
-			// this为实例对象
-			// 构造函数initialize
-			// this为类函数对象
-			// arguments 实例化时传入的参数
-			this.initialize.apply(this, arguments);
-		}
-
-		// 对象继承添加方法
-		Klass.addMethods = addMethods;
-		// 父类
-		Klass.superclass = parent;
-		// 子类
-		Klass.Subclass= [];
-
-		if( parent ) {
-			// 子类的原型指针指向父类的原型
-			Subclass.prototype = parent.protorype;
-			// 当前类的原型
-			Klass.prototype = new Subclass();
-			// 当前类添加到父类的子类
-			parent.Subclass.push(Klass);
-		}
-
-		(properties[0] && properties[0].initialize) && (Klass.prototype.initialize = properties.initialize);
-
-		// 如果没有自定义构造函数设置默认空函数
-		!Klass.prototype.initialize && (Klass.prototype.initialize = function() {console.log(arguments)});
-
-		// 设置当前构造类函数为构造函数
-		Klass.prototype.constructor = Klass;
-
-		return Klass;
-	}
-
-	function addMethods() {
-		console.log('这是addMethods方法');
-	}
-
+	// 返回Class的方法
 	return {
 		create: create,
 		Methods: {
 			addMethods: addMethods
 		}
-	}
-})()
-var Humen = Class.create();
-var Gay = Class.create(Humen, {
-	initialize: function(username) {
-		console.log(username, 123);
-		this.username = username;
-	}
-});
-var gay = new Gay('unofficial');
-console.log(gay.username);
+	};
+})();
 ```
+> 这一个需要学习的点，闭包的立即执行的匿名函数中返回一个对象，对象中包含一个create的方法，以及Methods方法对象。  
+
+* 创建类
+```
+function create() {
+	// 可能会有两个参数
+	// 第一个参数是父类，需要被继承的类 var gay = Class.create('Humen');
+	// 第二个参数是当前类的方法
+
+	// 自定义Klass类，create函数最后返回的也是创建的Klass类
+	function Klass() {
+		this.initialize.apply(this, arguments);
+	}
+
+	// 如果当前类方法中没有initialize方法，使用默认的空函数作为构造方法
+
+	// initialize是构造方法（自定义constructor方法）
+}
+```
+
+* 自定义方法
+```
+function addMethods() {
+
+}
+```
+
 ### 参考资料
 [JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  
 [强大的原型和原型链](http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)  

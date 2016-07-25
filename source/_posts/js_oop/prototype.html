@@ -12,7 +12,6 @@
 			console.log(this.username +'今年已经'+ this.age +'岁啦')
 		}
 	});
-	console.log('Humen类', Humen);
 
 	var Gay = Class.create(Humen, {
 		initialize: function() {
@@ -22,8 +21,6 @@
 		}
 	});
 	var gay = new Gay('unofficial', '1');
-
-	console.log('%O', gay);
 
 	// 调用父类Humen的introduce方法
 	gay.introduce();

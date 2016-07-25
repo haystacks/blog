@@ -64,7 +64,7 @@ var Class = (function() {
       klass.addMethods(properties[i]);
 
     if (!klass.prototype.initialize)
-      klass.prototype.initialize = Prototype.emptyFunction;
+      klass.prototype.initialize = function() { };
 
     klass.prototype.constructor = klass;
     return klass;
@@ -177,3 +177,38 @@ var Class = (function() {
     }
   };
 })();
+
+/**/
+function $A(iterable) {
+  if (!iterable) return [];
+  if ('toArray' in Object(iterable)) return iterable.toArray();
+  var length = iterable.length || 0, results = new Array(length);
+  while (length--) results[length] = iterable[length];
+  return results;
+}
+
+/*检测是不是函数*/
+function isFunction(object) {
+  return Object.prototype.toString.call(object) === '[object Function]';
+}
+
+/*继承*/
+function extend(destination, source) {
+  for (var property in source)
+    destination[property] = source[property];
+  return destination;
+}
+/*扩展Object*/
+extend(Object, {
+  extend: extend,
+  isFunction: isFunction
+});
+
+extend(Function.prototype, {
+  argumentNames: function argumentNames() {
+    var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+      .replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+      .replace(/\s+/g, '').split(',');
+    return names.length == 1 && !names[0] ? [] : names;
+  }
+})

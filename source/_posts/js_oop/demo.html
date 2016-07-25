@@ -62,11 +62,45 @@
 			return this;
 		}
 
-		function addMethods(properties) {
-			// super暂时没看懂
-			this.prototype = properties;
-			return this;
-		}
+		// function addMethods(properties) {
+		// 	// super暂时没看懂
+		// 	this.prototype = properties;
+		// 	return this;
+		// }
+  function addMethods(source) {
+    var ancestor   = this.superclass && this.superclass.prototype,
+        properties = Object.keys(source);
+
+    for (var i = 0, length = properties.length; i < length; i++) {
+      var property = properties[i], value = source[property];
+      if (ancestor && Object.isFunction(value) &&
+          value.argumentNames()[0] == "$super") {
+        var method = value;
+        value = (function(m) {
+          return function() { return ancestor[m].apply(this, arguments); };
+        })(property).wrap(method);
+
+        // We used to use `bind` to ensure that `toString` and `valueOf`
+        // methods were called in the proper context, but now that we're
+        // relying on native bind and/or an existing polyfill, we can't rely
+        // on the nuanced behavior of whatever `bind` implementation is on
+        // the page.
+        //
+        // MDC's polyfill, for instance, doesn't like binding functions that
+        // haven't got a `prototype` property defined.
+        value.valueOf = (function(method) {
+          return function() { return method.valueOf.call(method); };
+        })(method);
+
+        value.toString = (function(method) {
+          return function() { return method.toString.call(method); };
+        })(method);
+      }
+      this.prototype[property] = value;
+    }
+
+    return this;
+  }
 
 		return {
 			create: create,
@@ -75,6 +109,42 @@
 			}
 		}
 	})()
+
+/**/
+function $A(iterable) {
+  if (!iterable) return [];
+  if ('toArray' in Object(iterable)) return iterable.toArray();
+  var length = iterable.length || 0, results = new Array(length);
+  while (length--) results[length] = iterable[length];
+  return results;
+}
+
+/*检测是不是函数*/
+function isFunction(object) {
+  return Object.prototype.toString.call(object) === '[object Function]';
+}
+
+/*继承*/
+function extend(destination, source) {
+  for (var property in source)
+    destination[property] = source[property];
+  return destination;
+}
+/*扩展Object*/
+extend(Object, {
+  extend: extend,
+  isFunction: isFunction
+});
+
+extend(Function.prototype, {
+  argumentNames: function argumentNames() {
+    var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+      .replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+      .replace(/\s+/g, '').split(',');
+    return names.length == 1 && !names[0] ? [] : names;
+  }
+})
+
 
 	var Humen = Class.create({
 		initialize: function() {
@@ -86,8 +156,6 @@
 			console.log(this.username +'今年已经'+ this.age +'岁啦')
 		}
 	});
-	var h = new Humen('ul', '123');
-	h.introduce();
 
 	var Gay = Class.create(Humen, {
 		initialize: function() {
@@ -98,10 +166,8 @@
 	});
 	var gay = new Gay('unofficial', '1');
 
-	console.log('%O', gay);
-
 	// 调用父类Humen的introduce方法
-	// gay.introduce();
+	gay.introduce();
 	</script>
 </body>
 </html>
