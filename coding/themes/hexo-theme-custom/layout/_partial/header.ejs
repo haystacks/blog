@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:wb="http://open.weibo.com/wb">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="keywords" content="<%= theme.keywords %>" />
+	<% pageTitle = page.title ? '-'+page.title : '' %>
+	<meta name="description" content="<%= theme.description %><%= pageTitle %>" />
+	<title><%= config.title　%><%= pageTitle %></title>
+	<link rel="stylesheet" href="<%= theme.cssPath %>">
+</head>
+<body>
+<header>
+	<div class="wrapper">
+		<a href="/index.html" class="logo">
+			unofficial
+		</a>
+		<nav class="nav" id="nav">
+			<ul>
+				<%
+					var menus = theme.menu,
+						i;
+					for(i in menus) {
+				%>
+					<li><a href="<%= menus[i] %>"><span><%= i %></span></a></li>
+				<%
+					}
+				%>
+			</ul>
+		</nav>
+	</div>
+</header>

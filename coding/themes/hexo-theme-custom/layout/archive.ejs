@@ -1,0 +1,54 @@
+<% page.posts.each(function(page) { %>
+<%- partial('_partial/p', {index: true, page: page, archive: is_archive()}) %>
+<% }) %>
+<%
+  //var page.total = 50; //模拟
+	var showPage = 5; //奇数
+	var centerPage = Math.ceil(showPage/2);
+  //页码开始 结束
+	if(page.total <= showPage) { 
+		var start = 1;
+		var end = page.total;
+    var leftFlip = '';
+    var rightFlip = '';
+	} else {
+		if(page.current <= centerPage) {
+			var start = 1;
+			var end = showPage;
+      var leftFlip = '';
+      var rightFlip = centerPage + showPage;
+		} else {
+      //
+			var start = (page.current - centerPage + 1) > (page.total - showPage + 1) ? (page.total - showPage + 1) : (page.current - centerPage + 1);
+			var end = page.current + centerPage - 1 > page.total ? page.total : page.current + centerPage - 1;
+      var leftFlip = page.current - showPage < 0 ? 1 : page.current - showPage;
+      var rightFlip = page.current + centerPage > page.total ? '' : (page.current + showPage > page.total ? page.total : page.current + showPage);
+		}
+	}
+  //翻页链接
+  var leftFlipUrl = leftFlip == '' ? 'javascript:;' : leftFlip == 1 ? url_for(page.base) : url_for(page.base+'page/'+leftFlip);
+  var rightFlipUrl = rightFlip == '' ? 'javascript:;' : url_for(page.base+'page/'+rightFlip);
+%>
+<!-- pagination -->
+<div class="full-width">
+  <div class="wrapper container">
+    <section>
+      <ul class="pagination">
+        <li><a href="<%= leftFlipUrl %>"> &laquo; </a></li>
+      	<%
+      		var i = start;
+      		while(i <= end) {
+      			var url = i == page.current ? 'javascript:;' : i == 1 ? url_for(page.base) : url_for(page.base+'page/'+i);
+      	%>
+        <li><a href="<%= url %>"> <%= i %> </a></li>
+      	<%
+      			i++;
+      		}
+      	%>
+        <li><a href="<%= rightFlipUrl %>"> &raquo; </a></li>
+        <li><a href="javascript:;">当前是第<%= page.current %>页</a></li>
+        <li><a href="javascript:;">总共有<%= page.total %>页</a></li>
+      </ul>
+    </section>
+  </div>
+</div>

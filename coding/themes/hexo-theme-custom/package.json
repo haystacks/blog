@@ -1,0 +1,57 @@
+{
+  "name": "hexo-theme-custom",
+  "version": "1.0.1",
+  "private": false,
+  "devDependencies": {
+    "node-sass": "*",
+    "gulp": "*",
+    "gulp-minify-css": "*",
+    "gulp-sass": "*"
+  },
+  "description": "do the hexo theme for unofficial's blog",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cangku/hexo-theme-custom.git"
+  },
+  "keywords": [
+    "hexo",
+    "theme"
+  ],
+  "author": {
+    "name": "unofficial"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cangku/hexo-theme-custom/issues"
+  },
+  "homepage": "https://github.com/cangku/hexo-theme-custom#readme",
+  "_id": "hexo-theme-custom@1.0.1",
+  "_shasum": "96502cb50f9842685e0897d0f18c5fd278ea0e21",
+  "_from": "hexo-theme-custom@*",
+  "_npmVersion": "2.14.4",
+  "_nodeVersion": "4.1.1",
+  "_npmUser": {
+    "name": "unofficial",
+    "email": "1016908017@qq.com"
+  },
+  "dist": {
+    "shasum": "96502cb50f9842685e0897d0f18c5fd278ea0e21",
+    "size": 828322,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/hexo-theme-custom/download/hexo-theme-custom-1.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "unofficial",
+      "email": "1016908017@qq.com"
+    }
+  ],
+  "directories": {},
+  "publish_time": 1447643346573,
+  "_cnpm_publish_time": 1447643346573,
+  "_resolved": "https://registry.npm.taobao.org/hexo-theme-custom/download/hexo-theme-custom-1.0.1.tgz"
+}

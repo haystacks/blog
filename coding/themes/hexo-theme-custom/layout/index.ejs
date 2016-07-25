@@ -1,0 +1,19 @@
+<div class="full-width pusher">
+	<div class="wrapper container">
+		<section>
+			<!-- <h2>我是标题</h2>
+			<hr /> -->
+			<p><%- partial('_partial/say') %></p>
+		</section>
+	</div>
+</div>
+<div class="full-width fixed">
+	<div>
+		<section class="bg">
+			<!-- <img _src="<%= theme.fixedBgImgPath %>" src="<%= theme.fixedBgImgPath %>" alt="loading"> -->
+		</section>
+	</div>
+</div>
+<% page.posts.each(function(page) { %>
+<%- partial('_partial/p', {index: true, page: page}) %>
+<% }) %>

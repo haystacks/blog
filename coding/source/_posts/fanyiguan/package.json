@@ -1,0 +1,20 @@
+{
+  "name": "fanyiguan",
+  "version": "0.0.0",
+  "description": "百度翻译数据接口，中文转英文",
+  "main": "lib/index",
+  "scripts": {
+    "test": "node test/test",
+    "demo": "node demo"
+  },
+  "keywords": [
+    "translate",
+    "翻译",
+    "中文翻译",
+    "中文翻译英文"
+  ],
+  "author": {
+    "name": "unofficial"
+  },
+  "license": "MIT"
+}

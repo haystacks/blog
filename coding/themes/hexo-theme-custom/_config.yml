@@ -1,0 +1,24 @@
+title: unofficial
+
+# meta
+keywords: unofficial, 前端, javascript, nodejs, php
+description: unofficial的個人網站，關注學習分享知識 
+
+# menu
+menu:
+	Home: /index.html
+	Archives: /archives
+	About: /about.html
+	Link: /link.html
+
+# index fixed image
+fixedBgImgPath: /public/img/fixedBg.jpg
+
+# path
+cssPath: /public/css/style.css
+fontPath: /public/font/
+imgPath: /public/img/
+jsPath: /public/js/
+
+# duoshuo
+duoshuo_shortname: unofficial
