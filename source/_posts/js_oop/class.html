@@ -18,6 +18,10 @@
 			var args = [].slice.call(arguments);
 			this.username = args[0];
 			this.age = args[1];
+		},
+		introduce: function($super) {
+			this.username = 'zhangsan';
+			$super();
 		}
 	});
 	var gay = new Gay('unofficial', '1');

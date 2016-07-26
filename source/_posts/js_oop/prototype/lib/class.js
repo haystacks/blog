@@ -198,6 +198,20 @@ function extend(destination, source) {
     destination[property] = source[property];
   return destination;
 }
+
+function wrap(wrapper) {
+  var __method = this;
+  return function() {
+    var a = update([__method.bind(this)], arguments);
+    return wrapper.apply(this, a);
+  }
+}
+
+function update(array, args) {
+  var arrayLength = array.length, length = args.length;
+  while (length--) array[arrayLength + length] = args[length];
+  return array;
+}
 /*扩展Object*/
 extend(Object, {
   extend: extend,
@@ -210,5 +224,6 @@ extend(Function.prototype, {
       .replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
       .replace(/\s+/g, '').split(',');
     return names.length == 1 && !names[0] ? [] : names;
-  }
+  },
+  wrap: wrap
 })

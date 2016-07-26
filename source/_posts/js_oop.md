@@ -398,28 +398,128 @@ function create() {
 	// 可能会有两个参数
 	// 第一个参数是父类，需要被继承的类 var gay = Class.create('Humen');
 	// 第二个参数是当前类的方法
+	
+	/*
+	 * 判断传入的参数
+	 * 1. $A方法处理arguments类数组对象为数组，这里使用了[].slice.call(arguments)来代替数组浅复制
+	 * 2. 判断第一个参数是不是类，如果是赋值给parent
+	 */
+	var parent = null, properties = $A(arguments);
+    if (Object.isFunction(properties[0]))
+    	parent = properties.shift();
+
 
 	// 自定义Klass类，create函数最后返回的也是创建的Klass类
+
+	/*
+	 * Klass为 Class.create 创建的类
+	 * initialize 为自定义构造方法
+	 * this.initialize 中的this指当前对象
+	 * apply(this, arguments) 参数this指实例化对象
+	 * new 实例化对象的时候，Klass函数会自动执行，其中的this.initialize.apply(this, arguments);也就执行了，即属性初始化了
+	 */
 	function Klass() {
 		this.initialize.apply(this, arguments);
 	}
 
+	// 当前类添加属性 superclass 存放父类；subclass 存放子类
+	// 如果父类存在，父类的原型赋值给子类的原型，并初始化子类赋值给当前原型，添加当前类到父类的子类中
+	// 将传入的当前类的方法添加到当前类的原型上
+
+	/*
+	 * 继承addMethods方法
+	 * 设置父类 superclass
+	 * 设置子类 subclass
+	 */
+	Object.extend(Klass, Class.Methods);
+    Klass.superclass = parent;
+    Klass.subclasses = [];
+
+	/*
+	 * 如果父类存在
+	 * Subclass是一个类，父类的原型赋值给这个子类的原型
+	 * 实例化子类赋值给当前类的原型
+	 * 添加当前类到父类的子类数组中
+	 */
+	if (parent) {
+		Subclass.prototype = parent.prototype;
+		Klass.prototype = new Subclass;
+		parent.subclasses.push(Klass);
+    }
+
+	/*
+	 * 循环添加方法给当前类
+	 */
+	for (var i = 0, length = properties.length; i < length; i++)
+    	Klass.addMethods(properties[i]);
+
 	// 如果当前类方法中没有initialize方法，使用默认的空函数作为构造方法
+	if (!Klass.prototype.initialize)
+    	Klass.prototype.initialize = function() { };
+	
+	// 重置当前类的constructor函数为自身
+	Klass.prototype.constructor = Klass;
 
-	// initialize是构造方法（自定义constructor方法）
+	// 返回构造的类Klass
+	return Klass;
 }
 ```
 
-* 自定义方法
+* 自定义方法，添加传入的参数方法作为当前类的方法
 ```
-function addMethods() {
+function addMethods(source) {
+	// 判断父类是不是存在
+	// 获取参数的键名
+	var ancestor   = this.superclass && this.superclass.prototype,
+	properties = Object.keys(source);
 
+	// 循环数组
+	for (var i = 0, length = properties.length; i < length; i++) {
+		var property = properties[i], value = source[property];
+		// 这里主要是对于继承父类方法的调用的处理
+		// 如果父类存在，并且是方法，方法的第一个参数必须是$super，如果是重写value
+		if (ancestor && Object.isFunction(value) && value.argumentNames()[0] == "$super") {
+			var method = value;
+			// 处理当前方法
+			// wrap()
+			value = (function(m) {
+				return function() { return ancestor[m].apply(this, arguments); };
+			})(property).wrap(method);
+
+			// 新增valueOf
+			value.valueOf = (function(method) {
+				return function() { return method.valueOf.call(method); };
+			})(method);
+
+			// 新增toString
+			value.toString = (function(method) {
+				return function() { return method.toString.call(method); };
+			})(method);
+		}
+		// 直接赋值给当前类的原型
+		this.prototype[property] = value;
+    }
 }
 ```
+
+到这里基本上就学习完了prototype.js创建类的方法，但是如果需要融会贯通自己来实现一次，我想过程肯定还是会比较艰辛，继续加油。
+
+### 面向对象是什么？
+面向对象编程最美的调侃就是，“我还是单身，我是不是不适合面向对象编程”。也许是的，但是如果你能在脑海中抽象出类，需要的时候撸一发，对象迟早会有的。  
+![OOP](http://ww3.sinaimg.cn/mw690/e6cd2709gw1f67fndl7tfj207m054q2w.jpg)  
+面向对象是一种编程的范式方法，面向对象中的对象是类的实例，类是属性，方法的集合，对于一类对象可能有公共的行为与样式，``` 封装 ``` 在一起就形成了类。如果具体到这个类的一个子类型（狗与阿拉斯加雪橇犬），阿拉斯加肯定是狗，，既有狗的特性，但是同时他又有自己的特点，于是乎 ``` 继承 ``` 了狗类的一些行为。这是如果在拿来一直猫，猫和狗又都属于动物类，这事又可以抽象出一个动物类，他们都会叫，狗是汪汪汪，猫是喵喵喵，这个是叫的多种表现形式，被称为 ``` 多态 ```。  
+
+面向对象提高了程序的重用性，对于模块化开发以及重构等都带来很多好处。  
+
+### 实践 -- 坦克大战游戏
+坦克大战在玩小霸王卡版的时候经常约上邻居家的伙伴一起，其实最多的玩的还是雪人兄弟，这个是记忆比较深刻的。不扯远了，今天主要来实现一个简单的坦克大战游戏。  
+
+
 
 ### 参考资料
 [JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  
 [强大的原型和原型链](http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)  
 [JavaScript isPrototypeOf vs instanceof usage](http://stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage)  
 [Classes in ECMAScript 6 (final semantics)](http://www.2ality.com/2015/02/es6-classes-final.html)  
-[prototype.js](https://github.com/sstephenson/prototype/tree/master)
+[prototype.js](https://github.com/sstephenson/prototype/tree/master)  
+[面向对象程序设计](https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1)
