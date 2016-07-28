@@ -2,7 +2,7 @@
  * @desc    坦克
  * @author  unofficial
  * @param   hero;   英雄
- * @param   NPC;    行尸
+ * @param   npc;    行尸
  */
 var Tank = (function() {
 
@@ -23,28 +23,34 @@ var Tank = (function() {
             var y = (map.mapEle.clientHeight - this.tanker.clientHeight) / 2;
             this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
 
-            var self = this;
             // 控制移动
-            setTimeout(function() {
-                self.data = {
-                    direction: direction[0],
-                    src: {
-                        x: x,
-                        y: y
-                    },
-                    dest: {
-                        x: 10,
-                        y: 10
-                    }
-                };
+            this.data = {
+                direction: direction[0],
+                speed: 5,
+                src: {
+                    x: x,
+                    y: y
+                }
+            };
 
-                self.move();
+        } else if(this.roleName === 'npc') {
+            // npc坦克随机位置
+            var x = 10;
+            var y = 400;
+            this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
 
-            }, 3000);
-        } else if(this.roleName === 'NPC') {
-            // NPC坦克随机位置
+            // 控制移动
+            this.data = {
+                direction: direction[0],
+                speed: 5,
+                src: {
+                    x: x,
+                    y: y
+                }
+            };
 
             // 自由移动
+            this.move();
 
         }
     }
@@ -61,9 +67,8 @@ var Tank = (function() {
     function moveUp() {
         // 保持原来的X方向不变，Y方向正向移动
         var x = this.data.src.x;
-        var y = this.data.dest.y;
+        var y = this.data.src.y;
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
-        this.tanker.style.transition = 'transform 2.s';
         this.data.src.y = y;
     }
     
@@ -80,21 +85,41 @@ var Tank = (function() {
 
     // 左移动
     function moveLeft() {
-        var x = this.data.dest.x;
-        var y = this.data.dest.y;
+        var x = this.data.src.x;
+        var y = this.data.src.y;
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         this.tanker.style.transition = 'transform 2.s';
     }
 
-    // 移动操作
+    // 自由移动操作
     // 从A移动到B
     // tanker direction up
     // eg: 50, 50 -> 10, 10
     // up: 50 -> 10, left: 50 -> 10
     // test
     function move() {
-        this.moveUp();
-        this.moveLeft();
+        var src = this.data.src;
+        this.data.src = {
+            x: src.x,
+            y: src.y - 1
+        }
+        switch(this.data.direction) {
+            case 'up':
+                this.moveUp();
+            case 'right':
+                this.moveRight();
+            case 'down':
+                this.moveDown();
+            case 'left':
+                this.moveLeft();
+        }
+
+        if(this.moveId === 200) {
+            cancelAnimationFrame(this.moveId);
+        } else {
+            this.moveId = requestAnimationFrame(this.move.bind(this));
+        }
+
     }
 
 

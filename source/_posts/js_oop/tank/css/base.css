@@ -18,5 +18,10 @@ body {
 .hero {
     width: 32px;
     height: 32px;
+}
 
+.npc {
+    width: 32px;
+    height: 32px;
+    background-position: -128px 0;
 }
