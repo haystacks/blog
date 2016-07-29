@@ -57,4 +57,4 @@ var Map = (function() {
 
 // mapName, width, height, backgroundColor, isAuto
 // new Map('map', 600, 500, '#ccc', 1);
-new Map();
+// new Map();
