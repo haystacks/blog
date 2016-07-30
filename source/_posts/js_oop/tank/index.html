@@ -11,23 +11,11 @@
     <script src="js/data.js"></script>
     <script src="js/impact.js"></script>
     <script src="js/tank.js"></script>
+    <script src="js/main.js"></script>
     <script>
         !function() {
-            // 初始化地图
-            var map = new Map();
-            // 获得数据信息
-            var dataInfo = data();
-            var impact = new Impact();
-            // 主角闪现
-            var hero = new Tank('hero', map, dataInfo, impact);
-            // NPC工厂，生产多个NPC
-            new Tank('npc', map, dataInfo, impact);
-            // NPC工厂，生产多个NPC
-            new Tank('npc', map, dataInfo, impact);
-            // NPC工厂，生产多个NPC
-            new Tank('npc', map, dataInfo, impact);
-            // NPC工厂，生产多个NPC
-            new Tank('npc', map, dataInfo, impact);
+            var main = new Main();
+            main.init();
         }()
     </script>
 </body>

@@ -52,7 +52,7 @@ var data = function() {
 
     // level 1 -> 2npc etc.
     var level = [
-        2, 4, 6
+        {npc: 4, speed: 1, bulletSpeed: 3}
     ];
     
     return {

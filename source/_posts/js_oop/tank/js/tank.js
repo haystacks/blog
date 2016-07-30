@@ -14,7 +14,7 @@ var Tank = (function() {
         'height': 32
     }
     // 全局变量 地图，坦克数据，关卡数据
-    var map, tankInfo, level;
+    var map, impact, tankInfo, level;
     // 随机范围内整数
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random()*(max-min+1)+min);
@@ -24,9 +24,10 @@ var Tank = (function() {
         var args = [].slice.call(arguments);
         // tank的属性
         this.roleName = args[0];
-        map = args[1];
-        tankInfo = args[2]['tankInfo'];
-        level = args[2]['level'];
+        map = args[1]['map'];
+        impact = args[1]['impact'];
+        tankInfo = args[1]['dataInfo']['tankInfo'];
+        level = args[1]['dataInfo']['level'];
         
         this.draw();
         // 初始状态为1
