@@ -24,10 +24,12 @@ var Tank = (function() {
         var args = [].slice.call(arguments);
         // tank的属性
         this.roleName = args[0];
+        this.size = tankSize;
         map = args[1]['map'];
         impact = args[1]['impact'];
         tankInfo = args[1]['dataInfo']['tankInfo'];
         level = args[1]['dataInfo']['level'];
+        allObj = args[1]['allObj'] || [];
         
         this.draw();
         // 初始状态为1
@@ -131,6 +133,26 @@ var Tank = (function() {
         var src = this.data.src;
         var x = src.x, y = src.y;
 
+        // 检测位置碰撞情况
+        // 碰撞地图边缘
+        var isImpact = impact.border(this, allObj);
+        if(isImpact) {
+            switch(this.data.direction) {
+                case 'up':
+                    this.data.direction = direction[2];
+                    break;
+                case 'right':
+                    this.data.direction = direction[3];
+                    break;
+                case 'down':
+                    this.data.direction = direction[0];
+                    break;
+                case 'left':
+                    this.data.direction = direction[1];
+                    break;
+            }
+        }
+
         // 根据方向判断移动位置
         switch(this.data.direction) {
             case 'up':
@@ -158,9 +180,15 @@ var Tank = (function() {
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         // 移动过程中切换坦克链条状态
         this.changeStatus();
-        // 检测位置碰撞情况
-        if(this.moveId % 200 === 1 && this.moveId !== 1) {
-            this.data.direction = direction[randomIntFromInterval(0, 3)];
+
+        // 自动更换方向
+        if(this.moveId % 360 === 1 && this.moveId !== 1) {
+            
+            // 全部坦克对象随机更换方向
+            for(var t in allObj) {
+                (allObj[t].roleName == 'npc') && (allObj[t].data.direction = direction[randomIntFromInterval(0, 3)]);
+            }
+            
             this.moveId = requestAnimationFrame(this.move.bind(this));
         } else {
             this.moveId = requestAnimationFrame(this.move.bind(this));

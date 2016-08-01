@@ -12,7 +12,7 @@ var Main = (function () {
 	Main.prototype.init = function() {
 		// 初始化地图
         this.map = new Map();
-        this.impact = new Impact();
+        this.impact = new Impact(this.map);
 
         // 主角闪现
         var hero = new Tank('hero', this);
@@ -25,6 +25,7 @@ var Main = (function () {
 		// 按照关卡生成坦克
         for (var i = 0; i < this.dataInfo.level[this.level - 1]['npc']; i++) {
         	var npc = new Tank('npc', this);
+			npc.name = 'npc'+i;
         	this.allObj.push(npc);
         };
 	}
