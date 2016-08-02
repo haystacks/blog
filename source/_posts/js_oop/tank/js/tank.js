@@ -84,8 +84,16 @@ var Tank = (function() {
     // 上移动
     function moveUp() {
         // 保持原来的X方向不变，Y方向正向移动
+        this.data.src.y--;
+        var isImpact = impact.border(this, allObj);
         var x = this.data.src.x;
-        var y = this.data.src.y;
+        var y = isImpact ? ++this.data.src.y : ++this.data.src.y - this.data.speed * 2;
+
+        this.data.src = {
+            x: x,
+            y: y
+        }
+        this.data.direction = direction[0];
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         // 移动过程中切换状态
         this.changeStatus();
@@ -95,8 +103,16 @@ var Tank = (function() {
     // 右移动
     function moveRight() {
         // 保持原来的X方向不变，Y方向正向移动
-        var x = this.data.src.x;
+        this.data.src.x++;
+        var isImpact = impact.border(this, allObj);
+        var x = isImpact ? --this.data.src.x : --this.data.src.x + this.data.speed * 2;
         var y = this.data.src.y;
+
+        this.data.src = {
+            x: x,
+            y: y
+        }
+        this.data.direction = direction[1];
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         // 移动过程中切换状态
         this.changeStatus();
@@ -106,8 +122,16 @@ var Tank = (function() {
     // 下移动
     function moveDown() {
         // 保持原来的X方向不变，Y方向正向移动
+        this.data.src.y++;
+        var isImpact = impact.border(this, allObj);
         var x = this.data.src.x;
-        var y = this.data.src.y;
+        var y = isImpact ? --this.data.src.y : --this.data.src.y + this.data.speed * 2;
+
+        this.data.src = {
+            x: x,
+            y: y
+        }
+        this.data.direction = direction[2];
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         // 移动过程中切换状态
         this.changeStatus();
@@ -116,8 +140,16 @@ var Tank = (function() {
     // 左移动
     function moveLeft() {
         // 保持原来的X方向不变，Y方向正向移动
-        var x = this.data.src.x;
+        this.data.src.x--;
+        var isImpact = impact.border(this, allObj);
+        var x = isImpact ? ++this.data.src.x : this.data.src.x - this.data.speed * 2;
         var y = this.data.src.y;
+
+        this.data.src = {
+            x: x,
+            y: y
+        }
+        this.data.direction = direction[3];
         this.tanker.style.transform = 'translate3d('+ x + 'px,' + y + 'px, 0)';
         // 移动过程中切换状态
         this.changeStatus();
@@ -181,6 +213,8 @@ var Tank = (function() {
         // 移动过程中切换坦克链条状态
         this.changeStatus();
 
+        // 射击
+        // this.fire();
         // 自动更换方向
         if(this.moveId % 360 === 1 && this.moveId !== 1) {
             
@@ -188,11 +222,10 @@ var Tank = (function() {
             for(var t in allObj) {
                 (allObj[t].roleName == 'npc') && (allObj[t].data.direction = direction[randomIntFromInterval(0, 3)]);
             }
-            
-            this.moveId = requestAnimationFrame(this.move.bind(this));
-        } else {
-            this.moveId = requestAnimationFrame(this.move.bind(this));
+
         }
+        
+        this.moveId = requestAnimationFrame(this.move.bind(this));
 
     }
 
@@ -205,15 +238,25 @@ var Tank = (function() {
 
     // 射击
     function fire() {
-        var bullet = new Bullet(); 
-        bullet.move();
+        if(!this.bulletStatus) {
+            this.bullet = new Bullet(this.data.direction, this.data.speed, this.data.src, tankSize, map, impact);
+            this.bulletStatus = this.bullet.status;
+        } else {
+            this.bullet.move();
+            this.bulletStatus = this.bullet.status;
+        }
     }
 
 
     Tank.prototype = {
         draw: draw,
         move: move,
-        changeStatus: changeStatus
+        moveUp: moveUp,
+        moveRight: moveRight,
+        moveDown: moveDown,
+        moveLeft: moveLeft,
+        changeStatus: changeStatus,
+        fire: fire
     }
 
     return Tank;

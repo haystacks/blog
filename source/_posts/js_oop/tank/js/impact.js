@@ -3,7 +3,10 @@ var Impact = (function() {
     function Impact() {
         // tank and map
         // tank and tank
-        this.map = [].slice.call(arguments)[0];
+        var args = [].slice.call(arguments);
+        this.map = args[0];
+        // 已经检查过的对象
+        this.checkedObj = args[1];
     }
 
     /**
@@ -11,11 +14,10 @@ var Impact = (function() {
      * @return boolean
      * */
     function border(e, allObj) {
-        
+
         // 是否和地图边缘碰撞
-        // debugger;
-        if(e.data.src.x > 0 && e.data.src.x + e.size.width < this.map.mapEle.clientWidth && e.data.src.y > 0 && e.data.src.y + e.size.height < this.map.mapEle.clientHeight) {
-            this.tank2obj(e, allObj);
+        if(e.data.src.x >= 0 && e.data.src.x + e.size.width <= this.map.mapEle.clientWidth && e.data.src.y >= 0 && e.data.src.y + e.size.height <= this.map.mapEle.clientHeight) {
+            // return this.tank2obj(e, allObj);
             return false;
         } else {
             return true;
@@ -29,7 +31,17 @@ var Impact = (function() {
      * @tank    hero/npc
      */
     function tank2obj(e, allObj) {
-        // console.log(e.name);
+        this.checkedObj.push(e);
+        for (var key in allObj) {
+            if (allObj[key]['roleName'] == 'hero' || allObj[key]['roleName'] == 'npc' && e.id != allObj[key]['id']) {
+                if(Math.abs(e.data.src.x - allObj[key]['data']['src']['x']) < e.size.width && Math.abs(e.data.src.y - allObj[key]['data']['src']['y']) < e.size.height) {
+                    return true;
+                } else {
+                    return false;
+                }
+                
+            }
+        }
     }
 
     function fire() {

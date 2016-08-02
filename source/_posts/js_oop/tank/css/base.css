@@ -25,3 +25,8 @@ body {
     height: 32px;
     background-position: -128px 0;
 }
+.bullet {
+    width: 8px;
+    height: 8px;
+    background: url("../images/Misc.png") no-repeat;
+}
