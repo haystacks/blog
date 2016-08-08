@@ -1,0 +1,118 @@
+body {
+	font-family: $font-family;
+	background: #eee;
+}
+
+a {
+	color: #fff;
+	text-decoration: underline;
+	& :hover {
+		opacity: .8;
+	}
+}
+
+
+.wrapper {
+
+	margin: 0 auto;
+	max-width: 980px;
+
+}
+
+header {
+	background: #00bcd4;
+
+	.logo {
+		font-size: 24px;
+		text-decoration: none;
+	}
+	nav {
+		float: right;
+		ul {
+			li {
+				line-height: 36px;
+				padding: 0 8px;
+				display: inline-block;
+			}
+		}
+	}
+	& > .menu {
+		padding: 25px 0;
+
+		@extend .wrapper;
+	}
+
+	& > .recent-post {
+		margin-bottom: 50px;
+		color: #fff;
+
+		@extend .wrapper;
+
+		h3 {
+			margin: 20px 0 30px;
+		}
+		.excerpt {
+			a {
+				@extend a;
+			}
+		}
+		.other {
+			font-size: 14px;
+		}
+
+	}
+
+	& > .search {
+		
+		padding: 24px;
+		background: #4dd0e1;
+
+		.view {
+			@extend .wrapper;
+
+			input {
+				border: 0;
+				font-size: 18px;
+				text-indent: 1em;
+				line-height: 60px;
+				vertical-align: middle;
+				width: 100%;
+			}
+		}
+	}
+}
+
+main {
+	padding: 0 8px;
+	background: #fff;
+
+	@extend .wrapper;
+	.left-bar {
+		float: left;
+		width: 63%;
+	}
+
+	.right-bar {
+		float: right;
+		width: 33%;
+
+		.cates {
+			padding: 20px;
+			border: 1px solid #ccc;
+
+			h2 {
+				margin-bottom: 15px;
+				border-bottom: 1px dashed #ccc;
+				line-height: 2;
+			}
+		}
+	}
+}
+
+footer {
+	margin-top: 25px;
+	padding: 10px 0;
+    color: #aaa;
+    text-align: right;
+    border-top: 1px solid #666;
+}

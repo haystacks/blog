@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="keywords" content="<%= theme.keywords %>" />
+	<meta name="description" content="<%= theme.description %>" />
+	<meta name="author" content="<%= theme.author %>">
+	<% pageTitle = page.title ? page.title+'-'+theme.title : theme.title %>
+	<title><%= pageTitle %></title>
+	<link rel="stylesheet" href="<%= theme.root %><%= theme.cssPath %>">
+</head>
+<body>
+	<header>
+		<div class="menu clearfix">
+			<a class="logo" href="/"><%= theme.logo %></a>
+			
+			<nav>
+				<ul>
+					<%
+						var menus = theme.menu,
+							i;
+						for(i in menus) {
+					%>
+						<li><a href="<%= theme.root %><%= menus[i] %>"><span><%= i %></span></a></li>
+					<%
+						}
+					%>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="recent-post">
+			<% rencentPost = site.posts.data[0]; %>	
+			<h3><%= rencentPost.title %></h3>
+			<p class="excerpt"><%- rencentPost.excerpt %></p>
+			<p class="other">Posted by <a href="/"> <%= config.author %> </a> at <%= rencentPost.categories %> on <%= date(rencentPost.time) %></p>
+			<p> » <a href="<%= url_for(rencentPost.path) %>"><%= __('read more') %></a></p>
+		</div>
+
+		<div class="search">
+			<div class="view">
+				<input type="text" placeholder="Google 站内搜索">
+				<!-- <a href="<%= theme.root %>rss2.xml" class="feed" target="_blank">RSS</a> -->
+			</div>
+		</div>
+	</header>

@@ -1,0 +1,33 @@
+<main>
+	<div class="clearfix">
+		<section class="left-bar">
+			<div class="recent-posts">
+				<h2>近期文章 <a href="<%= theme.root %>archives">博客归档 »</a></h2>
+				<ul>
+					<% site.posts.forEach(function(post){ %>
+					<li>
+						<time><%= date(post.date) %> » </time>
+						<a href="<%= url_for(post.path) %>"><%= post.title %></a>
+					</li>
+					<% }) %>
+				</ul>	
+			</div>
+		</section>
+		<section class="right-bar">
+			<div class="cates">
+				<h2>文章分类</h2>
+				<ul>
+					<% site.categories.forEach(function(category){ %>
+					<li><a href="<%= url_for(category.path) %>"><%= category.name %></a> <span><%= category.length %></span></li>
+					<% }) %>
+				</ul>
+				<h2>标签列表</h2>
+				<ul>
+					<% site.tags.forEach(function(tag){ %>
+					<li><a href="<%= url_for(tag.path) %>"><%= tag.name %></a> <span><%= tag.length %></span></li>
+					<% }) %>
+				</ul>
+			</div>
+		</section>
+	</div>
+</main>

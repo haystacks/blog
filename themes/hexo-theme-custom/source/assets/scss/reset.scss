@@ -1,0 +1,59 @@
+/**
+ * 重置浏览器默认样式
+ */
+
+::-webkit-scrollbar-track-piece {
+	background-color: #f3f3f3;
+}
+::-webkit-scrollbar-thumb {
+	background: #ccc;
+}
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+body {
+    -webkit-user-select: none;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+	&[target='_blank'] {
+		cursor: alias;
+	}
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+}
+
+h1 {
+	font-size: 32px;
+}
+
+h2 {
+	font-size: 26px;
+}
+
+h3 {
+	font-size: 22px;
+}
+
+input {
+	padding: 0;
+}
+
+// 测试注释

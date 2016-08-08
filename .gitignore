@@ -1,6 +1,7 @@
-# ignore all files
-*
-
-# show files
-!.gitignore
-!readme.md
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/

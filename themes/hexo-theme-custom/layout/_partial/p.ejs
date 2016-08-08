@@ -1,0 +1,67 @@
+<div class="full-width">
+	<div class="wrapper container">
+		<section>
+			<% var title = page.title?page.title:__('oh no, title is not defined.') %>
+			<% var excerpt = page.excerpt?page.excerpt:__('oh no, excerpt is not found.') %>
+			<% var content = page.content?page.content:__('oh no, content is not found.') %>
+			<h2><%= title %></h2>
+			<% if(!index) { %>
+			<div class="post-info">
+				<span><a href="<%= theme.menu.About %>"><%= config.author %></a></span>
+				<span><%= date(page.date, 'YYYY-MM-DD hh:mm:ss') %></span>
+				<% if(page.categories) { %><span><%- list_categories(page.categories, {show_count: false}) %></span><% } %>
+				<% if(page.tags) { %><span><%- list_tags(page.tags, {show_count: false}) %></span><% } %>
+			</div>
+			<% } %>
+			<div class="post-con">
+				<p><%- page.photos %></p>
+				<p><%- index ? excerpt : content %></p>
+			</div>
+			<% if(index) { %>
+			<p class="align-center"><a class="button" href="<%= url_for(page.path) %>" ><%= __('show more') %></a></p>
+			<% } %>
+		</section>
+		<!-- pagination -->
+		<%
+		if (!index && page.layout == 'post') {
+		%>
+		<section id="pagination">
+			<%
+				var prevUrl = page.prev?url_for(page.prev.path):'javascript:;';
+				var nextUrl = page.next?url_for(page.next.path):'javascript:;';
+				var pTitle = page.prev?page.prev.title:__('first');
+				var nTitle = page.next?page.next.title:__('last');
+				var prevTitle = __('prev')+'：'+pTitle;
+				var nextTitle = nTitle.split('').reverse().join('')+'：'+__('next');
+			%>
+			<ul>
+				<li id="prev"><a href="<%= prevUrl %>"><%= prevTitle %></a></li>
+				<li id="next"><a href="<%= nextUrl %>"><%= nextTitle %></a></li>
+			</ul>
+		</section>
+		<%
+		}
+		%>
+		<!-- comment -->
+		<% if (!index && page.comments && theme.duoshuo_shortname){ %>
+		<section id="comments">
+			<!-- 多说评论框 start -->
+			<div class="ds-thread" data-thread-key="<%= page.layout %>-<% var key = page.slug?page.slug:page.path %><%= key %>" data-title="<%= page.title %>" data-url="<%= page.permalink %>"></div>
+			<!-- 多说评论框 end -->
+			<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+			<script type="text/javascript">
+			var duoshuoQuery = {short_name:'<%= theme.duoshuo_shortname %>'};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0]
+					 || document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
+			<!-- 多说公共JS代码 end -->
+		</section>
+		<% } %>
+	</div>
+</div>
