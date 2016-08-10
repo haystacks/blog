@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>prototype</title>
+</head>
+<body>
+	<script src="prototype/lib/prototype.js"></script>
+	<script>
+	var Humen = Class.create({
+		introduce: function() {
+			console.log(this.username +'今年已经'+ this.age +'岁啦')
+		}
+	});
+
+	var Gay = Class.create(Humen, {
+		initialize: function() {
+			var args = [].slice.call(arguments);
+			this.username = args[0];
+			this.age = args[1];
+		}
+	});
+	var gay = new Gay('unofficial', '1');
+
+	// 调用父类Humen的introduce方法
+	gay.introduce();
+	</script>
+</body>
+</html>

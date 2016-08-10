@@ -1,0 +1,32 @@
+/*reset*/
+body {
+    margin: 0;
+}
+
+/*this tank style css*/
+#map {
+    position: relative;
+}
+.tank {
+    position: absolute;
+    background: url('../images/tank.png') no-repeat;
+    overflow: hidden;
+    z-index: 1;
+    
+}
+
+.hero {
+    width: 32px;
+    height: 32px;
+}
+
+.npc {
+    width: 32px;
+    height: 32px;
+    background-position: -128px 0;
+}
+.bullet {
+    width: 8px;
+    height: 8px;
+    background: url("../images/Misc.png") no-repeat;
+}
