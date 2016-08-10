@@ -1,0 +1,41 @@
+<!-- archive tag category -->
+<% lastYear = 0; lastMonth = 0; %>
+<main>
+
+	<section class="recent-posts">
+		<ul>
+			<% lastYear = 0; lastMonth = 0; %>
+            <% page.posts.each(function(page) { %>
+
+                    <% year = page.date.year(); month = page.date.month();%>
+
+                    <% if(lastYear != year) { %>
+                        <li class="year"><h3><%= year %></h3></li>
+                        <% lastYear = year;%>
+                    <% } else { %>
+
+                        <% if(lastMonth != month) { %>
+                            <!-- <%= month %> -->
+                            <% lastMonth = month; %>
+                        <% } %>
+
+                    <% } %>
+
+                <li>
+                    <header>
+                        <div>
+                            <h3><%= page.title %></h3>
+                            <ul class="clearfix">
+                                <li>? 条评论</li>
+                                <li><%= date(page.date) %></li>
+                            </ul>
+                        </div>
+
+                        <a class="more" href="<%= url_for(page.path) %>"><%= __('read more') %></a>
+                    </header>
+                </li>
+			<% }) %>
+		</ul>
+	</section>
+
+</main>
