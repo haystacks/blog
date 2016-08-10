@@ -1,3 +1,1 @@
-<% page.posts.each(function(page) { %>
-<%- partial('_partial/p', {index: true, page: page}) %>
-<% }) %>
+<%- partial('_partial/archive', {page: page, isCategory: page.category}) %>

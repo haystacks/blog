@@ -1,0 +1,337 @@
+body {
+	font-family: $font-family;
+	background: #eee;
+}
+
+a {
+	& :hover {
+		opacity: .8;
+	}
+}
+
+button {
+	font-size: 16px;
+	display: inline-block;
+	height: 32px;
+	line-height: 2;
+	min-width: 88px;
+	padding: 2px 16px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: .2s;
+	white-space: nowrap;
+}
+
+@include clearfix();
+.wrapper {
+
+	margin: 0 auto;
+	max-width: 980px;
+
+}
+
+header {
+	background: #00bcd4;
+
+	.logo {
+		font-size: 24px;
+		text-decoration: none;
+	}
+	nav {
+		float: right;
+		ul {
+			li {
+				line-height: 36px;
+				padding: 0 8px;
+				display: inline-block;
+			}
+		}
+	}
+	& > .menu {
+		padding: 25px 0;
+
+		@extend .wrapper;
+	}
+
+	& > .recent-post {
+		margin-bottom: 50px;
+		color: #fff;
+
+		@extend .wrapper;
+
+		h3 {
+			margin: 20px 0 30px;
+		}
+		.excerpt {
+			a {
+				@extend a;
+			}
+		}
+		.other {
+			font-size: 14px;
+		}
+
+	}
+
+	& > .search {
+		
+		padding: 24px;
+		background: #4dd0e1;
+
+		.view {
+			@extend .wrapper;
+
+			input {
+				border: 0;
+				font-size: 18px;
+				text-indent: 1em;
+				line-height: 60px;
+				vertical-align: middle;
+				width: 100%;
+			}
+		}
+	}
+}
+
+main {
+	@extend .wrapper;
+
+	section {
+		background: #fff;
+		margin-top: 24px;
+    	padding: 5px 10px;
+
+		a {
+			color: #333;
+			text-decoration: underline;
+		}
+
+		&.recent-posts {
+			background: none;
+			padding: 0;
+			& > ul {
+				&>li {
+					min-height: 100px;
+					margin-top: 1px;
+					padding: 24px 24px 10px;
+					background: #fff;
+					position: relative;
+
+					header {
+						background: none;
+						display: flex;
+						justify-content: space-between;
+
+						ul {
+							list-style-type: circle;
+							margin: 30px 0 0;
+							li {
+								float: left;
+								font-size: 12px;
+								color: #666;
+								&:nth-of-type(1) {
+									list-style-type: none;
+								}
+
+								&:nth-of-type(n+2) {
+									margin-left: 28px;
+								}
+							}
+						}
+					}
+					
+					a {
+						&.more {
+							color:#ff1744;
+
+							@extend button;
+						}
+
+						&:hover {
+							background: rgba(153,153,153,.2);
+						}
+
+						&.active {
+							
+							border-radius: 2px;
+							background: #ff1744;
+							box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 2px rgba(0,0,0,.24);
+							color: #fff;
+
+							@extend button;
+						}
+					}
+				}
+			}
+		}
+
+		&.detail {
+
+		}
+		
+	}
+}
+
+footer {
+	margin-top: 60px;
+	padding: 10px 0;
+    color: #333;
+    text-align: center;
+
+	.view {
+		font-size: 12px;
+
+		@extend .wrapper;
+		
+		a {
+			color: #333;
+		}
+	}
+}
+
+/*hexo 默认样式*/
+// list_categories
+.detail {
+
+	.post-info {
+		font-size: 14px;
+		line-height: 20px;
+		margin: 20px 0 20px;
+
+		a {
+			color: #999;
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+		.create-time {
+			color: #999;
+		}
+	}
+
+	.category {
+		display: inline-block;
+    	vertical-align: bottom;
+		
+		ul {
+			float: right;
+			li {
+				float: left;
+			}
+		}
+	}
+
+	.tag {
+		@extend .category;
+		
+		ul {
+			li {
+				background: #ff1744;
+				margin: 0 3px;
+				padding: 0 3px;
+				border-radius: 3px;
+
+				a {
+					color: #fff;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+// detail markdown
+.post-con {
+	p {
+		margin-bottom: 25px;
+	}
+	ul {
+		margin-left: 35px;
+		list-style-type: square;
+		li {
+			margin-bottom: 5px;
+			line-height: 28px;
+		}
+	}
+
+	&>ul {
+		margin: 25px 0 25px 35px;
+	}
+	.highlight {
+		background: #f8f8f8;
+		overflow-x: auto;
+		border: 1px solid #ccc;
+		border-width: 1px 0;
+		margin: 10px 0;
+
+		pre {
+			font-family: Consolas, "Courier New";
+			.comment {
+				color: #8d8687;
+			}
+			.title {
+				color: #815ba4;
+			}
+			.variable,
+			.attr,
+			.tag,
+			.regexp,
+			.ruby .constant,
+			.xml .tag .title,
+			.xml .pi,
+			.xml .doctype,
+			.html .doctype,
+			.css .id,
+			.css .class,
+			.css .pseudo {
+				color: #f99b15;
+			}
+			.number,
+			.preprocessor,
+			.built_in,
+			.literal,
+			.params,
+			.constant {
+				color: #7163d7;
+			}
+			.class,
+			.ruby .class .title,
+			.css .rules .attribute {
+				color: #f99b15;
+			}
+			.string,
+			.value,
+			.inheritance,
+			.header,
+			.ruby .symbol,
+			.xml .cdata {
+				color: #48b685;
+			}
+			.css .hexcolor {
+				color: #6cc;
+			}
+			.function,
+			.python .decorator,
+			.python .title,
+			.ruby .function .title,
+			.ruby .title .keyword,
+			.perl .sub,
+			.javascript .title,
+			.coffeescript .title {
+				color: #69c;
+			}
+			.keyword,
+			.javascript .function {
+				color: #f92672;
+			}
+		}
+
+		.gutter {
+			color: #ccc;
+		}
+		.code {
+			padding-left: 20px;
+		}
+	}
+}

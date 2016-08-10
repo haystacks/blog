@@ -1,0 +1,23 @@
+<main>
+
+	<section class="recent-posts">
+		<ul>
+			<% site.posts.forEach(function(post){ %>
+			<li>
+				<header>
+					<div>
+						<h3><%= post.title %></h3>
+						<ul class="clearfix">
+							<li>? 条评论</li>
+							<li><%= date(post.date) %></li>
+						</ul>
+					</div>
+
+					<a class="more" href="<%= url_for(post.path) %>"><%= __('read more') %></a>
+				</header>
+			</li>
+			<% }) %>
+		</ul>
+	</section>
+
+</main>

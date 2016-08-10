@@ -1,5 +1,6 @@
 ---
 title: Hello World
+date: 2014-8-10 15:13:51
 categories:
  - test
  - 复件

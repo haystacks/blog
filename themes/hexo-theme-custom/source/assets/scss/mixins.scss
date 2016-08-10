@@ -35,13 +35,15 @@
 /**
  * 清除浮动
  */ 
-.clearfix:after {
-    content: '\20';
-    display: block;
-    height: 0;
-    clear: both;
-}
+@mixin clearfix() {
+    .clearfix:after {
+        content: '\20';
+        display: block;
+        height: 0;
+        clear: both;
+    }
 
-.clearfix {
-    *zoom: 1;
+    .clearfix {
+        *zoom: 1;
+    }
 }
