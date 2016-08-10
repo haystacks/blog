@@ -68,5 +68,7 @@ theme: hexo-theme-custom
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:  
-  type: 
+  type: git
+  repo: https://git.coding.net/unofficial/blog.git
+  branch: page
  
