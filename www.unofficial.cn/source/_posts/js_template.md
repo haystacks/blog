@@ -1,4 +1,4 @@
-title: js_template
+title: js模板引擎
 ---
 ### categorys
 * <a href="#_1">初始结缘</a>
@@ -88,9 +88,9 @@ for( var key = 0; key < datas.length; key++ ) {
 temp.push( '</ul>' );
 var listStr = temp.join( '' );
 ```
-如何才能获得上面的js语句，通过正则处理以下内容，拿到模板字符串以后先将字符串放置到 ``` temp.push( '模板字符串' ); ```  
+如何才能获得上面的js语句，通过正则处理以下内容，拿到模板字符串以后先将字符串放置到 ** temp.push( '模板字符串' ); **  
 
-```
+``` javascript
 var templateStr = document.getElementById( 'template' ).innerHTML;
 
 templateStr = ''.concat( 'temp.push(\'', templateStr, '\');' );
@@ -101,14 +101,14 @@ var jsStr = templateStr.replace(/[\r\n\t]/g, "").replace( /({{)(=?)\s*(.*?)\s*(}
 ``` 
 
 程序完成到这里基本雏形就出现了，但是这里我遇见了一个问题，我直接将模板代码放置在html代码中，输出的代码错乱了！  
-> 因为 ```key < data.lengths``` 中的 < 
+> 因为 ** key < data.lengths ** 中的 < 
 
 因为这里将 **<** 当做了html中的闭合符合处理。如果将模板代码放置到script标签中呢？  
 
 * 在模板引擎没有处理的时候不会显示模板标签代码
 * 不会有上面的问题啦！
 
-```
+``` javascript
 <script type="text/html" id="template">
 <ul>
 {{ for( var key = 0; key < datas.length; key++ ) { }}
@@ -118,12 +118,12 @@ var jsStr = templateStr.replace(/[\r\n\t]/g, "").replace( /({{)(=?)\s*(.*?)\s*(}
 </script>
 ```
 
-最后拼接好的应该是一段可以执行的js代码，于是我们将相应的参数都提前拼接进去，把上面的 ``` templateStr ```修改一下  
+最后拼接好的应该是一段可以执行的js代码，于是我们将相应的参数都提前拼接进去，把上面的 ** templateStr ** 修改一下  
 ```
 templateStr = ''.concat( 'var temp=[];', 'temp.push(\'', templateStr, '\');', 'return temp.join( "" );' );
 ```
-把上面的内容包装进函数，由于最后 ``` jsStr ``` 是一串可执行js代码，于是将它传入Function执行。  
-```
+把上面的内容包装进函数，由于最后 ** jsStr ** 是一串可执行js代码，于是将它传入Function执行。  
+``` javascript
 	function tempe(id, datas) {
 		// 通过传入的id获取模板字符串
 		var templateStr = document.getElementById( id ).innerHTML;
