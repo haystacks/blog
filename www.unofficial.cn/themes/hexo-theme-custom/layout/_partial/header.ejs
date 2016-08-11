@@ -32,7 +32,7 @@
 
 		<% if(is_home()) { %>
 		<div class="recent-post">
-			<% rencentPost = site.posts.data[0]; %>	
+			<% rencentPost = page.posts.data[0]; %>	
 			<h3><%= rencentPost.title %></h3>
 			<div class="excerpt post-con"><%- rencentPost.excerpt %></div>
 			<p class="other">Posted by <a href="/"><%= config.author %></a> at <% rencentPost.categories.forEach(function(category) { %>

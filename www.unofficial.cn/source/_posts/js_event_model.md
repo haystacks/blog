@@ -1,4 +1,5 @@
 title: js event model
+date: 2016-8-11 09:15:38
 ---
 * [什么是js事件](#what-is)
 * [事件处理](#_1)

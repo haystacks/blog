@@ -10,9 +10,9 @@ cankao: http://www.google.com/get/noto/
 # menu
 menu:
 	Home: index.html
-	Archives: archives
-	About: about.html
-	Link: link.html
+	Archives: blog/archives/index.html
+	About: blog/about.html
+	Link: blog/link.html
 
 # index fixed image
 fixedBgImgPath: assets/imgs/fixedBg.jpg
