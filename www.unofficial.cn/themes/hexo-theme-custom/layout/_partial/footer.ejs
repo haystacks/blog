@@ -1,7 +1,9 @@
 	<footer>
+		<% if(!isHome) { %>
 		<div class="view">
 			Copyright ©2014-2016 本站由 <a href="/">unofficial</a> 参考谷歌字体页面手码主题 | <a href="<%= url_for('about.html#contact') %>">联系方式</a>
 		</div>
+		<% } %>
 	</footer>
 </body>
 </html>

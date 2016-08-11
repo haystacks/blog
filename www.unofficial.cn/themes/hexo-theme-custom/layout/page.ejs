@@ -1,1 +1,5 @@
+<% if(page.pagetype == 'index') { %>
+<%- partial('_page/index', {page: site, index: true, isPage: true}) %>
+<% } else { %>
 <%- partial('_partial/p', {index: false}) %>
+<% } %>

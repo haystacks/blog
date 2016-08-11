@@ -15,8 +15,9 @@ let cleanCSS = require('gulp-clean-css');
 let assets = './source/assets';
 
 // css目录
-let sassPath = assets + '/scss/*.scss';
-let cssSrc = assets + '/scss/style.scss';
+let sassPath = assets + '/scss/*/*.scss';
+let homeSrc = assets + '/scss/home.scss';
+let styleSrc = assets + '/scss/style.scss';
 let cssDest = assets + '/css'
 
 // js目录
@@ -30,7 +31,7 @@ let jsDest = assets + '/js';
 gulp.task('sass', function() {
 
 	// scss -> css
-	gulp.src(cssSrc)
+	gulp.src([homeSrc, styleSrc])
 		.pipe(sass().on('error', sass.logError))
 		.pipe(cleanCSS())
 		// .pipe(base64({

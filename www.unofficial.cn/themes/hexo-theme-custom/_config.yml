@@ -18,7 +18,8 @@ menu:
 fixedBgImgPath: assets/imgs/fixedBg.jpg
 
 # path
-cssPath: assets/css/style.css
+homePath: assets/css/home.css
+stylePath: assets/css/style.css
 fontPath: assets/font/
 imgPath: assets/imgs/
 jsPath: assets/js/
