@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: unofficial | 吴非的个人网站
-subtitle: 分享中学习成长
+title: unofficial
+subtitle: 吴非的个人网站
 description: 
 author: unofficial
 language: zh-CN
@@ -28,7 +28,7 @@ i18n_dir: blog/:lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :year-:month-:day-:title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab

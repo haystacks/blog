@@ -1,10 +1,18 @@
-title: js模板引擎
+title: js模板引擎实现过程学习
+date: 2016-06-26
+updated: 2016-08-12 16:17:26
+category:
+- 学习
+tags: 
+- js
+- template
+- 模板引擎
 ---
 ### categorys
 * <a href="#_1">初始结缘</a>
 * <a href="#js">如何实现一个js模板引擎？</a>
 * <a href="#_2">回顾总结</a>
-
+<!-- more -->
 ### 初始结缘
 感觉题目好有难度，没怎么造过轮子，更多的是不断使用别人造好的轮子，很多时候也没仔细去思考一个问题，别人为什么要不断重复造轮子，造出来的轮子到底是好还是说根本没改善，可能不如别人的轮子，自己还得意的想，我造好了一个轮子怎么怎么NB，相反更多的应该是在这个过程中分析遇到的问题，整理整个知识点的开发流程，以便更好的发明轮子应用到实际的开发环境。  
 php的开发中遇到过模板引擎的概念，在最开始知道mvc这个概念的时候，里面的视图层就是和模板引擎相关，其中smarty模板引擎，tp与cms都有实现自己的相关模板引擎。工作中更多的是使用phpcms，就phpcms来说一下我了解到的知识点以及公司转型过程中，不熟悉php的同学如何开发模板。  
@@ -24,7 +32,7 @@ php的开发中遇到过模板引擎的概念，在最开始知道mvc这个概�
 </body>
 </html>
 ```
-写好的一个模板标签，后文要怎么预处理成php能理解到的呢？控制器中分配变量 ``` $username ``` 。
+写好的一个模板标签，后文要怎么预处理成php能理解到的呢？控制器中分配变量 ** $username ** 。
 ```controller
 $username = 'unofficial';
 ```
@@ -47,7 +55,6 @@ $username = 'unofficial';
 js 模板引擎是不是一样的道理呢？  
 ### 如何实现一个js模板引擎？
 是不是也是和php一样的道理？把数据分配给模板，然后用js把模板标签替换成数据。  
-> DEMO:
 
 <script async src="http://jsfiddle.net/unofficial/sm14vx4x/embed/js,html,result/"></script>
 
@@ -62,8 +69,7 @@ js 模板引擎是不是一样的道理呢？
 
 ```
 
-道理好像是这么一个道理，我们就稍微来复杂一些的，比如说一个之前我遇到过一个phpcms模板方面的问题，当时是另外一个同事在cms模板页面用js模板写了一个列表，后来我需要修改这个模板，我只是本着觉得奇怪就把js模板修改成了拼接字符串的，后来想想我还是挺执着的，竟然拼出来了。  
-> DEMO:  
+道理好像是这么一个道理，我们就稍微来复杂一些的，比如说一个之前我遇到过一个phpcms模板方面的问题，当时是另外一个同事在cms模板页面用js模板写了一个列表，后来我需要修改这个模板，我只是本着觉得奇怪就把js模板修改成了拼接字符串的，后来想想我还是挺执着的，竟然拼出来了。   
 
 <script async src="http://jsfiddle.net/unofficial/sm14vx4x/1/embed/js,html,result/"></script>
 
@@ -142,7 +148,6 @@ templateStr = ''.concat( 'var temp=[];', 'temp.push(\'', templateStr, '\');', 'r
 ```
 
 这里涉及到一个关于  ``` apply ``` 基础知识的应用，注意与 ``` call ``` 区别。  
-> DEMO:
 
 <script async src="http://jsfiddle.net/unofficial/sm14vx4x/2/embed/js,html,result/"></script>
 

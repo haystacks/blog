@@ -34,6 +34,8 @@
 				</ul>
 			</nav>
 		</div>
-		<%- partial('header_search', {index: true, isPage: true}) %>
+		<% if(page.pagetype == 'index') { %>
+		<%- partial('header_search', {index: true}) %>
+		<% } %>
 		<% } %>
 	</header>

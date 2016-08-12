@@ -1,5 +1,12 @@
-title: js event model
-date: 2016-8-11 09:15:38
+title: js事件模型学习
+date: 2016-07-10
+updated: 2016-8-12 16:17:26
+category:
+- 学习
+tags: 
+- js
+- event
+- 事件模型
 ---
 * [什么是js事件](#what-is)
 * [事件处理](#_1)
@@ -9,7 +16,7 @@ date: 2016-8-11 09:15:38
 	* [对zepto的自我认识](#zepto)
 	* [fastclick又是怎么做的？](#fastclick)
 * [实践出真知](#_2)
-
+<!-- more -->
 ### what is ? 
 这里学习的JavaScript暂时只是指客户端JavaScript，它是异步事件驱动编程模型。异步与客户端的js是单线程的概念是不是冲突的呢？找了一圈资料，没有找到官方介绍JavaScript的事件模型的。线程，异步这些概念的，参考知乎上的一个问答学习一遍。  
 JavaScript是没有线程概念的，所谓的单线程也只是相对浏览器运行环境而言，JavaScript的运行依赖浏览器中的js引擎，例如chrome的v8，Nodejs同样也是依赖v8而生，浏览器的运行机制中，就chrome而言每个标签页都是一个独立的进程。  
@@ -22,17 +29,17 @@ JavaScript是没有线程概念的，所谓的单线程也只是相对浏览器�
 
 > 输出运行结果
 
-```
+**
 (10) start
 end
 test: 14.000ms
 (9) end 
-```
+**
 最先输出10次start，接着才输出end，然后是第一次循环开始到第一次定时器处理程序运行结束耗时情况，再依次输出9次end。浏览器首先开始for循环，接着把每一次循环中的定时器执行函数添加到事件队列中，10次循环结束后开始执行队列，队列第一个处理程序执行时遇到程序time结束标记，输出执行时间，再依次执行后文的处理程序。  
 
 ### 事件处理
 * 事件类型（event type）
-事件类型是表明发生什么类型事件的字符串，点击事件 ``` click ```，这个事件实际上就是的动作点击鼠标，被称为 ``` click ``` 事件  
+事件类型是表明发生什么类型事件的字符串，点击事件 ** click **，这个事件实际上就是的动作点击鼠标，被称为 ** click ** 事件  
 * 事件目标（event target）
 事件目标是指与事件类型相关的对象，描述事件的时候，我们应该同时指明类型与目标，例如给一个Button添加一个点击事件。  
 浏览器支持的事件来源：  
@@ -133,9 +140,9 @@ test: 14.000ms
 
 	<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/4/embed/"></script>
 
-	```
+	**
 	// 捕获 执行 冒泡
-	```
+	**
 
 	事件捕获的用途？  
 	
@@ -149,7 +156,7 @@ test: 14.000ms
 * 事件取消
 	* 取消事件的默认操作有几种方法：
 		* 在属性注册的事件处理函数中返回值能用于取消事件默认操作
-		* 在addEventListener中事件处理函数中调用事件对象的 ``` preventDefault ``` 方法取消事件的默认操作
+		* 在addEventListener中事件处理函数中调用事件对象的 ** preventDefault ** 方法取消事件的默认操作
 		* IE9以下版本通过设置returnValue为false来取消事件的默认操作
 
 		<!-- <script async src="http://jsfiddle.net/unofficial/rwb7qm9z/5/embed/"></script> -->
@@ -163,11 +170,11 @@ test: 14.000ms
 		<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/6/embed/"></script>
 
 * 事件派发/事件广播 dispatchEvent
- ``` dispatchEvent ``` 之前也只没有深入了解过这个，这里参考MDN的资料学习一下。  
- ``` dispatchEvent ``` 是向一个指定的事件目标手动派发一个事件，``` cancelled = !target.dispatchEvent(event) ```。
- * event 是被派发的 ``` Event ``` 事件对象
+ ** dispatchEvent ** 之前也只没有深入了解过这个，这里参考MDN的资料学习一下。  
+ ** dispatchEvent ** 是向一个指定的事件目标手动派发一个事件，** cancelled = !target.dispatchEvent(event) **。
+ * event 是被派发的 ** Event ** 事件对象
  * target 是初始化事件目标
- * cancelled 返回值，如果有一个事件处理函数调用了 ``` event.preventDefault() ``` ，则返回false，否则返回true。
+ * cancelled 返回值，如果有一个事件处理函数调用了 ** event.preventDefault() ** ，则返回false，否则返回true。
 
  事件派发我们在后文描述移动端事件的时候就有应用，通过touch等相关事件模拟一下tap，swipe事件。touchEnd的时候派发自定义事件到事件目标上。
 
@@ -201,7 +208,7 @@ test: 14.000ms
 
  <script async src="http://jsfiddle.net/unofficial/yjhrbdtp/1/embed/"></script>
 
- ```
+```
 	// 构造方法 
 	function Ul(selector) {// 通过选择器识别获得父元素对象
 		if(typeof selector == 'object') { // document document.body
@@ -235,8 +242,7 @@ test: 14.000ms
 	u('#ul').delegation('li', 'click', function(e) {
 		console.log(e.type, e.target.innerText);
 	});
- ```
-
+```
 
 > 学习了PC端的事件模型，继续学习移动WEB端相关的事件是不是就轻松一点呢？  
 
@@ -248,7 +254,7 @@ click不是可以继续使用吗？
 [](./js_tap/01.jpg)
 [](./js_tap/02.jpg)
  
-只是从点击事件考虑的话，未做移动端适配的网页需要单击后会等待300ms（暂时没找到资料参考，数据来源于网上移动端事件教程）考虑是不是需要双击放大页面，但通常处理双击事件时也是需要通过时间差来判断。同时给元素绑定 ``` click/dbclick ``` ，PC端代码测试会执行两次click事件，再执行一次dbclick事件。  
+只是从点击事件考虑的话，未做移动端适配的网页需要单击后会等待300ms（暂时没找到资料参考，数据来源于网上移动端事件教程）考虑是不是需要双击放大页面，但通常处理双击事件时也是需要通过时间差来判断。同时给元素绑定 ** click/dbclick ** ，PC端代码测试会执行两次click事件，再执行一次dbclick事件。  
 随着移动设备的使用，为了能够更好的响应用户在移动设备上的操作，W3C制定了一些移动端事件来很好的处理用户在移动设备上的相关操作。移动设备需要对触摸移动的支持，PC端我们使用mousemove事件来获得鼠标移动事件对象，移动WEB端却需要使用touchmove才能获得触点事件对象。还有对多点触摸的事件对象等等  
 * 未做移动端适配的网页有一个300ms的时间差
 * 移动设备触摸操作与PC鼠标操作之间的差别  
@@ -259,7 +265,7 @@ click不是可以继续使用吗？
 touch实现tap的过程是什么？  
 > touchstart touchmove touchend  
 
-例如：拿起手机，手指触摸到手机屏幕，碰触的那一刻就执行了 ``` touchstart ``` ，如果我执行了滑屏解锁，在滑动的过程中执行的是 ``` touchmove ```，解锁手机了，在解锁结束抬起手机的一刻执行的是 ``` touchend ```。如果把上述过程组装成tap事件，我们就需要判断一下触摸开始到触摸结束耗用的时间，以及触摸过程中手指移动位置是不是在一定范围内才能算作一次tap。  
+例如：拿起手机，手指触摸到手机屏幕，碰触的那一刻就执行了 ** touchstart ** ，如果我执行了滑屏解锁，在滑动的过程中执行的是 ** touchmove **，解锁手机了，在解锁结束抬起手机的一刻执行的是 ** touchend **。如果把上述过程组装成tap事件，我们就需要判断一下触摸开始到触摸结束耗用的时间，以及触摸过程中手指移动位置是不是在一定范围内才能算作一次tap。  
 show me the code？
 
 ```
@@ -344,7 +350,7 @@ show me the code？
 ```
 
 #### zepto中的touch  
-github上找到zepto的touch.js ``` https://github.com/madrobby/zepto/blob/master/src/touch.js ``` ，166行代码中定义了滑动方向监测函数 ``` swipeDirection ```，长时间触摸事件 ``` longTap ``` ，取消长时间触摸事件 ``` cancelLongTap ```，取消所有触摸事件 ``` cancelAll ```， isPrimaryTouch， isPointerEventType。接下来就是文档加载结束后初始化相关事件。  
+github上找到zepto的touch.js ** https://github.com/madrobby/zepto/blob/master/src/touch.js ** ，166行代码中定义了滑动方向监测函数 ** swipeDirection **，长时间触摸事件 ** longTap ** ，取消长时间触摸事件 ** cancelLongTap **，取消所有触摸事件 ** cancelAll **， isPrimaryTouch， isPointerEventType。接下来就是文档加载结束后初始化相关事件。  
 
 ```
   $(document).ready(
@@ -353,16 +359,16 @@ github上找到zepto的touch.js ``` https://github.com/madrobby/zepto/blob/maste
 ```
 
 * $(document).on('touchstart MSPointerDown pointerdown', handle);
-  通过点击按钮，首先执行的是触摸开始（指针按下）注册的 ``` touchstart（MSPointerDown/pointerdown） ``` 事件，首先是通过事件对象中的属性来判断是不是IE相关的触摸，接着判断是不是多点触摸，获取第一个触摸点的事件目标，紧接着对于触摸时间的处理，用于判断是不是双击或者长触摸。  
+  通过点击按钮，首先执行的是触摸开始（指针按下）注册的 ** touchstart（MSPointerDown/pointerdown） ** 事件，首先是通过事件对象中的属性来判断是不是IE相关的触摸，接着判断是不是多点触摸，获取第一个触摸点的事件目标，紧接着对于触摸时间的处理，用于判断是不是双击或者长触摸。  
 
 * $(document).on('touchmove MSPointerMove pointermove', handle);
   触摸后可能移动手指，这里主要获取的是最后移动的位置，以及对比触摸开始位置得到移动移动距离。  
 
 * $(document).bind('MSGestureEnd', handle);
-  ``` MSGestureEnd ``` 和 ``` touchend ``` 类似，``` MSGestureEnd ``` 是IE10为win的移动设备增加的动态手势，用于指代动态手势操作结束。获得滑动方向，方向不存在时触发 ``` swipe ``` 事件，存在即触发 ``` swipeLeft/swipeRight/swipeUp/swipeDown ``` 。继续学习下类似的操作。  
+  ** MSGestureEnd ** 和 ** touchend ** 类似，** MSGestureEnd ** 是IE10为win的移动设备增加的动态手势，用于指代动态手势操作结束。获得滑动方向，方向不存在时触发 ** swipe ** 事件，存在即触发 ** swipeLeft/swipeRight/swipeUp/swipeDown ** 。继续学习下类似的操作。  
 
 * $(document).on('touchend MSPointerUp pointerup', handle);
-  ``` touchend ```指触摸结束，``` MSPointerUp ``` ， ``` pointerup ```均指指针离开事件，一看到前缀 ``` MS ``` 就知道是为了兼容，带前缀在IE11下就不被支持了，于是这里增加了一个不带前缀的事件类型。触摸结束时通过对比触摸移动的距离是不是超过30来判断是不是需要触发 ``` swipe ``` 滑动事件。如果移动的位置在30以内，并且触摸开始时设置的 ``` last ```属性还存在，判断是点击事件，如果是双击则触发 ``` doubleTap ```，否则触发 ``` singleTap ```。  
+  ** touchend **指触摸结束，** MSPointerUp ** ， ** pointerup **均指指针离开事件，一看到前缀 ** MS ** 就知道是为了兼容，带前缀在IE11下就不被支持了，于是这里增加了一个不带前缀的事件类型。触摸结束时通过对比触摸移动的距离是不是超过30来判断是不是需要触发 ** swipe ** 滑动事件。如果移动的位置在30以内，并且触摸开始时设置的 ** last **属性还存在，判断是点击事件，如果是双击则触发 ** doubleTap **，否则触发 ** singleTap **。  
 
 * $(document).on('touchcancel MSPointerCancel pointercancel', handle);
   注册事件取消操作。  
@@ -370,7 +376,7 @@ github上找到zepto的touch.js ``` https://github.com/madrobby/zepto/blob/maste
 * $(window).on('scroll', handle);
   给window注册滚动事件时取消所有事件操作。
 
-* 通过注册以上事件实际上给触摸的事件目标模拟了 ``` swipe ```, ``` swipeLeft ```, ``` swipeRight ```, ``` swipeUp ```, ``` swipeDown ```, ``` doubleTap ```, ``` tap ```, ``` singleTap ```, ``` longTap ``` 事件
+* 通过注册以上事件实际上给触摸的事件目标模拟了 ** swipe **, ** swipeLeft **, ** swipeRight **, ** swipeUp **, ** swipeDown **, ** doubleTap **, ** tap **, ** singleTap **, ** longTap ** 事件
 
 ```
 ['swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown',
@@ -419,14 +425,14 @@ github上找到zepto的touch.js ``` https://github.com/madrobby/zepto/blob/maste
 fastclick的readme的描述说，fastclick就是为了解决物理设备点击或移动设备浏览器上触摸触发的300ms的延迟的类。
 ##### when?
 * 非桌面浏览器
-* 在chrome上没有设置 ``` user-scalable=no ```（禁止缩放）
-* chrome 32+ 上没有设置 ``` width=device-width ```
-* IE11+ 没有使用 ``` touch-action: manipulation ```
-* IE10 没有使用 ``` -ms-touch-action: manipulation ```
+* 在chrome上没有设置 ** user-scalable=no **（禁止缩放）
+* chrome 32+ 上没有设置 ** width=device-width **
+* IE11+ 没有使用 ** touch-action: manipulation **
+* IE10 没有使用 ** -ms-touch-action: manipulation **
 
 存在以上情况才有使用fastclick的必要，毕竟fastclick是以处理问题而生的。  
 ##### how?
-代码行数蛮多，更多的是注释，描述这么处理是需要解决什么问题，其中有很大一部分都是在解决兼容问题以及事件本身的问题，以为fastclick是在 ``` FastClick.prototype.onTouchEnd ``` 是解决完各种能够遇见的问题的时候调用 ``` sendClick ``` 这个方法也是这个类的关键之处，展示代码
+代码行数蛮多，更多的是注释，描述这么处理是需要解决什么问题，其中有很大一部分都是在解决兼容问题以及事件本身的问题，以为fastclick是在 ** FastClick.prototype.onTouchEnd ** 是解决完各种能够遇见的问题的时候调用 ** sendClick ** 这个方法也是这个类的关键之处，展示代码
 
 ```
 	/**
@@ -465,7 +471,7 @@ fastclick的readme的描述说，fastclick就是为了解决物理设备点击�
 整理整理思路，重新再来！  
 <script async src="http://jsfiddle.net/unofficial/8gykht86/embed/"></script>  
 重写后还是有些小问题。  
-<iframe src="/js_event_model/swipe.html" frameborder="0"></iframe>
+<iframe src="/demo/js_event_model/swipe.html" frameborder="0"></iframe>
 ### 参考资料
 * [如何证明JavaScript是单线程的？](http://www.zhihu.com/question/31982417)
 * [EventLoop - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
@@ -475,7 +481,6 @@ fastclick的readme的描述说，fastclick就是为了解决物理设备点击�
 * [EventTarget.dispatchEvent](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/dispatchEvent)
 * [Events-EventTarget-dispatchEvent](http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget-dispatchEvent)
 * [http://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html](http://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html)
-
 * [http://www.w3.org/TR/touch-events/#introduction](http://www.w3.org/TR/touch-events/#introduction)
 * [https://github.com/madrobby/zepto](https://github.com/madrobby/zepto)
 * [http://www.cnblogs.com/yexiaochai/p/3462657.html](http://www.cnblogs.com/yexiaochai/p/3462657.html)

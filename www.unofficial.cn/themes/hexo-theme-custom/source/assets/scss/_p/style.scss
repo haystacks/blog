@@ -105,6 +105,7 @@ main {
 		a {
 			color: #333;
 			text-decoration: underline;
+			word-break: break-all;
 		}
 
 		&.recent-posts {
@@ -254,11 +255,15 @@ footer {
 
 // detail markdown
 .post-con {
+	line-height: 30px;
+	img {
+		max-width: 100%;
+	}
 	p {
 		margin-bottom: 25px;
 	}
 	ul {
-		margin-left: 35px;
+		margin: 0 35px;
 		list-style-type: square;
 		li {
 			margin-bottom: 5px;
@@ -267,7 +272,7 @@ footer {
 	}
 
 	&>ul {
-		margin: 25px 0 25px 35px;
+		margin: 25px 35px;
 	}
 	.highlight {
 		background: #f8f8f8;

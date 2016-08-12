@@ -1,27 +1,19 @@
 	<section class="home">
-		<h2>吴非的个人网站
+		<h2><%= theme.subtitle %>
 			<a href="javascript:">
 				<img class="avatar" src="assets/imgs/avatar.jpg" alt="">
 			</a>
 		</h2>
-		<h3>unofficial's personal website</h3>
+		<h3><%= theme.enSubtitle %></h3>
 
 		<p>
 			»
-			<a href="/blog">博客</a>
+			<a href="/blog/index.html"><%= __('blog') %></a>
 			 / 
-			<a href="javaScript:;">交流</a>
-			 / 
-			<a href="javaScript:;">实验</a>
-			 / 
-			<a href="javaScript:;">关于</a>
+			<a href="<%= url_for(theme.menu.About) %>"><%= __('about') %></a>
 		</p>
 		<p>
 			»
-			<a href="/blog" target="_blank">github</a>
-			 / 
-			<a href="javascript:;" target="_blank">weixin</a>
-			 / 
-			<a href="javascript:;" target="_blank">weibo</a>
+			<a href="//github.com/cangku" target="_blank">Github</a>
 		</p>
 	</section>

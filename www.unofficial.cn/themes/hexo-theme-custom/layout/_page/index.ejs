@@ -2,7 +2,7 @@
 
 	<section class="recent-posts">
 		<ul>
-			<% page.posts.forEach(function(page){ %>
+			<% page.posts.slice(0, 10).forEach(function(page){ %>
 			<li>
 				<header>
 					<div>
