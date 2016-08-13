@@ -12,19 +12,19 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: //www.unofficial.cn/
-root: /
-permalink: blog/:year/:month/:day/:title.html
+url: //www.unofficial.cn/blog
+root: /blog/
+permalink: :year/:month/:day/:title.html
 permalink_defaults:
 
 # Directory
 source_dir: source
-public_dir: public
-tag_dir: blog/tags
-archive_dir: blog/archives
-category_dir: blog/categories
-code_dir: blog/downloads/code
-i18n_dir: blog/:lang
+public_dir: public/blog
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
 skip_render:
 
 # Writing
@@ -58,7 +58,7 @@ time_format: HH:mm:ss
 # Pagination
 ## Set per_page to 0 to disable pagination
 per_page: 9
-pagination_dir: blog/page
+pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/

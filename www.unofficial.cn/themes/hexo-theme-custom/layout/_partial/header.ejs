@@ -8,22 +8,17 @@
 	<meta name="author" content="<%= theme.author %>">
 	<% pageTitle = page.title ? page.title+'-'+theme.title : theme.title %>
 	<title><%= pageTitle %></title>
-	<% if(isHome) { %>
-	<link rel="stylesheet" href="<%= url_for(theme.homePath) %>">
-	<% } else { %>
 	<link rel="stylesheet" href="<%= url_for(theme.stylePath) %>">
-	<% } %>
 </head>
 <body>
 	<header>
-		<% if(!isHome) { %>
 		<div class="menu clearfix">
 			<a class="logo" href="/"><%= theme.logo %></a>
 			
 			<nav>
 				<ul>
 					<%
-						var menus = theme.menu,
+						var menus = site.data.menu,
 							i;
 						for(i in menus) {
 					%>
@@ -34,8 +29,7 @@
 				</ul>
 			</nav>
 		</div>
-		<% if(page.pagetype == 'index') { %>
-		<%- partial('header_search', {index: true}) %>
-		<% } %>
+		<% if(isHome) { %>
+		<%- partial('header_search', {page: page, index: true}) %>
 		<% } %>
 	</header>

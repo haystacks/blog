@@ -5,15 +5,8 @@ keywords: 'unofficial, 前端, javascript, nodejs, php'
 description: '吴非的个人网站，关注学习前端知识，分享工作生活中的一言一感'
 
 # logo
-logo: 'Unofficial’s Blog'
+logo: Unofficial's Blog
 cankao: http://www.google.com/get/noto/
-
-# menu
-menu:
-	Home: index.html
-	Archives: blog/archives/index.html
-	About: blog/about.html
-	Link: blog/link.html
 
 # index fixed image
 fixedBgImgPath: assets/imgs/fixedBg.jpg
