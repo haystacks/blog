@@ -17,7 +17,7 @@
 				<%- list_tags(page.tags, {show_count: false}) %>
 			</div>
 			<% } %>
-			评论数：<span>?</span> 条评论
+			评论数：<a href="#comments" class="duoshuo_key" id="<%= page.layout %>-<% var key = page.slug?page.slug:page.path; keys.push(key); %><%= key %>">?</a> 条评论
 		</div>
 		
 		<div class="post-con">

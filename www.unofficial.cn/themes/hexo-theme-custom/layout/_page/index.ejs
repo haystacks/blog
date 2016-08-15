@@ -2,13 +2,14 @@
 
 	<section class="recent-posts">
 		<ul>
+			<% keys = []; %>
 			<% page.posts.slice(0, 10).forEach(function(page){ %>
 			<li>
 				<header>
 					<div>
 						<h3><%= page.title %></h3>
 						<ul class="clearfix">
-							<li>? 条评论</li>
+							<li><span class="duoshuo_key" id="<%= page.layout %>-<% var key = page.slug?page.slug:page.path; keys.push(key); %><%= key %>">?</span> 条评论</li>
 							<li><%= date(page.date) %></li>
 						</ul>
 					</div>
