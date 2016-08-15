@@ -1,0 +1,17 @@
+
+	<div class="recent-post">
+		<% rencentPost = page.posts.data[0]; %>	
+		<h3><%= rencentPost.title %></h3>
+		<div class="excerpt post-con"><%- rencentPost.excerpt %></div>
+		<p class="other">Posted by <a href="/"><%= config.author %></a> at <% rencentPost.categories.forEach(function(category) { %>
+				<a href="<%= url_for(category.path) %>"><%= category.name %></a>
+			<% }) %> on <%= date(rencentPost.time) %></p>
+		<p> » <a href="<%= url_for(rencentPost.path) %>"><%= __('read more') %></a></p>
+	</div>
+
+	<div class="search">
+		<div class="view">
+			<input type="text" placeholder="Google 站内搜索">
+			<!-- <a href="<%= url_for('rss2.xml') %>" class="feed" target="_blank">RSS</a> -->
+		</div>
+	</div>

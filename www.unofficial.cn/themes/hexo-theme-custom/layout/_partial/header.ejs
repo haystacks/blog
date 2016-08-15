@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="keywords" content="<%= theme.keywords %>" />
+	<meta name="description" content="<%= theme.description %>" />
+	<meta name="author" content="<%= theme.author %>">
+	<% pageTitle = page.title ? page.title+'-'+theme.title : theme.title %>
+	<title><%= pageTitle %></title>
+	<link rel="stylesheet" href="<%= url_for(theme.stylePath) %>">
+</head>
+<body>
+	<header>
+		<div class="menu clearfix">
+			<a class="logo" href="/"><%= theme.logo %></a>
+			
+			<nav>
+				<ul>
+					<%
+						var menus = site.data.menu,
+							i;
+						for(i in menus) {
+					%>
+						<li><a href="<%= url_for(menus[i]) %>"><span><%= i %></span></a></li>
+					<%
+						}
+					%>
+				</ul>
+			</nav>
+		</div>
+		<% if(isHome) { %>
+		<%- partial('header_search', {page: page, index: true}) %>
+		<% } %>
+	</header>

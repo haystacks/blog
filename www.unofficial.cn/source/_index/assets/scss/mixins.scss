@@ -1,0 +1,33 @@
+/**
+ * 固定宽度居中
+ * @param   width
+ * @param   height
+ */
+
+@mixin widthHeightCenter($width, $height) {
+    
+    width: $width;
+    height: $height;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    margin-left: -$width / 2;
+    margin-top: -$height / 2;
+
+}
+
+/**
+ * 颜色渐变
+ * @param   start color 
+ * @param   end color
+ */
+
+@mixin jianbian($startColor, $endColor) {
+    background: $startColor; /* Old browsers */
+    background: -moz-linear-gradient(left, $startColor 0%, $endColor 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, $startColor 0%, $endColor 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, $startColor 0%, $endColor 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$startColor}', endColorstr='#{$endColor}',GradientType=0 ); /* IE6-9 */;
+}

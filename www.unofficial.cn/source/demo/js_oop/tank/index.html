@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tanker</title>
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+    <div id="map"></div>
+    <script src="js/map.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/impact.js"></script>
+    <script src="js/bullet.js"></script>
+    <script src="js/tank.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        !function() {
+            var main = new Main();
+            main.init();
+            // setInterval(function() {
+            //     console.log(main.allObj);
+            // }, 3000)
+        }()
+    </script>
+</body>
+</html>
