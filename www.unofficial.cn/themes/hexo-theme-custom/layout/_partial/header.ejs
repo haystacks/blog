@@ -6,7 +6,7 @@
 	<meta name="keywords" content="<%= theme.keywords %>" />
 	<meta name="description" content="<%= theme.description %>" />
 	<meta name="author" content="<%= theme.author %>">
-	<% pageTitle = page.title ? page.title+'-'+theme.title : theme.title %>
+	<% pageTitle = page.title ? __(page.title)+'-'+theme.title : theme.title %>
 	<title><%= pageTitle %></title>
 	<link rel="stylesheet" href="<%= url_for(theme.stylePath) %>">
 </head>
