@@ -17,7 +17,7 @@
 				<%- list_tags(page.tags, {show_count: false}) %>
 			</div>
 			<% } %>
-			评论数：<a href="#comments" class="duoshuo_key" id="<%= page.layout %>-<% var key = page.slug?page.slug:page.path; keys.push(key); %><%= key %>">?</a> 条评论
+			评论数：<a href="#comments" class="duoshuo_key" id="<%= page.layout %>-<% var key = page.slug?page.slug:page.path; %><%= key %>">?</a> 条评论
 		</div>
 		
 		<div class="post-con">
@@ -30,7 +30,7 @@
 	<%
 	if (!index && page.layout == 'post') {
 	%>
-	<section id="pagination">
+	<section class="pagination">
 		<%
 			var prevUrl = page.prev?url_for(page.prev.path):'javascript:;';
 			var nextUrl = page.next?url_for(page.next.path):'javascript:;';
@@ -40,8 +40,8 @@
 			var nextTitle = nTitle+'：'+__('next');
 		%>
 		<ul class="clearfix">
-			<li id="prev"><a href="<%= prevUrl %>"><%= prevTitle %></a></li>
-			<li id="next"><a href="<%= nextUrl %>"><%= nextTitle %></a></li>
+			<li class="prev"><a href="<%= prevUrl %>"><%= prevTitle %></a></li>
+			<li class="next"><a href="<%= nextUrl %>"><%= nextTitle %></a></li>
 		</ul>
 	</section>
 	<%

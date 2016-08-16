@@ -14,7 +14,6 @@
             url: url,
             success: function(data) {
                 var res = data.response;
-                console.log(res);
                 $keys.each(function(k, v) {
                     $(v).html(res[v.id].comments);
                 })
