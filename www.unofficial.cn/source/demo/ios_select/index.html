@@ -1,0 +1,85 @@
+layout: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        /* select */
+        .select-checked-value, .select-checked-text {
+            position: absolute;
+        }
+
+        .select {
+            position: relative;
+            display: block;
+            border: 1px solid #eee;
+            width: 80px;
+            height: 26px;
+            line-height: 26px;
+            -webkit-user-select: none;
+        }
+        .select:after {
+            position: absolute;
+            top: 50%;
+            right: 1%;
+            margin: -8px 8px 0 0;
+            display: block;
+            content: ' ';
+            width: 10px;
+            height: 10px;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+            transform: rotate(-135deg);
+        }
+        .select-checked-text {
+            width: 100%;
+            padding-left: 5px;
+        }
+        .select-option {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .select-option-header {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <select name="" id="">
+        <option value="1">第一项</option>
+        <option value="2">第二项</option>
+        <option value="3">第三项</option>
+    </select>
+    <div class="select">
+        <!--<div class="select-checked-value">1</div>-->
+        <span class="select-checked-text">第一项</span>
+        <div class="select-option">
+            <header class="select-option-header">
+                <span>取消</span>
+                <span>确定</span>
+            </header>
+            
+            <ul class="select-option-body">
+                <li class="option" data-value="1">第一项</li>
+                <li class="option" data-value="2">第二项</li>
+                <li class="option" data-value="3">第三项</li>
+            </ul>
+        </div>
+    </div>
+    <div class="masklayer"></div>
+</body>
+</html>
