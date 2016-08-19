@@ -144,6 +144,13 @@ layout: false
                     // 隐藏源select
                     selects[i].style.display = 'none';
                 }
+                // addEvent
+                [].slice.call(document.querySelectorAll('.' + this.selectClassName)).forEach(function(ele) {
+                    ele.addEventListener('click', function(e) {
+                        console.log('%O', e);
+                    });
+                })
+                
             }
 
             // 根据name创建select
