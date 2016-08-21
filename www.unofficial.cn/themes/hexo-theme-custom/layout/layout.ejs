@@ -1,8 +1,8 @@
 <% isHome = is_home(); %>
-<% if(isHome || page.layout) { %>
+<% if(page.layout !== false) { %>
 <%- partial('_partial/header') %>
 <% } %>
 <%- body %>
-<% if(isHome || page.layout) { %>
+<% if(page.layout !== false) { %>
 <%- partial('_partial/footer') %>
 <% } %>

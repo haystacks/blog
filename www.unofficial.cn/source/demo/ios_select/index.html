@@ -119,9 +119,9 @@ layout: false
     </div>-->
     
     <select name="y">
-        <option value="1">第一项</option>
-        <option value="2">第二项</option>
-        <option value="3">第三项</option>
+        <option value="1">第Y一项</option>
+        <option value="2">第Y二项</option>
+        <option value="3">第Y三项</option>
     </select>
     <script>
         (function() {
@@ -140,21 +140,32 @@ layout: false
                 var len = this.selects.length;
                 for(var i = 0; i < len; i++) {
                     // 创建自定义select
-                    this.createSelect(selects[i]);
+                    this.create(selects[i]);
                     // 隐藏源select
                     selects[i].style.display = 'none';
                 }
                 // addEvent
-                [].slice.call(document.querySelectorAll('.' + this.selectClassName)).forEach(function(ele) {
+                [].slice.call(document.getElementsByClassName(this.selectClassName)).forEach(function(ele) {
                     ele.addEventListener('click', function(e) {
-                        console.log('%O', e);
+                        // target || srcElement
+                        var currentTarget = e.currentTarget;
+                        var target = e.target || e.srcElement;
+                        // console.log('%O', currentTarget);
+                        if(target.className === 'select-checked-text' && target.nextElementSibling.style.display === 'none') {
+                            // 当前对象的兄弟元素显示
+                            target.nextElementSibling.style.display = 'block';
+                        } else if(target.tagName.toUpperCase() === 'LI') {
+                            console.log(this);
+                        } else {
+                            currentTarget.children[1].style.display = 'none';                          
+                        }
                     });
                 })
                 
             }
 
             // 根据name创建select
-            Select.prototype.createSelect = function() {
+            Select.prototype.create = function() {
                 var selectEle = [].slice.call(arguments)[0];
                 
                 var name = selectEle.name;
@@ -173,7 +184,7 @@ layout: false
                 div.innerHTML = 
                     '<!--<div class="select-checked-value">'+firstOptionValue+'</div>-->'+
                     '<span class="select-checked-text">'+firstOptionText+'</span>'+
-                    '<div class="select-option">'+
+                    '<div class="select-option" style="display: none;">'+
                         '<header class="select-option-header">'+
                             '<span class="button">取消</span>'+
                             '<span class="button button-blue">确定</span>'+
@@ -186,6 +197,11 @@ layout: false
                 ;
                 this.body.appendChild(div);
             } 
+
+            Select.prototype.hidden = function() {
+                // select-option
+                this.display = 'none';
+            }
 
             return new Select();
 
