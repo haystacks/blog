@@ -127,110 +127,118 @@ layout: false
         <option value="3">第Y三项</option>
     </select>
     <script>
-        (function() {
-            // 根据select的name值作为id值初始化自定义select
-            function Select() {
-                this.body = document.querySelector('body');
-                this.selects = document.querySelectorAll('select');
-                // 自定义select的class名
-                this.selectClassName = 'select';
-                // 初始化自定义select元素
-                this.init();
-            }
-
-            Select.prototype.init = function() {
-                var selects = this.selects;
-                var len = this.selects.length;
-                // 
-                var self = this;
-                for(var i = 0; i < len; i++) {
-                    // 创建自定义select
-                    this.create(selects[i]);
-                    // 隐藏源select
-                    selects[i].style.display = 'none';
+        !function() {                
+            var Select = (function() {
+                // 根据select的name值作为id值初始化自定义select
+                function Select() {
+                    // 自定义select的class名
+                    this.selectClassName = 'select';
+                    this.body;
+                    // 初始化自定义select元素
+                    this.init();
                 }
-                // addEvent
-                [].slice.call(document.getElementsByClassName(this.selectClassName)).forEach(function(ele) {
-                    ele.addEventListener('click', function(e) {
-                        // target || srcElement
-                        var currentTarget = e.currentTarget;
-                        var target = e.target || e.srcElement;
-                        // console.log('%O', currentTarget);
-                        if(target.className === 'select-checked-text' && target.nextElementSibling.style.display === 'none') {
-                            self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
-                            self.lastCheckOptionEle = target;
-                            self.lastOptiomEle = target.nextElementSibling;
-                            // 当前对象的兄弟元素显示
-                            target.nextElementSibling.style.display = 'block';
-                        } else if(target.tagName.toUpperCase() === 'LI') {
-                            console.log(self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1);
-                            (self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1) && (self.lastLiEle.className = 'option');
-                            self.lastLiEle = target;
-                            self.lastCheckText = target.innerText;
-                            (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
-                        } else if(target.className.split(' ').indexOf('cancel') !== -1) {
-                            self.lastCheckText = '';
-                            currentTarget.children[1].style.display = 'none'; 
-                        } else if(target.className.split(' ').indexOf('confirm') !== -1) {
-                            self.lastCheckText && ((self.lastCheckOptionEle.innerText = self.lastCheckText) && (self.lastCheckText = ''));
-                            currentTarget.children[1].style.display = 'none';
-                        }
-                    });
-                })
-                
-            }
 
-            // 根据name创建select
-            Select.prototype.create = function() {
-                var selectEle = [].slice.call(arguments)[0];
-                
-                var name = selectEle.name;
-                var firstOptionValue = selectEle[0].value;
-                var firstOptionText = selectEle[0].text;
-                
-                var len = selectEle.length;
-                var optionsHtml = '';
-                for(var i = 0; i < len; i++) {
-                    var isChecking = firstOptionText === selectEle[i].text ? ' checking' : '';
-                    isChecking !== '' && (this.lastLiEle = this.initLastLiEle('<li class="option checking" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>'));
-                    optionsHtml += '<li class="option'+ isChecking +'" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>';
+                Select.prototype.init = function() {
+                    // addEvent
+                    [].slice.call().forEach(function(ele) {
+                        ele.addEventListener('click', function(e) {
+                            // target || srcElement
+                            var currentTarget = e.currentTarget;
+                            var target = e.target || e.srcElement;
+                            // console.log('%O', currentTarget);
+                            if(target.className === 'select-checked-text' && target.nextElementSibling.style.display === 'none') {
+                                self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
+                                self.lastCheckOptionEle = target;
+                                self.lastOptiomEle = target.nextElementSibling;
+                                // 当前对象的兄弟元素显示
+                                target.nextElementSibling.style.display = 'block';
+                            } else if(target.tagName.toUpperCase() === 'LI') {
+                                console.log(self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1);
+                                (self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1) && (self.lastLiEle.className = 'option');
+                                self.lastLiEle = target;
+                                self.lastCheckText = target.innerText;
+                                (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
+                            } else if(target.className.split(' ').indexOf('cancel') !== -1) {
+                                self.lastCheckText = '';
+                                currentTarget.children[1].style.display = 'none'; 
+                            } else if(target.className.split(' ').indexOf('confirm') !== -1) {
+                                self.lastCheckText && ((self.lastCheckOptionEle.innerText = self.lastCheckText) && (self.lastCheckText = ''));
+                                currentTarget.children[1].style.display = 'none';
+                            }
+                        });
+                    })
+                    
                 }
-                
-                var div = document.createElement('div');
-                div.className = this.selectClassName;
-                div.id = name;
-                div.innerHTML = 
-                    '<!--<div class="select-checked-value">'+firstOptionValue+'</div>-->'+
-                    '<span class="select-checked-text">'+firstOptionText+'</span>'+
-                    '<div class="select-option" style="display: none;">'+
-                        '<header class="select-option-header">'+
-                            '<span class="cancel button">取消</span>'+
-                            '<span class="confirm button button-blue">确定</span>'+
-                        '</header>'+
-                        
-                        '<ul class="select-option-body">'+
-                            optionsHtml
-                        '</ul>'+
-                    '</div>'
-                ;
-                this.body.appendChild(div);
-            } 
 
-            Select.prototype.hidden = function() {
-                // select-option
-                this.display = 'none';
+                // 根据name创建select
+                Select.prototype.create = function() {
+                    var selectEle = [].slice.call(arguments)[0];
+                    
+                    var name = selectEle.name;
+                    var firstOptionValue = selectEle[0].value;
+                    var firstOptionText = selectEle[0].text;
+                    
+                    var len = selectEle.length;
+                    var optionsHtml = '';
+                    for(var i = 0; i < len; i++) {
+                        var isChecking = firstOptionText === selectEle[i].text ? ' checking' : '';
+                        isChecking !== '' && (this.lastLiEle = this.initLastLiEle('<li class="option checking" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>'));
+                        optionsHtml += '<li class="option'+ isChecking +'" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>';
+                    }
+                    
+                    var div = document.createElement('div');
+                    div.className = this.selectClassName;
+                    div.id = name;
+                    div.innerHTML = 
+                        '<!--<div class="select-checked-value">'+firstOptionValue+'</div>-->'+
+                        '<span class="select-checked-text">'+firstOptionText+'</span>'+
+                        '<div class="select-option" style="display: none;">'+
+                            '<header class="select-option-header">'+
+                                '<span class="cancel button">取消</span>'+
+                                '<span class="confirm button button-blue">确定</span>'+
+                            '</header>'+
+                            
+                            '<ul class="select-option-body">'+
+                                optionsHtml
+                            '</ul>'+
+                        '</div>'
+                    ;
+                    this.body.appendChild(div);
+                } 
+
+                Select.prototype.hidden = function() {
+                    // select-option
+                    this.display = 'none';
+                }
+
+                // 初始化选中值
+                Select.prototype.initLastLiEle = function() {
+                    var div = document.createElement('div');
+                    div.innerHTML = [].slice.call(arguments)[0];
+                    return div.childNodes[0];
+                }
+
+                return Select;
+
+            })()
+
+
+            var body = document.querySelector('body');
+            var selects = document.querySelectorAll('select');
+
+            var len = this.selects.length;
+
+            for(var i = 0; i < len; i++) {
+
+                var select = new Select();
+                select.body = body;
+                // 创建自定义select
+                select.create(selects[i]);
+                // 隐藏源select
+                selects[i].style.display = 'none';
             }
 
-            // 初始化选中值
-            Select.prototype.initLastLiEle = function() {
-                var div = document.createElement('div');
-                div.innerHTML = [].slice.call(arguments)[0];
-                return div.childNodes[0];
-            }
-
-            return new Select();
-
-        })()
+        }()
     </script>
     <div class="masklayer"></div>
 </body>
