@@ -93,6 +93,9 @@ layout: false
         .select-option-body li {
             padding: 6px;
         }
+        .select-option-body li.checking {
+            background: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -138,6 +141,8 @@ layout: false
             Select.prototype.init = function() {
                 var selects = this.selects;
                 var len = this.selects.length;
+                // 
+                var self = this;
                 for(var i = 0; i < len; i++) {
                     // 创建自定义select
                     this.create(selects[i]);
@@ -152,12 +157,23 @@ layout: false
                         var target = e.target || e.srcElement;
                         // console.log('%O', currentTarget);
                         if(target.className === 'select-checked-text' && target.nextElementSibling.style.display === 'none') {
+                            self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
+                            self.lastCheckOptionEle = target;
+                            self.lastOptiomEle = target.nextElementSibling;
                             // 当前对象的兄弟元素显示
                             target.nextElementSibling.style.display = 'block';
                         } else if(target.tagName.toUpperCase() === 'LI') {
-                            console.log(this);
-                        } else {
-                            currentTarget.children[1].style.display = 'none';                          
+                            console.log(self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1);
+                            (self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1) && (self.lastLiEle.className = 'option');
+                            self.lastLiEle = target;
+                            self.lastCheckText = target.innerText;
+                            (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
+                        } else if(target.className.split(' ').indexOf('cancel') !== -1) {
+                            self.lastCheckText = '';
+                            currentTarget.children[1].style.display = 'none'; 
+                        } else if(target.className.split(' ').indexOf('confirm') !== -1) {
+                            self.lastCheckText && ((self.lastCheckOptionEle.innerText = self.lastCheckText) && (self.lastCheckText = ''));
+                            currentTarget.children[1].style.display = 'none';
                         }
                     });
                 })
@@ -175,7 +191,9 @@ layout: false
                 var len = selectEle.length;
                 var optionsHtml = '';
                 for(var i = 0; i < len; i++) {
-                    optionsHtml += '<li class="option" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>';
+                    var isChecking = firstOptionText === selectEle[i].text ? ' checking' : '';
+                    isChecking !== '' && (this.lastLiEle = this.initLastLiEle('<li class="option checking" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>'));
+                    optionsHtml += '<li class="option'+ isChecking +'" data-value="'+selectEle[i].value+'">'+selectEle[i].text+'</li>';
                 }
                 
                 var div = document.createElement('div');
@@ -186,8 +204,8 @@ layout: false
                     '<span class="select-checked-text">'+firstOptionText+'</span>'+
                     '<div class="select-option" style="display: none;">'+
                         '<header class="select-option-header">'+
-                            '<span class="button">取消</span>'+
-                            '<span class="button button-blue">确定</span>'+
+                            '<span class="cancel button">取消</span>'+
+                            '<span class="confirm button button-blue">确定</span>'+
                         '</header>'+
                         
                         '<ul class="select-option-body">'+
@@ -201,6 +219,13 @@ layout: false
             Select.prototype.hidden = function() {
                 // select-option
                 this.display = 'none';
+            }
+
+            // 初始化选中值
+            Select.prototype.initLastLiEle = function() {
+                var div = document.createElement('div');
+                div.innerHTML = [].slice.call(arguments)[0];
+                return div.childNodes[0];
             }
 
             return new Select();
