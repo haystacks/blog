@@ -8,6 +8,7 @@
 	<meta name="author" content="<%= theme.author %>">
 	<% pageTitle = page.title ? __(page.title)+'-'+theme.title : theme.title %>
 	<title><%= pageTitle %></title>
+	<link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="stylesheet" href="<%= url_for(theme.stylePath) %>">
 </head>
 <body>

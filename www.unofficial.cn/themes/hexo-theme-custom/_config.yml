@@ -20,3 +20,6 @@ jsPath: assets/js/
 
 # duoshuo
 duoshuo_shortname: unofficial
+
+# 统计
+ta.qq.com: //tajs.qq.com/stats?sId=52446048
