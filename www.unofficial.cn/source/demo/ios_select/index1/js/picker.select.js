@@ -60,7 +60,7 @@
             var div = document.createElement('div');
             // 自定义select注册事件
             this.addEvent(div);
-            div.className = this.selectClassName;
+            div.className = this.selectClassName.concat(' ', this.selectClassName, '-', 'right');
             div.id = name;
             div.innerHTML = 
                 '<!--<div class="select-selected-value">'+this.selectedValue+'</div>-->'+
@@ -97,7 +97,7 @@
         // 隐藏所有显示的选项
         Select.prototype.hiddenAll = function() {
             var optionEles = document.querySelectorAll('.select-option');
-            optionEles.forEach(function(ele) {
+            [].slice.call(optionEles).forEach(function(ele) {
                 (ele.style.display === 'block') && (ele.style.display = 'none');
             })
         }

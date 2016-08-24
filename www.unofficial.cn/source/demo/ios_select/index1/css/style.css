@@ -9,23 +9,23 @@ ul {
 
 /* select */
 .select-selected-value, .select-selected-text {
-    position: absolute;
+    /* position: absolute; */
 }
 
 .select {
     position: relative;
-    display: block;
+    display: inline-block;
     border: 1px solid #eee;
-    width: 80px;
     height: 26px;
     line-height: 26px;
     -webkit-user-select: none;
 }
-.select:after {
+
+.select-right:after {
     position: absolute;
     top: 50%;
-    right: 1%;
-    margin: -8px 8px 0 0;
+    right: 0;
+    margin-top: -8px;
     display: block;
     content: ' ';
     width: 10px;
@@ -51,8 +51,9 @@ ul {
     background-color: #eee;
 }
 .select-selected-text {
+    display: block;
     width: 100%;
-    padding-left: 5px;
+    padding: 0 15px 0 5px;
 }
 .select-option {
     position: fixed;
