@@ -9,22 +9,24 @@ ul {
 
 /* select */
 .select-selected-value, .select-selected-text {
-    /* position: absolute; */
+    position: relative;
+    z-index: 1; 
+    border: 2px solid #515151;
+    border-radius: 4px;
+    height: 26px;
+    line-height: 26px;
 }
 
 .select {
     position: relative;
     display: inline-block;
-    border: 1px solid #eee;
-    height: 26px;
-    line-height: 26px;
     -webkit-user-select: none;
 }
 
 .select-right:after {
     position: absolute;
     top: 50%;
-    right: 0;
+    right: 6px;
     margin-top: -8px;
     display: block;
     content: ' ';
@@ -52,8 +54,9 @@ ul {
 }
 .select-selected-text {
     display: block;
-    width: 100%;
-    padding: 0 15px 0 5px;
+    padding: 0 20px 0 5px;
+    background: linear-gradient(to right, #fff, #cececf);
+    background-color: linear-gradient(#fff, #cececf);
 }
 .select-option {
     position: fixed;
