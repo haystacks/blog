@@ -55,8 +55,7 @@ ul {
 .select-selected-text {
     display: block;
     padding: 0 20px 0 5px;
-    background: linear-gradient(to right, #fff, #cececf);
-    background-color: linear-gradient(#fff, #cececf);
+    /*background: linear-gradient(#fff, #cececf);*/
 }
 .select-option {
     position: fixed;
