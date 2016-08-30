@@ -1,0 +1,17 @@
+{
+  "name": "gulp",
+  "version": "0.0.1",
+  "description": "gulp conf",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["gulp"],
+  "author": "unofficial",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-sass": "^2.3.2"
+  }
+}

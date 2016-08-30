@@ -1,0 +1,92 @@
+/* 选择 */
+.select {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+
+    &-right:after {
+        position: absolute;
+        top: 50%;
+        right: 6px;
+        margin-top: -8px;
+        display: block;
+        content: ' ';
+        width: 10px;
+        height: 10px;
+        border-top: 1px solid #333;
+        border-left: 1px solid #333;
+        transform: rotate(-135deg);
+    }
+
+    .select-selected-value, .select-selected-text {
+        position: relative;
+        z-index: 1; 
+        border: 2px solid #515151;
+        border-radius: 4px;
+        height: 26px;
+        line-height: 26px;
+    }
+    
+    .select-selected {
+        background-color: #eee;
+    }
+
+    .select-selected-text {
+        display: block;
+        padding: 0 20px 0 5px;
+        /*background: linear-gradient(#fff, #cececf);*/
+    }
+
+    .select-option {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #eee;
+        border-top: solid 1px #ccc;
+    }
+
+    .select-option {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #eee;
+        border-top: solid 1px #ccc;
+    }
+
+    .select-option-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px;
+    }
+
+    .select-option-body {
+        background-color: #ddd;
+        line-height: 30px;
+        cursor: context-menu;
+    }
+
+    .select-option-body li {
+        padding: 6px;
+    }
+    
+    .select-option-body li.checking {
+        background: #ccc;
+    }
+}
+
+/* 按钮 */
+.button {
+    display: block;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    cursor: pointer;
+}
+.button-blue {
+    border: 1px solid #007aff;
+    background-color: #007aff;
+    color: #fff;
+}
