@@ -1,7 +1,8 @@
 'use strict';
-let gulp = require('gulp');
-let sass = require('gulp-sass');
-let cleanCSS = require('gulp-clean-css');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const cleanCSS = require('gulp-clean-css');
+const eslint = require('gulp-eslint');
 
 
 /**
@@ -41,14 +42,24 @@ gulp.task('sass:watch', function() {
 	gulp.watch(sassPath, ['sass']);
 })
 
-// js
-gulp.task('js', function() {
+// eslint js
+gulp.task('eslint', function() {
+	return gulp.src([jsSrc,'!node_modules/**'])
+        // eslint() attaches the lint output to the "eslint" property 
+        // of the file object so it can be used by other modules. 
+        .pipe(eslint())
+        // eslint.format() outputs the lint results to the console. 
+        // Alternatively use eslint.formatEach() (see Docs). 
+        .pipe(eslint.format())
+        // To have the process exit with an error code (1) on 
+        // lint error, return the stream and pipe to failAfterError last. 
+        .pipe(eslint.failAfterError());
+})
 
-	// es6 -> es5
-	gulp.src(jsSrc)
-		.pipe()
-		.pipe(gulp.dest(jsDest));
+// auto watch js
+gulp.task('eslint:watch', function() {
+	gulp.watch(jsSrc, ['eslint']);
 })
 
 // tast -> default
-gulp.task('default', ['sass', 'sass:watch'])
+gulp.task('default', ['sass', 'sass:watch', 'eslint', 'eslint:watch'])

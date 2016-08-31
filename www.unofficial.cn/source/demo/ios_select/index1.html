@@ -1,5 +1,6 @@
 layout: false
 ---
+<!-- http://www.dcloud.io/hellomui/examples/picker.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +38,49 @@ layout: false
         <option value="3">王五</option>
     </select>
 
+    <input id="dateTest" type="date" />
+    <div class="date" id="z">
+        <!--<div class="select-selected-value">1</div>-->
+        <span class="select-selected-text">第一项</span>
+        <div class="select-option">
+            <header class="select-option-header">
+                <span class="button">取消</span>
+                <span class="button button-blue">确定</span>
+            </header>
+            
+            <ul class="date-wrapper">
+                <li class="year">
+                    <div class="year-checked"></div>
+                    <ul class="select-option-body">
+                        <li class="option" data-value="2001">2001</li>
+                        <li class="option" data-value="2002">2002</li>
+                        <li class="option" data-value="2003">2003</li>
+                        <li class="option" data-value="2004">2004</li>
+                        <li class="option" data-value="2005">2005</li>
+                    </ul>
+                </li>
+                <li class="month">
+                    <div class="month-checked"></div>
+                    <ul class="select-option-body">
+                        <li class="option" data-value="1">第一项</li>
+                        <li class="option" data-value="2">第二项</li>
+                        <li class="option" data-value="3">第三项</li>
+                    </ul>
+                </li>
+                <li class="day">
+                    <div class="day-checked"></div>
+                    <ul class="select-option-body">
+                        <li class="option" data-value="1">第一项</li>
+                        <li class="option" data-value="2">第二项</li>
+                        <li class="option" data-value="3">第三项</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <!--<div class="masklayer"></div>-->
-    <script src="index1/js/picker.select.js"></script>
+    <script src="index1/js/picker.js"></script>
+    <script src="index1/js/main.js"></script>
 </body>
 </html>
