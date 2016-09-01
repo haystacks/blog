@@ -132,7 +132,78 @@
     
     // element input rewrite
     function isInput() {
-        console.log('213');
+        var inputEle = [].slice.call(arguments)[0];
+        if(inputEle.type === 'date') {
+            isInputDate.call(this, inputEle);
+        }
+    }
+
+    // 补零操作
+    function addZero(str) {
+        var length = 2;
+        return new Array(length - str.toString().length + 1).join("0") + str;             
+    }
+
+    // input type date
+    function isInputDate() {
+        var dateEle = [].slice.call(arguments)[0];
+        var name = dateEle.name;
+        // 获取默认值 默认文本
+        var d = new Date();
+        var initYear = d.getFullYear();
+        var initMonth = addZero(d.getMonth()+1);
+        var initDay = addZero(d.getDay());
+        this.days = getDays(initYear);
+        this.startYear = initYear - 5;
+        this.endYear = initYear + 5;
+        console.log(this.startYear, this.endYear);
+        
+        // 
+        // year
+        // 
+        var optionsYear = '';
+        for(var i = this.startYear; i < this.endYear; i++) {
+            optionsYear += i === initYear ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+        }
+
+        //
+        // month
+        // 
+        var optionsMonth = '';
+        for(var i = 1; i <= 12; i++) {
+            optionsMonth += i === initMonth ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+        }
+
+        //
+        // day
+        //
+        var optionsDay = '';
+        var days = this.days[initMonth-1];
+        for(var i = 1; i < days; i++) {
+            optionsDay += i === initDay ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+        }
+        
+        var div = document.createElement('div');
+        // 自定义select注册事件
+        this.addEvent(div);
+        div.className = this.selectClassName.concat(' ', this.selectClassName, '-', 'right');
+        div.id = name;
+        div.innerHTML = 
+            '<span class="select-selected-text">'+initYear+initMonth+initDay+'</span>'+
+            '<div class="select-option" style="display: none;">'+
+                '<header class="select-option-header">'+
+                    '<span class="cancel button">取消</span>'+
+                    '<span class="confirm button button-blue">确定</span>'+
+                '</header>'+
+                
+                '<ul class="select-option-body">'+
+                    optionsHtml
+                '</ul>'+
+            '</div>'
+        ;
+        // 设置初始化选中元素
+        this.lastLiEle = this.initLastLiEle(div);
+        this.body.appendChild(div);
     }
 
     // 初始化选中值
