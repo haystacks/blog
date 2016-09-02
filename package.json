@@ -4,18 +4,21 @@
   "description": "a little demo.",
   "main": "index.js",
   "dependencies": {
-    "gulp-eslint": "^3.0.1"
+    "gulp-eslint": "^3.0.1",
+    "koa": "^1.2.2"
   },
   "devDependencies": {},
   "scripts": {
-    "run": "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/haystacks/blog.git"
   },
-  "keywords": ["demo"],
+  "keywords": [
+    "demo"
+  ],
   "author": "unofficial",
   "license": "MIT",
   "bugs": {
