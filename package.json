@@ -1,0 +1,25 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "a little demo.",
+  "main": "index.js",
+  "dependencies": {
+    "gulp-eslint": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "run": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haystacks/blog.git"
+  },
+  "keywords": ["demo"],
+  "author": "unofficial",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/haystacks/blog/issues"
+  },
+  "homepage": "https://github.com/haystacks/blog#readme"
+}
