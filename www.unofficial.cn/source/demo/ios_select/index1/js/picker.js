@@ -41,9 +41,50 @@
     // 
     function Select() {
         this.selectClassName = OPTIONS.class;
+        this.lastCheckEleArr = {};
     }
 
-    Select.prototype.addEvent = function() {
+    // Select.prototype.addEvent = function() {
+    //     // addEvent
+    //     var ele = [].slice.call(arguments)[0];
+    //     var self = this;
+    //     ele.addEventListener('click', function(e) {
+    //         // target || srcElement
+    //         var currentTarget = e.currentTarget;
+    //         var target = e.target || e.srcElement;
+    //         // console.log('%O', currentTarget);
+    //         if(target.className === 'select-selected-text' && target.nextElementSibling.style.display === 'none') {
+    //             self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
+    //             self.lastCheckOptionEle = target;
+    //             self.lastOptiomEle = target.nextElementSibling;
+    //             // 是否隐藏之前显示的下拉选择? 是
+    //             self.hiddenAll();
+    //             // 设置当前选中元素的默认值
+    //             self.setOptionSelectedValue(target);
+    //             // 当前对象的兄弟元素显示
+    //             target.nextElementSibling.style.display = 'block';
+    //         } else if(target.tagName.toUpperCase() === 'LI') {
+    //             console.log('%O', target);
+
+    //             (self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1) && (self.lastLiEle.className = 'option');
+    //             self.lastLiEle = target;
+    //             self.lastCheckText = target.innerText;
+    //             (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
+    //         } else if(target.className.split(' ').indexOf('cancel') !== -1) {
+    //             self.lastLiEle.className = 'option';
+    //             self.lastCheckText = '';
+    //             currentTarget.children[1].style.display = 'none'; 
+    //         } else if(target.className.split(' ').indexOf('confirm') !== -1) {
+    //             self.lastCheckText && ((self.lastCheckOptionEle.innerText = self.lastCheckText) && (self.lastCheckText = ''));
+    //             currentTarget.children[1].style.display = 'none';
+    //         }
+    //     });
+        
+    // }
+
+
+    // 多选择元素绑定事件
+        Select.prototype.addEvent = function() {
         // addEvent
         var ele = [].slice.call(arguments)[0];
         var self = this;
@@ -63,16 +104,33 @@
                 // 当前对象的兄弟元素显示
                 target.nextElementSibling.style.display = 'block';
             } else if(target.tagName.toUpperCase() === 'LI') {
-                (self.lastLiEle && self.lastLiEle.className.split(' ').indexOf('checking') !== -1) && (self.lastLiEle.className = 'option');
-                self.lastLiEle = target;
-                self.lastCheckText = target.innerText;
+                // 点击元素后获取元素的 dataKey / value / text / target
+                // 定义一个数组用户存放数据 lastCheckEleArr 
+                var dataKey = target.dataset.key;
+                var value = target.dataset.value;
+                var text = target.innerText;
+                var lastEle;
+                ((dataKey in self.lastCheckEleArr) && (lastEle = self.lastCheckEleArr[dataKey][2]) && lastEle.className.split(' ').indexOf('checking') !== -1) && (lastEle.className = 'option');
+                // self.lastCheckEleArr[dataKey] = [value, text, target];
+                self.lastCheckEleArr[dataKey] = [value, text, target];
                 (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
             } else if(target.className.split(' ').indexOf('cancel') !== -1) {
-                self.lastLiEle.className = 'option';
-                self.lastCheckText = '';
+                // 循环遍历内容设置样式为option。情况选择值
+                for(var key in self.lastCheckEleArr) {
+                    self.lastCheckEleArr[key][2].className = 'option';
+                    self.lastCheckEleArr[key] = [];
+                }
+
                 currentTarget.children[1].style.display = 'none'; 
             } else if(target.className.split(' ').indexOf('confirm') !== -1) {
-                self.lastCheckText && ((self.lastCheckOptionEle.innerText = self.lastCheckText) && (self.lastCheckText = ''));
+                
+                var allValue = '', allText = '';
+                for(var key in self.lastCheckEleArr) {
+                    allValue += self.lastCheckEleArr[key][0];
+                    allText += self.lastCheckEleArr[key][1];
+                    self.lastCheckEleArr[key] = [];
+                }
+                self.lastCheckOptionEle.innerText = allText;
                 currentTarget.children[1].style.display = 'none';
             }
         });
@@ -163,7 +221,7 @@
         // 
         var optionsYear = '';
         for(var i = this.startYear; i < this.endYear; i++) {
-            optionsYear += i === initYear ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+            optionsYear += i === initYear ? '<li class="option checking" data-key="0" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-key="0" data-value="'+i+'">'+i+'</li>';
         }
 
         //
@@ -171,7 +229,7 @@
         // 
         var optionsMonth = '';
         for(var i = 1; i <= 12; i++) {
-            optionsMonth += i === initMonth ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+            optionsMonth += i === initMonth ? '<li class="option checking" data-key="1" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-key="1" data-value="'+i+'">'+i+'</li>';
         }
 
         //
@@ -180,13 +238,13 @@
         var optionsDay = '';
         var days = this.days[initMonth-1];
         for(var i = 1; i < days; i++) {
-            optionsDay += i === initDay ? '<li class="option checking" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-value="'+i+'">'+i+'</li>';
+            optionsDay += i === initDay ? '<li class="option checking" data-key="2" data-value="'+i+'">'+i+'</li>' : '<li class="option" data-key="2" data-value="'+i+'">'+i+'</li>';
         }
         
         var div = document.createElement('div');
         // 自定义select注册事件
         this.addEvent(div);
-        div.className = this.selectClassName.concat(' ', this.selectClassName, '-', 'right');
+        div.className = this.selectClassName.concat(' ', this.selectClassName, '-', 'right', ' ', 'date');
         div.id = name;
         div.innerHTML = 
             '<span class="select-selected-text">'+initYear+initMonth+initDay+'</span>'+
@@ -196,9 +254,23 @@
                     '<span class="confirm button button-blue">确定</span>'+
                 '</header>'+
                 
-                '<ul class="select-option-body">'+
-                    optionsHtml
-                '</ul>'+
+                '<ul class="date-wrapper">'+
+                    '<li>'+
+                        '<ul class="select-option-body">'+
+                            optionsYear + 
+                        '</ul>'+
+                    '</li>'+
+                    '<li>'+
+                        '<ul class="select-option-body">'+
+                            optionsMonth + 
+                        '</ul>'+
+                    '</li>'+
+                    '<li>'+
+                        '<ul class="select-option-body">'+
+                            optionsDay + 
+                        '</ul>'+
+                    '</li>'+
+                '</ul>'
             '</div>'
         ;
         // 设置初始化选中元素
