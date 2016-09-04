@@ -210,7 +210,7 @@
         var d = new Date();
         var initYear = d.getFullYear();
         var initMonth = addZero(d.getMonth()+1);
-        var initDay = addZero(d.getDay());
+        var initDay = addZero(d.getDate());
         this.days = getDays(initYear);
         this.startYear = initYear - 5;
         this.endYear = initYear + 5;
