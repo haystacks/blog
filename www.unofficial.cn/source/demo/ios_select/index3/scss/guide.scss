@@ -1,0 +1,9 @@
+ul {
+    transform-style: preserve-3d;
+    text-align: center;
+    // perspective: 1000px;
+    li {
+        transform-origin: center center 0;
+        transform: perspective(1000px) rotateX(50deg);
+    }
+}
