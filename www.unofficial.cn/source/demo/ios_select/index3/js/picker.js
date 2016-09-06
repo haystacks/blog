@@ -73,88 +73,58 @@
         // addEvent
         var ele = [].slice.call(arguments)[0];
         var self = this;
-        ele.addEventListener('click', function(e) {
-            // target || srcElement
-            var currentTarget = e.currentTarget;
-            var target = e.target || e.srcElement;
-            // console.log('%O', currentTarget);
-            if(target.className === ('select-selected-'+self.typeName) && target.nextElementSibling.style.display === 'none') {
-                self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
-                self.lastCheckOptionEle = target;
-                self.lastOptiomEle = target.nextElementSibling;
-                // 是否隐藏之前显示的下拉选择? 是
-                self.hiddenAll();
-                // 设置当前选中元素的默认值
-                self.setOptionSelectedValue(target);
-                // 当前对象的兄弟元素显示
-                target.nextElementSibling.style.display = 'block';
-            } else if(target.tagName.toUpperCase() === 'LI') {
-                // 点击元素后获取元素的 dataKey / value / text / target
-                // 定义一个数组用户存放数据 lastCheckEleArr 
-                console.log(self.lastCheckEleArr);
-                var dataKey = target.dataset.key;
-                var value = target.dataset.value;
-                var text = target.innerText;
-                var lastEle;
-                ((dataKey in self.lastCheckEleArr) && (lastEle = self.lastCheckEleArr[dataKey][2]) && lastEle.className.split(' ').indexOf('checking') !== -1) && (lastEle.className = 'option');
-                self.lastCheckEleArr[dataKey] = {'value': value, 'text': text, 'target': target};
-                (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
-            } else if(target.className.split(' ').indexOf('cancel') !== -1) {
-                // 循环遍历内容设置样式为option。情况选择值
-                for(var key in self.lastCheckEleArr) {
-                    self.lastCheckEleArr[key]['target'].className = 'option';
-                    self.lastCheckEleArr[key] = [];
-                }
+        // ele.addEventListener('tap', function(e) {
+        //     // target || srcElement
+        //     var currentTarget = e.currentTarget;
+        //     var target = e.target || e.srcElement;
+        //     // console.log('%O', currentTarget);
+        //     if((target.className === 'select-selected-text' || target.className === 'select-selected-value') && target.nextElementSibling.style.display === 'none') {
+        //         self.lastOptiomEle ? (self.lastOptiomEle.style.display = 'none') : '';
+        //         self.lastCheckOptionEle = target;
+        //         self.lastOptiomEle = target.nextElementSibling;
+        //         // 当前对象的兄弟元素显示
+        //         target.nextElementSibling.style.display = 'block';
+        //     } else if(target.tagName.toUpperCase() === 'LI') {
+        //         // 点击元素后获取元素的 dataKey / value / text / target
+        //         // 定义一个数组用户存放数据 lastCheckEleArr 
+        //         console.log(self.lastCheckEleArr);
+        //         var dataKey = target.dataset.key;
+        //         var value = target.dataset.value;
+        //         var text = target.innerText;
+        //         var lastEle;
+        //         ((dataKey in self.lastCheckEleArr) && (lastEle = self.lastCheckEleArr[dataKey][2]) && lastEle.className.split(' ').indexOf('checking') !== -1) && (lastEle.className = 'option');
+        //         self.lastCheckEleArr[dataKey] = {'value': value, 'text': text, 'target': target};
+        //         (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
+        //     } else if(target.className.split(' ').indexOf('cancel') !== -1) {
+        //         // 循环遍历内容设置样式为option。情况选择值
+        //         for(var key in self.lastCheckEleArr) {
+        //             self.lastCheckEleArr[key]['target'].className = 'option';
+        //             self.lastCheckEleArr[key] = [];
+        //         }
 
-                currentTarget.children[1].style.display = 'none'; 
-            } else if(target.className.split(' ').indexOf('confirm') !== -1) {
+        //         currentTarget.children[1].style.display = 'none'; 
+        //     } else if(target.className.split(' ').indexOf('confirm') !== -1) {
                 
-                var allValue = '', allText = '';
-                for(var key in self.lastCheckEleArr) {
-                    allValue += self.lastCheckEleArr[key]['value'];
-                    allText += self.lastCheckEleArr[key]['text'];
-                    self.lastCheckEleArr[key] = [];
-                }
-                self.lastCheckOptionEle.innerText = allText;
-                currentTarget.children[1].style.display = 'none';
-            }
+        //         var allValue = '', allText = '';
+        //         for(var key in self.lastCheckEleArr) {
+        //             allValue += self.lastCheckEleArr[key]['value'];
+        //             allText += self.lastCheckEleArr[key]['text'];
+        //             self.lastCheckEleArr[key] = [];
+        //         }
+        //         self.lastCheckOptionEle.innerText = allText;
+        //         currentTarget.children[1].style.display = 'none';
+        //     }
+        // });
+
+        // 点击事件
+        on.call(ele, 'tap', function(e) {
+            console.log(e);
         });
-        
-        this.scrollEle(ele)    
+
+        /* 滑动选择 */
+        // this.scrollEle(ele)    
     }
 
-    // 滚动元素
-    Select.prototype.scrollEle = function(ele) {
-        var x, y;
-        var moveFun = function(ev) {
-            var target = ev.target.parentElement;
-            if(target.tagName.toUpperCase() === 'UL' && target.className == 'select-option-body') {
-                // console.log(ev.pageX, ev.pageY);
-            }
-        };
-        var unMoveFun = function(ev) {
-            // 如果移动的距离大于等于21PX，默认半行的距离，视为移动则
-            console.log('事件已取消');
-            ev.stopImmediatePropagation();
-        };
-        ele.addEventListener('mousedown', function(e) {
-            var target = e.target.parentElement;
-            if(target.tagName.toUpperCase() === 'UL' && target.className == 'select-option-body') {
-                // console.log(e.pageX, e.pageY);
-
-                ele.addEventListener('mousemove', moveFun)
-            }
-        })
-        // 这里还有两个问题！！！！
-        ele.addEventListener('mouseup', function(e) {
-            var target = e.target.parentElement;
-            //if(target.tagName.toUpperCase() === 'UL' && target.className == 'select-option-body') {
-                console.log(e.pageX, e.pageY);
-
-                ele.removeEventListener('mousemove', unMoveFun);
-            //}
-        })
-    }
     // 根据name创建select
     Select.prototype.create = function() {
         var pickerEle = [].slice.call(arguments)[0];
@@ -194,6 +164,7 @@
         for(var key in data.data) {
             innerHTML +=
                 '<li>'+
+                    '<div class="select-rule"></div>'+
                     '<ul class="select-option-body">';
             var currentData = data.data[key];
             for (var i in currentData) {
@@ -211,7 +182,7 @@
         // console.log(innerHTML);
         div.innerHTML = innerHTML;
         // 设置初始化选中元素
-        this.lastLiEle = this.initLastLiEle(div);
+        // this.lastLiEle = this.initLastLiEle(div);
         this.parentEle.appendChild(div);
         this.lastCheckEleArr = data.allSelected;
     }
@@ -319,23 +290,23 @@
 
     // 隐藏所有显示的选项
     Select.prototype.hiddenAll = function() {
-        var optionEles = document.querySelectorAll('.select-option');
+        this.optionEles = this.optionEles || document.querySelectorAll('.select-option');
+        var optionEles = this.optionEles;
         [].slice.call(optionEles).forEach(function(ele) {
             (ele.style.display === 'block') && (ele.style.display = 'none');
         })
     }
 
-    // 设置默认值选择背景
-    Select.prototype.setOptionSelectedValue = function() {
-        // 获取选中的值
-        var target = [].slice.call(arguments)[0];
-        var selectedText = target.textContent;
-        var self = this;
-        // 获取所有option元素，检测相等设置选中
-        [].slice.call(target.nextElementSibling.lastElementChild.children).forEach(function(ele) {
-            ele.textContent === selectedText ? (ele.className += ' checking') && (self.lastLiEle = ele) : (ele.className = 'option');
-        })
 
+    /**
+     * 自定义事件相关
+     * 1. 模拟tap事件
+     */
+    function on(eventName, eventHandle) {
+        var event = new Event(eventName);
+        console.log(this, event);
+        this.addEventListener(event, eventHandle);
+        this.dispatchEvent(event);
     }
 
     return Select;

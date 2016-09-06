@@ -12,13 +12,37 @@
         <option value="1">第一项</option>
         <option value="2" selected>第二项</option>
         <option value="3">第三项</option>
+        <option value="4">第四项</option>
+        <option value="5">第五项</option>
     </select>
 
-    <ul>
-        <li>测试1</li>
-        <li>测试2</li>
-        <li>测试3</li>
-    </ul>
+    <div class="demo">
+        <div class="rule"></div>
+        <ul id="test">
+            <li class="visible highlight">测试-3</li>
+            <li class="visible">测试-2</li>
+            <li class="visible">测试-1</li>
+            <li class="visible">测试00</li>
+            <li>测试01</li>
+            <li>测试02</li>
+            <li>测试03</li>
+            <li>测试03</li>
+            <li>测试03</li>
+            <li>测试03</li>
+            <li>测试03</li>
+        </ul>
+    </div>
+
+    <button id="btn">点击</button>
+
+    <script>
+        var i = 1;
+        var btn = document.querySelector('#btn'),
+            test = document.querySelector('#test');
+        btn.addEventListener('click', function() {
+            test.style.transform = 'rotateX('+ 20*i++ +'deg)';
+        })
+    </script>
     
     <!--<select name="y">
         <option value="1">张三</option>

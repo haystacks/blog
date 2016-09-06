@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>transform</title>
+    <style>
+        body {
+            margin: 0;
+            font: 12px 'Microsoft Yahei';
+        }
+        div {
+            margin: 50px auto 0;
+            width: 200px;
+            height: 300px;
+            background: #999;
+
+            /*让两个元素重叠用于演示移动前与移动后*/
+            position: absolute;
+            left: 0;
+            right: 0;
+            color: #fff;
+        }
+
+        div:nth-of-type(2) {
+            background: #333;
+            transform: translate(100px);
+            transform: translate(100px, 0);
+            transform: translate3d(100px, 0, 0);
+            transform: translateX(100px);
+
+            display: none;
+        }
+
+        div:nth-of-type(3) {
+            background: #333;
+            transform: rotate(45deg);
+            transform: rotateX(0) rotateY(0) rotateZ(45deg);
+            transform: rotateZ(45deg);
+
+            display: none;
+        }
+
+        div:nth-of-type(4) {
+            background: #333;
+            transform: scale(1.2); 
+            transform: scale(1.2, 1.2); 
+            transform: scaleX(1.2) scaleY(1.2);
+
+            display: none; 
+        }
+
+        div:nth-of-type(5) {
+            background: #333;
+            transform: skew(5deg);
+            transform: skew(5deg, 0);
+            transform: skewX(5deg);
+            /* display: none; */
+        }
+    </style>
+</head>
+<body>
+    桌面 320*568
+    <div>原始位置</div>
+    <div>translate(100px)<br />translate(100px, 0)<br />translate3d(100px, 0, 0)<br />translateX(100px)</div>
+    <div>rotate(45deg)<br /><br />rotateX(0) rotateY(0) rotateZ(45deg)<br /><br />rotateZ(45deg)</div>
+    <div>scale(1.2)<br />scale(1.2, 1.2)<br />scaleX(1.2) scaleY(1.2)</div>
+    <div>skew(5deg)<br />skew(5deg, 0)<br />skewX(5deg)</div>
+</body>
+</html>
