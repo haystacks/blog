@@ -37,6 +37,8 @@
         'className': 'select',
         'direction': 'right',
         'separator': '',
+        'deg': 20,
+        'height': 30,
         'sizeCol': 3,
         'typeName': 'value',
         'parentEle': document.querySelector('body')
@@ -117,12 +119,83 @@
         // });
 
         // 点击事件
-        on.call(ele, 'tap', function(e) {
-            console.log(e);
-        });
+        var hammer = new Hammer(ele);
+        hammer.on('tap pan', function(e) {
+            var currentTarget = e.currentTarget;
+            var target = e.target;
+            // console.log('%O', currentTarget);
+            // thisCurrent 当前列
+            var thisTarget;
+            if((target.className === 'select-selected-text' || target.className === 'select-selected-value') && target.nextElementSibling.style.display === 'none') {
+                // 当前对象的兄弟元素显示
+                target.nextElementSibling.style.display = 'block';
+            } else if((target.tagName.toUpperCase() === 'LI' && target.parentElement.className == 'wrapper' && (thisTarget = target)) || target.parentElement.parentElement.tagName == 'LI' && (thisTarget = target.parentElement.parentElement)) {
+                if(e.type == 'tap') {
+                    isScroll.call(self, e, thisTarget);
+                } else if(e.type == 'pan') {
+                    console.log(e);
+                }
+            } else if(target.tagName.toUpperCase() === 'LI') {
+                // 点击元素后获取元素的 dataKey / value / text / target
+                // 定义一个数组用户存放数据 lastCheckEleArr 
+                // 当前点击的是第几列的
+                var col = target.parentElement.parentElement.dataset.key;
+                var dataKey = target.dataset.key;
+                var value = target.dataset.value;
+                var text = target.innerText;
 
-        /* 滑动选择 */
-        // this.scrollEle(ele)    
+                // 如果当前的0 < key < self.keyArr[col] --
+
+                var lastEle;
+                ((dataKey in self.lastCheckEleArr) && (lastEle = self.lastCheckEleArr[dataKey][2]) && lastEle.className.split(' ').indexOf('checking') !== -1) && (lastEle.className = 'option');
+                self.lastCheckEleArr[dataKey] = {'value': value, 'text': text, 'target': target};
+                (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
+            } else if(target.className.split(' ').indexOf('cancel') !== -1) {
+                // 循环遍历内容设置样式为option。情况选择值
+                for(var key in self.lastCheckEleArr) {
+                    self.lastCheckEleArr[key]['target'].className = 'option';
+                    self.lastCheckEleArr[key] = [];
+                }
+
+                currentTarget.children[1].style.display = 'none'; 
+            } else if(target.className.split(' ').indexOf('confirm') !== -1) {
+                
+                var allValue = '', allText = '';
+                for(var key in self.lastCheckEleArr) {
+                    allValue += self.lastCheckEleArr[key]['value'];
+                    allText += self.lastCheckEleArr[key]['text'];
+                    self.lastCheckEleArr[key] = [];
+                }
+                self.lastCheckOptionEle.innerText = allText;
+                currentTarget.children[1].style.display = 'none';
+            }
+
+        })
+    }
+
+    // 滚动切换
+    function isScroll(e, thisTarget) {
+        var self = this;
+        // 点击元素后获取元素的 dataKey / value / text / target
+        // 定义一个数组用户存放数据 lastCheckEleArr 
+        // 当前点击的是第几列的
+        var col = thisTarget.dataset.key;
+        var key = self.keyArr[col];
+        if(e.center.y < root.innerHeight - OPTIONS.height / 2 - thisTarget.offsetHeight / 2 && self.keyArr[col] < self.data.data[col].length - 1) {
+            // 移除原来的checking
+            thisTarget.lastElementChild.children[key].className = 'option';
+            key++;
+        } else if(e.center.y > root.innerHeight + OPTIONS.height / 2 - thisTarget.offsetHeight / 2 && self.keyArr[col] > 0) {
+            // 移除原来的checking
+            thisTarget.lastElementChild.children[key].className = 'option';
+            key--;
+        }
+        if(key != self.keyArr[col]) {
+            // 设置新的checking
+            thisTarget.lastElementChild.children[key].className = 'option checking';
+            thisTarget.lastElementChild.style.transform = 'perspective(1440px) rotateX('+ key*OPTIONS.deg +'deg)';
+            self.keyArr[col] = key;
+        }
     }
 
     // 根据name创建select
@@ -140,7 +213,8 @@
     // 生成html选择器结构
     Select.prototype.makeHtml = function(data) {
         var self = this;
-
+        // 全局化数据
+        self.data = data;
         var div = document.createElement('div');
         // 自定义select注册事件
         this.addEvent(div);
@@ -161,14 +235,16 @@
                 '</header>'+
                 
                 '<ul class="wrapper">';
+        self.keyArr = [];
         for(var key in data.data) {
             innerHTML +=
-                '<li>'+
+                '<li data-key="'+ key +'">'+
                     '<div class="select-rule"></div>'+
                     '<ul class="select-option-body">';
-            var currentData = data.data[key];
+            var currentData = data.data[key],
+                index = 0;
             for (var i in currentData) {
-                innerHTML += currentData[i].isSelected ? '<li class="option checking" data-key="'+key+'" data-value="'+currentData[i].value+'">'+currentData[i].text+'</li>' : '<li class="option" data-key="'+key+'" data-value="'+currentData[i].value+'">'+currentData[i].text+'</li>';             
+                innerHTML += currentData[i].isSelect && (self.keyArr[key] = index) ? '<li class="option checking" style="transform: rotateX('+ -index*OPTIONS.deg +'deg) translateZ('+ OPTIONS.height/2/Math.tan(OPTIONS.deg/2/180*Math.PI) +'px);" data-key="'+ (index++) +'" data-value="'+currentData[i].value+'">'+currentData[i].text+'</li>' : '<li class="option" style="transform: rotateX('+ -index*OPTIONS.deg +'deg) translateZ('+ OPTIONS.height/2/Math.tan(OPTIONS.deg/2/180*Math.PI) +'px);" data-key="'+ (index++) +'" data-value="'+currentData[i].value+'">'+currentData[i].text+'</li>';             
             }
             innerHTML +=
                     '</ul>'+
@@ -181,6 +257,10 @@
         
         // console.log(innerHTML);
         div.innerHTML = innerHTML;
+        // 设置默认旋转到指定位置
+        for(var key in self.keyArr) {
+            div.lastElementChild.lastElementChild.children[key].lastElementChild.style.transform = 'perspective(1440px) rotateX('+ self.keyArr[key]*OPTIONS.deg +'deg)';
+        }
         // 设置初始化选中元素
         // this.lastLiEle = this.initLastLiEle(div);
         this.parentEle.appendChild(div);
@@ -302,12 +382,6 @@
      * 自定义事件相关
      * 1. 模拟tap事件
      */
-    function on(eventName, eventHandle) {
-        var event = new Event(eventName);
-        console.log(this, event);
-        this.addEventListener(event, eventHandle);
-        this.dispatchEvent(event);
-    }
 
     return Select;
 }))
