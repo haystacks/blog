@@ -18,7 +18,7 @@
     // 
     // 通过ID选择指定元素
     // 
-    // var dateTestEle = document.getElementById('dateTest');
+    var dateTestEle = document.getElementById('dateTest');
     
     /**
      * @param 参数含义注释;
@@ -33,14 +33,14 @@
      * @max 最大值
      */
 
-    // var datePicker = new Epicker({
-    //     'className'     : 'select',
-    //     'addClassName'  : 'date',
-    //     'parentEle'     : body,
-    //     'ele'           : dateTestEle,
-    //     'min'           : '20110101',
-    //     'max'           : '20201231',
-    // });
+    var datePicker = new Epicker({
+        'className'     : 'select',
+        'addClassName'  : 'date',
+        'parentEle'     : body,
+        'ele'           : dateTestEle,
+        'min'           : '20110101',
+        'max'           : '20201231',
+    });
     // 隐藏源select，这个后期可以添加配置项，是否隐藏原元素，是否把当前当前自定义选择器选择的元素赋值给原元素，然后用于表单提交，还没研究其它代码，暂时按照自己的思路走
     // dateTestEle.style.display = 'none';
 

@@ -120,8 +120,15 @@
 
         // 点击事件
         var hammer = new Hammer(ele);
-        hammer.on('tap pan', function(e) {
-            var currentTarget = e.currentTarget;
+        
+        var newDeg;
+        // 开启纵向拖动
+        hammer.get("pan").set({
+            // direction: Hammer.DIRECTION_VERTICAL
+            direction: Hammer.DIRECTION_ALL
+        });
+        hammer.on('tap panup pandown panend', function(e) {
+            var currentTarget = e.srcEvent.currentTarget;
             var target = e.target;
             // console.log('%O', currentTarget);
             // thisCurrent 当前列
@@ -131,9 +138,29 @@
                 target.nextElementSibling.style.display = 'block';
             } else if((target.tagName.toUpperCase() === 'LI' && target.parentElement.className == 'wrapper' && (thisTarget = target)) || target.parentElement.parentElement.tagName == 'LI' && (thisTarget = target.parentElement.parentElement)) {
                 if(e.type == 'tap') {
-                    isScroll.call(self, e, thisTarget);
-                } else if(e.type == 'pan') {
-                    console.log(e);
+                    isTap.call(self, e, thisTarget);
+                } else if(e.type == 'pandown' || e.type == 'panup' || e.type == 'panend') {
+                    var col = thisTarget.dataset.key;
+                    // console.log(newDeg);
+                    var deg = newDeg || thisTarget.lastElementChild.style.transform.match(/rotateX\((\d+)deg\)/)[1];
+                    newDeg = deg;
+                    newDeg = deg - Math.atan(e.deltaY/(OPTIONS.height/2/Math.tan(OPTIONS.deg/2/180*Math.PI)))/Math.PI*10;
+                    var maxDeg = (self.data.data[col].length - 1)*OPTIONS.deg;
+                    newDeg = newDeg < 0 ? 0 : (newDeg > maxDeg ? maxDeg : newDeg);
+                    thisTarget.lastElementChild.style.transform = 'perspective(1440px) rotateX('+ newDeg +'deg)';
+                    if(e.type == 'panend') {
+                        key = Math.round(newDeg/OPTIONS.deg);
+                        newDeg = key * OPTIONS.deg;
+                        /* 取消之前的选中，设置新选中 */
+                        thisTarget.lastElementChild.children[self.keyArr[col]].className = 'option';
+                        thisTarget.lastElementChild.children[key].className = 'option checking';
+                        self.keyArr[col] = key;
+                        thisTarget.lastElementChild.style.transition = '100ms ease-out';
+                        thisTarget.lastElementChild.style.transform = 'perspective(1440px) rotateX('+ newDeg +'deg)';
+                        /* 更新选中的值 */
+                        self.lastCheckEleArr[col]['value'] = thisTarget.lastElementChild.children[key].dataset.value;
+                        self.lastCheckEleArr[col]['text'] = thisTarget.lastElementChild.children[key].innerText;
+                    }
                 }
             } else if(target.tagName.toUpperCase() === 'LI') {
                 // 点击元素后获取元素的 dataKey / value / text / target
@@ -151,12 +178,6 @@
                 self.lastCheckEleArr[dataKey] = {'value': value, 'text': text, 'target': target};
                 (target.className.split(' ').indexOf('checking') === -1) && (target.className += ' checking');
             } else if(target.className.split(' ').indexOf('cancel') !== -1) {
-                // 循环遍历内容设置样式为option。情况选择值
-                for(var key in self.lastCheckEleArr) {
-                    self.lastCheckEleArr[key]['target'].className = 'option';
-                    self.lastCheckEleArr[key] = [];
-                }
-
                 currentTarget.children[1].style.display = 'none'; 
             } else if(target.className.split(' ').indexOf('confirm') !== -1) {
                 
@@ -164,17 +185,18 @@
                 for(var key in self.lastCheckEleArr) {
                     allValue += self.lastCheckEleArr[key]['value'];
                     allText += self.lastCheckEleArr[key]['text'];
-                    self.lastCheckEleArr[key] = [];
                 }
-                self.lastCheckOptionEle.innerText = allText;
+                console.log(e.srcEvent);
+                currentTarget.children[0].innerText = allText;
+                currentTarget.children[0].dataset.value = allValue;
                 currentTarget.children[1].style.display = 'none';
             }
 
         })
     }
 
-    // 滚动切换
-    function isScroll(e, thisTarget) {
+    // 点击切换
+    function isTap(e, thisTarget) {
         var self = this;
         // 点击元素后获取元素的 dataKey / value / text / target
         // 定义一个数组用户存放数据 lastCheckEleArr 
@@ -196,6 +218,11 @@
             thisTarget.lastElementChild.style.transform = 'perspective(1440px) rotateX('+ key*OPTIONS.deg +'deg)';
             self.keyArr[col] = key;
         }
+    }
+
+    // 滚动切换
+    function isScroll() {
+
     }
 
     // 根据name创建select
@@ -292,7 +319,6 @@
     // element input rewrite
     function isInput() {
         var inputEle = [].slice.call(arguments)[0];
-        console.log(inputEle);
         if(inputEle.type === 'date') {
             isInputDate.call(this, inputEle);
         } else if(inputEle.dataset.type === 'area') {
