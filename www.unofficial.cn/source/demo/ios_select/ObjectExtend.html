@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Object.extend</title>
+</head>
+<body>
+	<script>
+		function Parent() {
+			this.a = 123;
+			this.b = 456;
+		}
+
+		Parent.prototype.add = function() {
+			return this.a + this.b;
+		}
+
+		function Son() {
+			this.b = 5;
+		}
+
+		function Next() {
+
+		}
+		// var NextProto = Object.create(Parent.prototype);
+		// Next.prototype = NextProto;
+		// Next.prototype.constructor = Next;
+		Son.prototype = Parent.prototype;
+		Son.prototype.constructor = Son;
+
+
+		console.log(Parent, Son, Next);
+
+		var p = new Parent();
+
+		var s = new Son();
+
+		var n = new Next();
+
+		console.log('%O', typeof n);
+		console.log('%O', p);
+		console.log('%O', s);
+		console.log('%O', n);
+
+
+	</script>
+</body>
+</html>
