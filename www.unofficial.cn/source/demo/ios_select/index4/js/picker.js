@@ -31,6 +31,7 @@
 	}
 
 	Picker.prototype.default = DEFAULT;
+	
 	// 初始化参数
 	Picker.prototype.parse = function(options) {
 		return Object.assign({}, this.default, options);

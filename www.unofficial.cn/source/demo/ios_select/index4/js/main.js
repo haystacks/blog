@@ -5,10 +5,9 @@
     var selects = [].slice.call(selects);
     selects.forEach(function(select) {
         var picker = new Select({
-            'className'     : 'selectTest',
+            'className'     : 'select',
             'ele'           : select,
         });
-        console.log(picker);
     })
 
     // 
