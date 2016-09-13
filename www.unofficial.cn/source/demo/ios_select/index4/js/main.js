@@ -7,6 +7,7 @@
         var picker = new Select({
             'className'     : 'select',
             'ele'           : select,
+            'iconDirection' : 'right'
         });
     })
 

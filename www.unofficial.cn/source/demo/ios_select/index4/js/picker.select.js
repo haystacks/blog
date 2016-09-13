@@ -38,42 +38,21 @@
 			},
 			eleArr = [].slice.call(ele);
 
+		var details = [];
 		eleArr.forEach(function(e, k) {
 
 			// 是否选择
 			var isSelected = selectedIndex === k;
 
-			data.details[k] = {
+			details[k] = {
 				'value': e.value,
 				'text': e.textContent,
 				'isSelected': isSelected
 			}
 		})
+		data.details[0] = details;
 		data.attr.name = name;
 		this.data = data;
-	}
-
-	// 创建HTML
-	Select.prototype.makeHtml = function() {
-		var div = document.createElement('div');
-		// 设置属性
-		div.className = ''.concat(this.options.className, ' ', this.options.className, '-', this.options.popDirection);
-		div.id = this.data.attr.name;
-		// 设置子HTML主结构
-		div.innerHTML = this.options.html;
-		// 设置选中值
-		var text = '',
-			value = '';
-		this.data.selected.forEach(function(selected) {
-			text = text.concat(selected.text);
-			value = value.concat(selected.value);
-		})
-		div.firstElementChild.textContent = text;
-		div.firstElementChild.dataset.value = value;
-		div.firstElementChild.className = this.options.className.concat('-', 'selected', '-', this.options.typeName);
-		// 添加到document父元素下
-        this.options.parentEle.appendChild(div);
-        console.log('%O', div);
 	}
 
 	// 全局化
