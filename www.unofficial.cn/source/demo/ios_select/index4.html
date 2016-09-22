@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="index4/css/style.css">
 </head>
 <body>
-    <button id="button">Button</button>
+    <div id="button" style="background: #333; width: 200px; height: 200px;">
+        <div id="button1" style="width: 100px; height: 100px; background: #eee;"></div>
+    </div>
+    
     <!-- origin select -->
     <select name="x">
         <option value="11">第一项</option>
@@ -26,5 +29,10 @@
     <!-- script src="index4/js/picker.select.js"></script -->
     <!-- 普通选择器插件 -->
     <script src="index4/js/main.js"></script>
+    <script>
+        document.getElementById('button1').addEventListener('click', function(e) {
+            console.log('触发click点击了');
+        })
+    </script>
 </body>
 </html>

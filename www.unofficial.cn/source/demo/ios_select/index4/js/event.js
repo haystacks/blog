@@ -3,6 +3,10 @@
  */
 ;(function(root) {
 
+	// 常量
+	var isTouchEnd = true,
+		toucher;
+
 	// 仅仅封装了部分事件
 	function Somevent(ele, eventName, eventHandle) {
 		// ele.addEventListener(eventName, eventHandle);
@@ -16,8 +20,15 @@
 	// 触摸开始
 	Somevent.prototype.start = function() {
 		this.ele.addEventListener('touchstart', function(e) {
-			console.log('start', e);
+			// 第一触摸点 时间 位置
+			isTouchEnd = false;
+			toucher = e.touches[0];
+			// e.preventDefault();
 		})
+	}
+	// 触摸移动
+	Somevent.prototype.move = function() {
+
 	}
 	// 触摸结束
 	Somevent.prototype.end = function() {
@@ -25,8 +36,10 @@
 		this.ele.addEventListener('touchend', function(e) {
 			console.log('end', e);
 			//
-			
-			self.dispatch();	
+			console.log(isTouchEnd, toucher);
+			console.log(self.ele == toucher.target)
+			self.dispatch();
+			e.preventDefault();	
 		})
 	}			
 
