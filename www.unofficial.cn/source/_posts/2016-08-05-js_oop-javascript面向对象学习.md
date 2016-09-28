@@ -8,7 +8,7 @@ tags:
 - oop
 - 面向对象
 ---
-![beauty.jpg](http://ww4.sinaimg.cn/large/e6cd2709gw1f5xvfrii2nj20u00m2mzp.jpg)
+![beauty.jpg](//ww4.sinaimg.cn/large/e6cd2709gw1f5xvfrii2nj20u00m2mzp.jpg)
 
 ### 对象
 JavaScript本身是一门面向对象的语言，JavaScript所有变量都可以当作对象使用（这里是说可以当对象使用，并不是说均是对象，应该理解为可以通过点操作符来调用一些属性方法），除了两个例外 null 和 undefined。  
@@ -269,7 +269,7 @@ let f = new Foo();
 console.log(f.getName());
 ```
 当我们使用** console.log('%O', f) **;时，返回的Foo对象和之前ES5通过function模拟的类实例的对象是一致的。  
-![ES6](http://ww4.sinaimg.cn/mw690/e6cd2709gw1f5xvfs74fhj20b4091t9a.jpg)  
+![ES6](//ww4.sinaimg.cn/mw690/e6cd2709gw1f5xvfs74fhj20b4091t9a.jpg)  
 
 * ** use strict **   
 必须在严格模式下执行
@@ -515,7 +515,7 @@ function addMethods(source) {
 
 ### 面向对象是什么？
 面向对象编程最美的调侃就是，“我还是单身，我是不是不适合面向对象编程”。也许是的，但是如果你能在脑海中抽象出类，需要的时候撸一发，对象迟早会有的。  
-![OOP](http://ww3.sinaimg.cn/mw690/e6cd2709gw1f67fndl7tfj207m054q2w.jpg)  
+![OOP](//ww3.sinaimg.cn/mw690/e6cd2709gw1f67fndl7tfj207m054q2w.jpg)  
 面向对象是一种编程的范式方法，面向对象中的对象是类的实例，类是属性，方法的集合，对于一类对象可能有公共的行为与样式，** 封装 ** 在一起就形成了类。如果具体到这个类的一个子类型（狗与阿拉斯加雪橇犬），阿拉斯加肯定是狗，，既有狗的特性，但是同时他又有自己的特点，于是乎 ** 继承 ** 了狗类的一些行为。这是如果在拿来一直猫，猫和狗又都属于动物类，这事又可以抽象出一个动物类，他们都会叫，狗是汪汪汪，猫是喵喵喵，这个是叫的多种表现形式，被称为 ** 多态 **。  
 
 面向对象提高了程序的重用性，对于模块化开发以及重构等都带来很多好处。  
@@ -526,9 +526,9 @@ function addMethods(source) {
 
 
 ### 参考资料
-[JavaScript 秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)  
-[强大的原型和原型链](http://www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)  
-[JavaScript isPrototypeOf vs instanceof usage](http://stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage)  
-[Classes in ECMAScript 6 (final semantics)](http://www.2ality.com/2015/02/es6-classes-final.html)  
+[JavaScript 秘密花园](//bonsaiden.github.io/JavaScript-Garden/zh/)  
+[强大的原型和原型链](//www.cnblogs.com/TomXu/archive/2012/01/05/2305453.html)  
+[JavaScript isPrototypeOf vs instanceof usage](//stackoverflow.com/questions/18343545/javascript-isprototypeof-vs-instanceof-usage)  
+[Classes in ECMAScript 6 (final semantics)](//www.2ality.com/2015/02/es6-classes-final.html)  
 [prototype.js](https://github.com/sstephenson/prototype/tree/master)  
 [面向对象程序设计](https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1)

@@ -21,23 +21,23 @@ date: 2016-08-25 08:56:00
 > 一句话翻译：在基于x64位处理器的电脑上安装版本号大于14316的64位操作系统
 
 #### 如何查看系统版本号？
-![系统版本号](/blog/assets/imgs/20160825/osversion.png) 
+![系统版本号](/assets/imgs/20160825/osversion.png) 
 > 开始 - 设置 - 系统 - 关于，关注OS系统 和 系统类型
 
 #### 如果系统版本号低了怎么办？
 [立即更新](https://www.microsoft.com/zh-cn/software-download/windows10) 下载系统更新工具更新
 
 ### 开发者模式
-![开发者模式](/blog/assets/imgs/20160825/develop.png)
+![开发者模式](/assets/imgs/20160825/develop.png)
 > 开始 - 设置 - 更新和安全 - 针对开发人员 - 开发人员模式
 
 ### 开启新特性
-![搜索 特性](/blog/assets/imgs/20160825/search.png)  
-![勾选子系统](/blog/assets/imgs/20160825/checked.png)  
+![搜索 特性](/assets/imgs/20160825/search.png)  
+![勾选子系统](/assets/imgs/20160825/checked.png)  
 > 开始 - 设置 - 搜索‘特性’ - 启用或关闭windows功能 - 适用于 Linux 的 Windows 子系统 - 重启生效
 
 ### 安装系统
-![安装](/blog/assets/imgs/20160825/install.png)  
+![安装](/assets/imgs/20160825/install.png)  
 > 开始（右键） - 运行 - 搜索‘bash’ - 回复‘y’
 
 到这里安装win10 子系统就完成了，接下来开始愉快的玩耍了~

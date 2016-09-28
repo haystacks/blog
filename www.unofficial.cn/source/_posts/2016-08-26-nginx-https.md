@@ -8,11 +8,11 @@ categories:
 date: 2016-08-26 16:34:43
 ---
 
-刚刚才安装了win10 的ubuntu子系统，迫不及待的想学习一下https服务器端配置，如何开启可以看这里《[bash on ubuntu on windows](/blog/2016/08/25/windows-10-上运行Ubuntu.html)》  
+刚刚才安装了win10 的ubuntu子系统，迫不及待的想学习一下https服务器端配置，如何开启可以看这里《[bash on ubuntu on windows](/2016/08/25/windows-10-上运行Ubuntu.html)》  
 <!-- more -->
 
 ### 安装准备
-* [nginx](http://nginx.org/en/linux_packages.html#stable)
+* [nginx](//nginx.org/en/linux_packages.html#stable)
 * [Let's Encrypt](https://letsencrypt.org/)
 
 服务器这里选用的是 **nginx** ，证书用的是开源免费证书 **Let's Encrypt** 。
@@ -31,7 +31,7 @@ date: 2016-08-26 16:34:43
     \* nginx is running
 
 例如我设置的端口是8080，访问 **localhost:8080** 就可以看到如下欢迎界面  
-![welcome to nginx](/blog/assets/imgs/20160825/welcome-to-nginx.png)
+![welcome to nginx](/assets/imgs/20160825/welcome-to-nginx.png)
 
 #### 可能存在的报错
 * port ?
@@ -88,7 +88,7 @@ certbot-auto certonly --webroot -w /usr/share/nginx/html -d dev.unofficial.cn
 #### check key
 验证key是怎么做的？
 
-![](/blog/assets/imgs/20160825/letsencrypt.png)  
+![](/assets/imgs/20160825/letsencrypt.png)  
 由于权限问题不能看到生成的fullchain.pem，也就不能继续配置学习，后续继续完善学习一下。  
 
 #### 可能存在的问题

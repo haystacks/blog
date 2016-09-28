@@ -12,7 +12,11 @@
 	<link rel="stylesheet" href="<%= url_for(theme.stylePath) %>">
 </head>
 <body>
-	<header>
+	<!-- 强势插入引导页 -->
+	<% if(isHome) { %>
+		<%- partial('_partial/default') %>
+	<% } %>
+	<header id="blog">
 		<div class="menu clearfix">
 			<a class="logo" href="/"><%= theme.logo %></a>
 			

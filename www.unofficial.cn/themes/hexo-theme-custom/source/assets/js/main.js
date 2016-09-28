@@ -8,7 +8,7 @@
             keys.push(v.id);
         })
         
-        var url = "http://api.duoshuo.com/threads/counts.jsonp?short_name="+ short_name +"&threads=" + keys.join(',');
+        var url = "//api.duoshuo.com/threads/counts.jsonp?short_name="+ short_name +"&threads=" + keys.join(',');
         $.ajax({
             dataType: "jsonp",
             url: url,

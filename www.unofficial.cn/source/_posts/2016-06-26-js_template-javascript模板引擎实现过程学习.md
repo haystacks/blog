@@ -56,7 +56,7 @@ js 模板引擎是不是一样的道理呢？
 ### 如何实现一个js模板引擎？
 是不是也是和php一样的道理？把数据分配给模板，然后用js把模板标签替换成数据。  
 
-<script async src="http://jsfiddle.net/unofficial/sm14vx4x/embed/js,html,result/"></script>
+<script async src="//jsfiddle.net/unofficial/sm14vx4x/embed/js,html,result/"></script>
 
 如果情况是上述这样只是将一个模板变量替换成js变量字符串，我们又何必那么大费周折。还不如直接这样：  
 ```
@@ -71,7 +71,7 @@ js 模板引擎是不是一样的道理呢？
 
 道理好像是这么一个道理，我们就稍微来复杂一些的，比如说一个之前我遇到过一个phpcms模板方面的问题，当时是另外一个同事在cms模板页面用js模板写了一个列表，后来我需要修改这个模板，我只是本着觉得奇怪就把js模板修改成了拼接字符串的，后来想想我还是挺执着的，竟然拼出来了。   
 
-<script async src="http://jsfiddle.net/unofficial/sm14vx4x/1/embed/js,html,result/"></script>
+<script async src="//jsfiddle.net/unofficial/sm14vx4x/1/embed/js,html,result/"></script>
 
 但是如果能将代码写成模板代码是不是要好一些呢？希望这样也能像上面的代码一样输出文字。  
 ```
@@ -149,12 +149,12 @@ templateStr = ''.concat( 'var temp=[];', 'temp.push(\'', templateStr, '\');', 'r
 
 这里涉及到一个关于  ``` apply ``` 基础知识的应用，注意与 ``` call ``` 区别。  
 
-<script async src="http://jsfiddle.net/unofficial/sm14vx4x/2/embed/js,html,result/"></script>
+<script async src="//jsfiddle.net/unofficial/sm14vx4x/2/embed/js,html,result/"></script>
 
 ### 回顾总结
 一开始还是蛮担心能不能完成这篇博客，毕竟还没这么认真完成过轮子的构造。庆幸有一个诱惑在前面，最后坚持完成了。不得不给自己点赞一下。  
 在这个过程中，发现了一些问题，并想办法解决掉了遇到的问题，在参考的基础上给予了自己的想法，这个过程还是挺美妙的。这只是一个开始，如果要仔细看这个程序，还有很多地方需要优化改善，不断学习，才能更好的优化自己的程序。  
 
 ### 参考资料
-* http://www.cnblogs.com/hustskyking/p/principle-of-javascript-template.html
-* http://www.cnblogs.com/dolphinX/p/3489269.html
+* //www.cnblogs.com/hustskyking/p/principle-of-javascript-template.html
+* //www.cnblogs.com/dolphinX/p/3489269.html

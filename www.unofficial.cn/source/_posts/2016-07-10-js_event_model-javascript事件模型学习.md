@@ -23,9 +23,9 @@ JavaScript是没有线程概念的，所谓的单线程也只是相对浏览器�
 呈现引擎采用了单线程。几乎所有操作（除了网络操作）都是在单线程中进行的。在 Firefox 和 Safari 中，该线程就是浏览器的主线程。而在 Chrome 浏览器中，该线程是标签进程的主线程。  
 网络操作可由多个并行线程执行。并行连接数是有限的（通常为 2 至 6 个，以 Firefox 3 为例是 6 个）。  
 浏览器的主线程是事件循环。它是一个无限循环，永远处于接受处理状态，并等待事件（如布局和绘制事件）发生，并进行处理。  
-![event_loop.png](http://ww1.sinaimg.cn/large/e6cd2709gw1f5nupf6frej208607it8n.jpg)  
+![event_loop.png](//ww1.sinaimg.cn/large/e6cd2709gw1f5nupf6frej208607it8n.jpg)  
 如何解释客户端中的JavaScript是单线程的例子？  
-<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/embed/js/dark/"></script>  
+<script async src="//jsfiddle.net/unofficial/rwb7qm9z/embed/js/dark/"></script>  
 
 > 输出运行结果
 
@@ -106,7 +106,7 @@ test: 14.000ms
 
 * 事件对象（event object）
  事件对象是与特定事件相关并且包含该事件的详细信息。事件对象作为参数传递给事件处理程序（IE8以下的浏览器事件对象需要通过全局变量event），事件对象中都有type属性（事件类型）和targe属性（事件目标），以及其他一些附加信息。鼠标事件对象中包含鼠标位置坐标，键盘事件对象包含相关的键的详细信息，等等。  
- <script async src="http://jsfiddle.net/unofficial/rwb7qm9z/1/embed/"></script>
+ <script async src="//jsfiddle.net/unofficial/rwb7qm9z/1/embed/"></script>
 
  * target vs currentTarget
  	* 事件对象中包含target与currentTarget
@@ -117,7 +117,7 @@ test: 14.000ms
 * 事件传播 冒泡（event propagation）
  浏览器决定某元素触发其事件处理程序的过程。事件目标上注册的事件处理函数被调用后，大部分事件都会传播到DOM根元素上。  
   
- 	<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/2/embed/"></script>  
+ 	<script async src="//jsfiddle.net/unofficial/rwb7qm9z/2/embed/"></script>  
 
  	通过Demo可以得出以下结论：  
 
@@ -127,7 +127,7 @@ test: 14.000ms
 	* 同一事件目标可以通过addEventListener为其绑定事件类型时注册多个事件处理函数
 	* 元素button通过onclick最后设置的事件处理函数不会被通过addEventListener注册的事件处理函数覆盖，并且onclick以最后一次设置的为准，按照注册事件处理函数的顺序依次累计在消息队列中
 
- 	<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/3/embed/"></script>
+ 	<script async src="//jsfiddle.net/unofficial/rwb7qm9z/3/embed/"></script>
 
  	通过Demo可以总结如下：
 
@@ -138,7 +138,7 @@ test: 14.000ms
 * 事件捕获 捕获（event capturing）
 	冒泡（事件传播，冒泡描述起来更形象一些，水中的气泡是不是由里问往外冒？）中提到addEventListener有第三个参数，第三个参数不设置的时候默认为false，那么是不是也可以设置为true，答案是肯定的，事实证明addEventListener注册的事件存在3个阶段，第一个阶段是设置true的时候，这里称为事件捕获，第二个阶段是事件目标本身的事件处理函数被调用，第三阶段才是被设置为false的时候，就是这里提到的冒泡。  
 
-	<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/4/embed/"></script>
+	<script async src="//jsfiddle.net/unofficial/rwb7qm9z/4/embed/"></script>
 
 	**
 	// 捕获 执行 冒泡
@@ -159,15 +159,15 @@ test: 14.000ms
 		* 在addEventListener中事件处理函数中调用事件对象的 ** preventDefault ** 方法取消事件的默认操作
 		* IE9以下版本通过设置returnValue为false来取消事件的默认操作
 
-		<!-- <script async src="http://jsfiddle.net/unofficial/rwb7qm9z/5/embed/"></script> -->
-		<script async src="http://jsfiddle.net/unofficial/6xqe5c1q/embed/"></script>
+		<!-- <script async src="//jsfiddle.net/unofficial/rwb7qm9z/5/embed/"></script> -->
+		<script async src="//jsfiddle.net/unofficial/6xqe5c1q/embed/"></script>
 
 	* 取消事件传播
 		* addEventListener中通过stopPropagation方法阻止了其它事件对象上的处理函数不被执行，自身上的其它事件处理函数还是会被执行
 		* stopImmediatePropagation不仅阻止了其它事件对象上的处理函数不被执行外，还阻止了自身上的其它事件处理函数被执行，取消事件传播当前函数后续函数体内容还是会继续执行
 		* IE9以下版本的浏览器中通过设置属性cancelBubble的值为true可以阻止事件传播
 
-		<script async src="http://jsfiddle.net/unofficial/rwb7qm9z/6/embed/"></script>
+		<script async src="//jsfiddle.net/unofficial/rwb7qm9z/6/embed/"></script>
 
 * 事件派发/事件广播 dispatchEvent
  ** dispatchEvent ** 之前也只没有深入了解过这个，这里参考MDN的资料学习一下。  
@@ -202,11 +202,11 @@ test: 14.000ms
 
  不难看出事件代理有这么多优点，我们是不是随时都可以使用呢？例如我们是不是可以直接将事件代理到document上或者更上层，这样的话我们只是就可以坐享方便与快捷了呢？多数情况仅使用在上述描述的为多个子元素注册使用事件代理。  
  
- <script async src="http://jsfiddle.net/unofficial/1ff08dg8/embed/"></script>
+ <script async src="//jsfiddle.net/unofficial/1ff08dg8/embed/"></script>
  
  如果封装一个delegate函数呢？
 
- <script async src="http://jsfiddle.net/unofficial/yjhrbdtp/1/embed/"></script>
+ <script async src="//jsfiddle.net/unofficial/yjhrbdtp/1/embed/"></script>
 
 ```
 	// 构造方法 
@@ -463,26 +463,26 @@ fastclick的readme的描述说，fastclick就是为了解决物理设备点击�
 
 描述讲清楚这里原理，还是回到click上来。初始化一个鼠标事件，然后触发自定义的点击事件。即将touch事件在最后还是换成了立即触发的click事件。  
 为什么这么做，这么做有什么好处，由于涉及到移动端还不够深入，至于问题方面遇见的也不够，所以更多的也不是太清楚，这一点还希望后面有机会遇见问题，找到为什么要这么处理问题，这个才是我的关键之处。  
-透过钗哥的文章也没能很好的理解其中的问题，他提到了一些tap会引发的问题，我在测试 http://sandbox.runjs.cn/show/8ruv88rb 的时候，tap与fastclick差别其实不大，这里也就不是很理解，也不过多描述，待后续分析补充。  
+透过钗哥的文章也没能很好的理解其中的问题，他提到了一些tap会引发的问题，我在测试 //sandbox.runjs.cn/show/8ruv88rb 的时候，tap与fastclick差别其实不大，这里也就不是很理解，也不过多描述，待后续分析补充。  
 
 ### 实践出真知
 通过上文对于事件的学习，以及移动端事件的学习，实现一个简单的滑动库  
 这是一个不完整的demo，敲一会儿代码被一些事件耽搁一下，一会又被耽搁一下，思路也不清晰，找时间重新再写。毕竟之前也实现过都是可行的，只是这次是按照上面学习的知识点再综合理解来实现，结果还不如从前了，哈哈哈~  
 整理整理思路，重新再来！  
-<script async src="http://jsfiddle.net/unofficial/8gykht86/embed/"></script>  
+<script async src="//jsfiddle.net/unofficial/8gykht86/embed/"></script>  
 重写后还是有些小问题。  
 <iframe src="/demo/js_event_model/swipe.html" frameborder="0"></iframe>
 ### 参考资料
-* [如何证明JavaScript是单线程的？](http://www.zhihu.com/question/31982417)
+* [如何证明JavaScript是单线程的？](//www.zhihu.com/question/31982417)
 * [EventLoop - MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop)
-* [JavaScript 运行机制详解：再谈Event Loop](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
-* [JavaScript单线程和浏览器事件循环简述](http://www.cnblogs.com/whitewolf/p/javascript-single-thread-and-browser-event-loop.html)
-* [深入解析浏览器的幕后工作原理](http://www.cnblogs.com/lhb25/p/how-browsers-work.html)
+* [JavaScript 运行机制详解：再谈Event Loop](//www.ruanyifeng.com/blog/2014/10/event-loop.html)
+* [JavaScript单线程和浏览器事件循环简述](//www.cnblogs.com/whitewolf/p/javascript-single-thread-and-browser-event-loop.html)
+* [深入解析浏览器的幕后工作原理](//www.cnblogs.com/lhb25/p/how-browsers-work.html)
 * [EventTarget.dispatchEvent](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/dispatchEvent)
-* [Events-EventTarget-dispatchEvent](http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget-dispatchEvent)
-* [http://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html](http://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html)
-* [http://www.w3.org/TR/touch-events/#introduction](http://www.w3.org/TR/touch-events/#introduction)
+* [Events-EventTarget-dispatchEvent](//www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget-dispatchEvent)
+* [//www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html](//www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html)
+* [//www.w3.org/TR/touch-events/#introduction](//www.w3.org/TR/touch-events/#introduction)
 * [https://github.com/madrobby/zepto](https://github.com/madrobby/zepto)
-* [http://www.cnblogs.com/yexiaochai/p/3462657.html](http://www.cnblogs.com/yexiaochai/p/3462657.html)
+* [//www.cnblogs.com/yexiaochai/p/3462657.html](//www.cnblogs.com/yexiaochai/p/3462657.html)
 * [https://github.com/ftlabs/fastclick](https://github.com/ftlabs/fastclick)
 * [https://developers.google.com/mobile/articles/fast_buttons](https://developers.google.com/mobile/articles/fast_buttons)

@@ -2,14 +2,9 @@
  * Home 网站引导页
  */
 
-html {
-    height: 100%;
-}
-
-body {
-    @extend html;
-
+.page {
     @include jianbian(#00BCD4, #e5e5be);
+    height: 100VH;
 }
 
 .home {

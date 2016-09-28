@@ -12,17 +12,17 @@ tags:
 ### transform
 transform的翻译为变换/转换，在css中可以修改模型所在的空间位置。表明位置就需要坐标系，空间位置就需要空间坐标系。
 * 纯手工坐标系
-![坐标系](/blog/assets/imgs/20160906/20160906092758.jpg)
+![坐标系](/assets/imgs/20160906/20160906092758.jpg)
 * 纯手工空间坐标系
-![空间坐标系](/blog/assets/imgs/20160906/20160906092839.jpg)
+![空间坐标系](/assets/imgs/20160906/20160906092839.jpg)
 
 transform可以通过设置属性值来移动（translate）/旋转（rotate）/缩放（scale）/倾斜（skew）元素。
 
 * 创建一个元素小黑（原始位置），然后向左**移动**元素100px
-![translate](/blog/assets/imgs/20160906/translate.png)
+![translate](/assets/imgs/20160906/translate.png)
 > 注：原点位置（0, 0）在左上方位置，translate3d时z坐标也是0，即为桌面平面  
 * 创建一个元素小黑（原始位置），然后正向**旋转**元素45度
-![rotate](/blog/assets/imgs/20160906/rotate.png)
+![rotate](/assets/imgs/20160906/rotate.png)
  旋转时绕x轴转的时候rotateX、y轴rotateY、z轴rotateZ
  **存在的问题**
  * rotate3d(x, y, z, α)？
@@ -30,10 +30,10 @@ transform可以通过设置属性值来移动（translate）/旋转（rotate）/
 
  > 注：原点位置（0, 0）在中心位置  
 * 创建一个元素小黑（原始位置），然后**缩放**元素到原始的1.2倍
-![scale](/blog/assets/imgs/20160906/scale.png)
+![scale](/assets/imgs/20160906/scale.png)
  > 注：原点位置（0, 0）在中心位置
 * 创建一个元素小黑（原始位置），然后**倾斜**元素5度
-![skew](/blog/assets/imgs/20160906/skew.png)
+![skew](/assets/imgs/20160906/skew.png)
  > 注：原点位置（0, 0）在中心位置，中轴线为x轴
 
 ### transform-origin
