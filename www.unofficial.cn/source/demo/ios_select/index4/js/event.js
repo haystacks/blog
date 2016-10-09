@@ -19,7 +19,7 @@
 
 	// 触摸开始
 	Somevent.prototype.start = function() {
-		this.ele.addEventListener('touchstart', function(e) {
+		window.addEventListener('touchstart', function(e) {
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
 			toucher = e.touches[0];
@@ -33,19 +33,16 @@
 	// 触摸结束
 	Somevent.prototype.end = function() {
 		var self = this;
-		this.ele.addEventListener('touchend', function(e) {
-			console.log('end', e);
-			//
-			console.log(isTouchEnd, toucher);
-			console.log(self.ele == toucher.target)
+		window.addEventListener('touchend', function(e) {
 			self.dispatch();
-			e.preventDefault();	
+			// e.preventDefault();	
 		})
 	}			
 
 	// 派发事件
 	Somevent.prototype.dispatch = function() {
-		var event = new Event(this.eventName);
+		var event = new MouseEvent('click');
+		window.addEventListener('click', this.eventHandle)
 		this.ele.addEventListener(this.eventName, this.eventHandle);
 		this.ele.dispatchEvent(event);
 	}
