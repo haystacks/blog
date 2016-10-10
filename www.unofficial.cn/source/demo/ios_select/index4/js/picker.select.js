@@ -14,13 +14,17 @@
 		this.options = this.parse(options);
 		// if data ? makeHtml
 		this.makeHtml();
-		// 注册事件
+		// 注册点击事件
 		new Somevent(document.getElementById(options.ele.name), 'tap', function(e) {
 			if( e.target.firstElementChild.className == 'select-selected-value' && e.target.lastElementChild.style.display == 'none' ) {
 				e.target.lastElementChild.style.display = 'block';
 			} else {
 				e.target.lastElementChild.style.display = 'none';
 			}
+		})
+		// 注册滑动事件
+		new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
+			console.log(123);
 		})
 	}
 	// 继承Picker

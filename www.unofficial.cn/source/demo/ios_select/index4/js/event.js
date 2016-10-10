@@ -5,6 +5,7 @@
 
 	// 常量
 	var isTouchEnd = true,
+		isPc = !/iphone|android/.test(navigator.userAgent.toLowerCase()),
 		toucher;
 
 	// 仅仅封装了部分事件
@@ -21,9 +22,11 @@
 
 	// 触摸开始
 	Somevent.prototype.start = function() {
-		this.ele.addEventListener('touchstart', function(e) {
+		var eventName = isPc ? 'mousedown' : 'touchstart';
+		this.ele.addEventListener(eventName, function(e) {
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
+			console.log(e);
 			toucher = e.touches[0];
 			// e.preventDefault();
 		})
@@ -35,7 +38,8 @@
 	// 触摸结束
 	Somevent.prototype.end = function() {
 		var self = this;
-		this.ele.addEventListener('touchend', function(e) {
+		var eventName = isPc ? 'mouseup' : 'touchend';
+		this.ele.addEventListener(eventName, function(e) {
 			self.dispatch();
 			e.preventDefault();	
 		})
