@@ -14,6 +14,14 @@
 		this.options = this.parse(options);
 		// if data ? makeHtml
 		this.makeHtml();
+		// 注册事件
+		new Somevent(document.getElementById(options.ele.name), 'tap', function(e) {
+			if( e.target.firstElementChild.className == 'select-selected-value' && e.target.lastElementChild.style.display == 'none' ) {
+				e.target.lastElementChild.style.display = 'block';
+			} else {
+				e.target.lastElementChild.style.display = 'none';
+			}
+		})
 	}
 	// 继承Picker
 	Select.prototype = Object.create(root.Picker.prototype);

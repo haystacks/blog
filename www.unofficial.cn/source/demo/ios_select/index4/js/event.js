@@ -9,7 +9,9 @@
 
 	// 仅仅封装了部分事件
 	function Somevent(ele, eventName, eventHandle) {
-		// ele.addEventListener(eventName, eventHandle);
+		// 注册事件
+		ele.addEventListener(eventName, eventHandle);
+		// 属性
 		this.ele = ele;
 		this.eventName = eventName;
 		this.eventHandle = eventHandle;
@@ -19,7 +21,7 @@
 
 	// 触摸开始
 	Somevent.prototype.start = function() {
-		window.addEventListener('touchstart', function(e) {
+		this.ele.addEventListener('touchstart', function(e) {
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
 			toucher = e.touches[0];
@@ -33,17 +35,15 @@
 	// 触摸结束
 	Somevent.prototype.end = function() {
 		var self = this;
-		window.addEventListener('touchend', function(e) {
+		this.ele.addEventListener('touchend', function(e) {
 			self.dispatch();
-			// e.preventDefault();	
+			e.preventDefault();	
 		})
 	}			
 
 	// 派发事件
 	Somevent.prototype.dispatch = function() {
-		var event = new MouseEvent('click');
-		window.addEventListener('click', this.eventHandle)
-		this.ele.addEventListener(this.eventName, this.eventHandle);
+		var event = new Event(this.eventName);
 		this.ele.dispatchEvent(event);
 	}
 

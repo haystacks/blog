@@ -52,7 +52,11 @@
 
     
     // 测试Event
-    new Somevent(document.getElementById('button'), 'tap', function(e) {
-        console.log(e);
-    })
+    // new Somevent(document.getElementById('button1'), 'tap', function(e) {
+    //     console.log(e);
+    // })
+
+    // new Somevent(document.getElementById('button'), 'tap', function(e) {
+    //     console.log(e);
+    // })
 }()
