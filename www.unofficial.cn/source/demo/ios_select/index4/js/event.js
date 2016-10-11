@@ -11,7 +11,10 @@
 	// 仅仅封装了部分事件
 	function Somevent(ele, eventName, eventHandle) {
 		// 注册事件
-		ele.addEventListener(eventName, eventHandle);
+		var self = this;
+		ele.addEventListener(eventName, function(e) {
+			eventHandle(self._e);
+		});
 		// 属性
 		this.ele = ele;
 		this.eventName = eventName;
@@ -26,8 +29,7 @@
 		this.ele.addEventListener(eventName, function(e) {
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
-			console.log(e);
-			toucher = e.touches[0];
+			toucher = e.type == 'touchstart' ? e.touches[0] : e;
 			// e.preventDefault();
 		})
 	}
@@ -39,9 +41,15 @@
 	Somevent.prototype.end = function() {
 		var self = this;
 		var eventName = isPc ? 'mouseup' : 'touchend';
+
+		// 判断当前是什么事件
+		var currentType = this.whatEvent();
 		this.ele.addEventListener(eventName, function(e) {
-			self.dispatch();
-			e.preventDefault();	
+			self._e = e;
+			if(currentType == self.eventName) {
+				self.dispatch();
+			}
+			e.preventDefault();
 		})
 	}			
 
@@ -49,6 +57,11 @@
 	Somevent.prototype.dispatch = function() {
 		var event = new Event(this.eventName);
 		this.ele.dispatchEvent(event);
+	}
+
+	// 根据end与start的时间与距离判断事件类型
+	Somevent.prototype.whatEvent = function() {
+		return 'pan';
 	}
 
 	root.Somevent = Somevent;

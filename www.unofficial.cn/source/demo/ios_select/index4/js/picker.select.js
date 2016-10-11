@@ -16,15 +16,23 @@
 		this.makeHtml();
 		// 注册点击事件
 		new Somevent(document.getElementById(options.ele.name), 'tap', function(e) {
-			if( e.target.firstElementChild.className == 'select-selected-value' && e.target.lastElementChild.style.display == 'none' ) {
-				e.target.lastElementChild.style.display = 'block';
-			} else {
-				e.target.lastElementChild.style.display = 'none';
+			if( e.target.className == 'select-selected-value' ) {
+				e.target.nextElementSibling.style.display = e.target.nextElementSibling.style.display == 'none' ? 'block' : 'none';
+			} else if( [].slice.call(e.target.classList).indexOf('cancel') != -1 ) {
+				// 取消
+				e.path[2].style.display = 'none';
+			} else if( [].slice.call(e.target.classList).indexOf('confirm') != -1 ) {
+				// 确认
+				e.path[2].style.display = 'none';
+				console.log('确认操作');
 			}
 		})
 		// 注册滑动事件
 		new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
-			console.log(123);
+			if(e.nodeName == 'li' && e.path[1].className == 'wrapper') {
+				// 滑动当前列
+				console.log(this.getIndex(e.target));
+			}
 		})
 	}
 	// 继承Picker

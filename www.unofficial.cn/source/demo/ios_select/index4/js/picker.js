@@ -85,11 +85,11 @@
 		}, this)
 
 
-		wrapper.addEventListener('click', function(e) {
-			if(e.target.tagName === 'LI') { // 
-				console.log(this.getIndex(e.target));
-			}
-		}.bind(this))
+		// wrapper.addEventListener('click', function(e) {
+		// 	if(e.target.tagName === 'LI') { // 
+		// 		console.log(this.getIndex(e.target));
+		// 	}
+		// }.bind(this))
 	}
 
 	// 设置一列中的元素结构
