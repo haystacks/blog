@@ -19,7 +19,10 @@
 		this.ele = ele;
 		this.eventName = eventName;
 		this.eventHandle = eventHandle;
+		
+		// 注册鼠标事件与触摸事件
 		this.start();
+		this.move();
 		this.end();
 	}
 
@@ -35,7 +38,14 @@
 	}
 	// 触摸移动
 	Somevent.prototype.move = function() {
-
+		var self = this;
+		var eventName = isPc ? 'mousemove' : 'touchmove';
+		this.ele.addEventListener(eventName, function(e) {
+			if(!isTouchEnd) { // 鼠标或者触摸未结束
+				self.dispatch('pan');
+			}
+			// e.preventDefault();
+		})
 	}
 	// 触摸结束
 	Somevent.prototype.end = function() {
@@ -43,12 +53,11 @@
 		var eventName = isPc ? 'mouseup' : 'touchend';
 
 		// 判断当前是什么事件
-		var currentType = this.whatEvent();
+		// var currentType = this.whatEvent();
 		this.ele.addEventListener(eventName, function(e) {
 			self._e = e;
-			if(currentType == self.eventName) {
-				self.dispatch();
-			}
+			self.dispatch('tap');
+			isTouchEnd = true;
 			e.preventDefault();
 		})
 	}			
@@ -60,9 +69,9 @@
 	}
 
 	// 根据end与start的时间与距离判断事件类型
-	Somevent.prototype.whatEvent = function() {
-		return 'pan';
-	}
+	// Somevent.prototype.whatEvent = function() {
+	// 	return 'tap';
+	// }
 
 	root.Somevent = Somevent;
 })(window)
