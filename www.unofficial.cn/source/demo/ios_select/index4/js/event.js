@@ -60,11 +60,11 @@
 			isTouchEnd = true;
 			e.preventDefault();
 		})
-	}			
+	}
 
 	// 派发事件
-	Somevent.prototype.dispatch = function() {
-		var event = new Event(this.eventName);
+	Somevent.prototype.dispatch = function(eventName) {
+		var event = new Event(eventName);
 		this.ele.dispatchEvent(event);
 	}
 
