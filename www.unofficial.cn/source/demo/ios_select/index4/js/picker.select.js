@@ -16,9 +16,9 @@
 		this.makeHtml();
 		// 注册点击事件
 		new Somevent(document.getElementById(options.ele.name), 'tap', function(e) {
+			console.log(e);
 			if( e.target.className == 'select-selected-value' ) {
-				console.log(e.target.nextElementSibling.style.display);
-				// e.target.nextElementSibling.style.display = e.target.nextElementSibling.style.display == 'none' ? 'block' : 'none';
+				e.target.nextElementSibling.style.display = e.target.nextElementSibling.style.display == 'none' ? 'block' : 'none';
 			} else if( [].slice.call(e.target.classList).indexOf('cancel') != -1 ) {
 				// 取消
 				e.path[2].style.display = 'none';
@@ -32,6 +32,7 @@
 		})
 		// 注册滑动事件
 		new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
+			// console.log(e);
 			if(e.target.nodeName == 'li' && e.target.path[1].className == 'wrapper') {
 				// 滑动当前列
 				console.log(123);

@@ -5,6 +5,7 @@
 
 	// 常量
 	var isTouchEnd = true,
+		isPan = false,
 		isPc = !/iphone|android/.test(navigator.userAgent.toLowerCase()),
 		toucher;
 
@@ -28,8 +29,10 @@
 
 	// 触摸开始
 	Somevent.prototype.start = function() {
+		var self = this;
 		var eventName = isPc ? 'mousedown' : 'touchstart';
 		this.ele.addEventListener(eventName, function(e) {
+			self._e = e;
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
 			toucher = e.type == 'touchstart' ? e.touches[0] : e;
@@ -42,7 +45,9 @@
 		var eventName = isPc ? 'mousemove' : 'touchmove';
 		this.ele.addEventListener(eventName, function(e) {
 			if(!isTouchEnd) { // 鼠标或者触摸未结束
+				self._e = e;
 				self.dispatch('pan');
+				isPan = true;
 			}
 			// e.preventDefault();
 		})
@@ -53,11 +58,10 @@
 		var eventName = isPc ? 'mouseup' : 'touchend';
 
 		// 判断当前是什么事件
-		// var currentType = this.whatEvent();
 		this.ele.addEventListener(eventName, function(e) {
-			self._e = e;
-			self.dispatch('tap');
+			self.eventName == 'tap' && isPan == false && self.dispatch(self.eventName);
 			isTouchEnd = true;
+			isPan = false;
 			e.preventDefault();
 		})
 	}
@@ -67,11 +71,6 @@
 		var event = new Event(eventName);
 		this.ele.dispatchEvent(event);
 	}
-
-	// 根据end与start的时间与距离判断事件类型
-	// Somevent.prototype.whatEvent = function() {
-	// 	return 'tap';
-	// }
 
 	root.Somevent = Somevent;
 })(window)
