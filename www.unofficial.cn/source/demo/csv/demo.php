@@ -3,13 +3,7 @@
 use League\Csv\Reader;
 
 require './vendor/autoload.php';
-$reader = Reader::createFromPath('pro.csv');
-
-// some array
-$jpg = array();
-$png = array();
-$gif = array();
-$oth = array();
+$reader = Reader::createFromPath('db.csv');
 
 // sql array
 $sql_arr = array();
@@ -18,7 +12,7 @@ $sql_arr = array();
 $sql_s = 'INSERT INTO `sm_products` (`name`, `i_order`, `feature_img`, `feature_smallimg`, `introduction`, `description`, `price`, `discount_price`, `delivery_fee`, `online_orderable`, `recommended`, `create_time`, `product_category_id`, `s_locale`, `pub_start_time`, `pub_end_time`, `published`, `for_roles`, `is_seo`, `meta_key`, `meta_desc`) VALUES';
 
 // description
-function setDescription($name, $xlh, $enname, $cas, $cpcd, $cpgg, $cpbz = '', $other) {
+function setDescription($name, $feature_img, $xlh, $enname, $cas, $cpcd, $cpgg, $cpbz = '', $other) {
     return "<div style=\"font-family:微软雅黑, Tahoma, Verdana, Arial, sans-serif;white-space:normal;background-color:#FFFFFF;color:#5C9A00;width:763px;text-align:center;font-size:16px;padding:5px 0px 20px;\">{$name}</div>
     <table class=\"row\" cellpadding=\"0\" cellspacing=\"0\" style=\"color:#000000;font-family:微软雅黑, Tahoma, Verdana, Arial, sans-serif;font-size:12px;background-color:#FFFFFF;width:762px;\">
         <tbody>
@@ -28,7 +22,7 @@ function setDescription($name, $xlh, $enname, $cas, $cpcd, $cpgg, $cpbz = '', $o
                 <td style=\"line-height:24px;font-family:微软雅黑, Tahoma, Verdana, Arial, sans-serif;border:1px solid #DADADA;height:30px;padding:0px 10px;\">
                 </td>
                 <td rowspan=\"8\" style=\"line-height:24px;font-family:微软雅黑, Tahoma, Verdana, Arial, sans-serif;border:1px solid #DADADA;height:30px;padding:0px 10px 0px 0px;width:335px;text-align:center;\">
-                <img height=\"199px\" src=\"/upload/image/20160920/1474379225.png\" style=\"padding:0px;margin:0px;\" /> {$xlh} </td>
+                <img height=\"199px\" src=\"{$feature_img}\" style=\"padding:0px;margin:0px;\" /> {$xlh} </td>
             </tr>
             <tr>
                 <td class=\"title\" style=\"line-height:24px;font-family:微软雅黑, Tahoma, Verdana, Arial, sans-serif;width:60px;text-align:center;border:1px solid #DADADA;height:30px;padding:0px 10px;\">
@@ -88,7 +82,7 @@ function charsetToUTF8($mixed) {
             } else {
                 $encode = mb_detect_encoding($v, array('ASCII', 'UTF-8', 'GB2312', 'GBK', 'BIG5'));
                 if ($encode == 'EUC-CN' || $encode == 'CP936') {
-                    $mixed[$k] = iconv('GBK', 'UTF-8', $v);
+                    $mixed[$k] = iconv('GBK', 'UTF-8//IGNORE', $v);
                 }
             }
         }
@@ -101,52 +95,34 @@ function charsetToUTF8($mixed) {
     return $mixed;
 }
 
-// $fp = fopen('./oth.md', 'a+');
-foreach ($reader as $index => $row) { // 1662    
-    // 
-    // 编码转换 EUC-CN -> UTF-8
-    // 
-    
+foreach ($reader as $index => $row) { // 1662 
+    if($index > 0 && $index >= 1031) {
+        $row = charsetToUTF8($row);
+        $name = $row[8];
+        $xlh = $row[7];
+        $enname = $row[9];
+        $cas = $row[10];
+        $cpcd = $row[11];
+        $cpgg = $row[12];
+        $cpbz = $row[13];
+        $other = str_replace('成都普菲德生物技术有限公司', '成都格利普生物科技有限公司', $row[4]);
+        // delete 相关产品
+        // $pos = strpos($other, '相关产品') ? strpos($other, '相关产品') : strlen($other);
+        // $other = substr($other, 0, $pos);
+        $feature_img = $row[3] ? '/upload/image/auto/'.$row[3] : '/upload/image/auto/noimg.jpg';
+        $now = time();
 
-    
-    // 第二次分割为 ‘	5000	NULL	’
-    // 第二次分割
-    $arr = preg_split("/	5000	NULL	/", $row[0]);
-    $tableParam = array_filter(preg_split('/\s/', $arr[1]));
-    $name = $tableParam[14];
+        // 存入sql数组
+        $description = setDescription($name, $feature_img, $xlh, $enname, $cas, $cpcd, $cpgg, $cpbz = '', $other);
+        $description = str_replace('"', '\\"', $description);
 
-    if(strpos($row[0], '.png')) {
-        // 第一次分割为 ‘		100	\|0\|	(\d+\.?)+\.png	’ 619
-        $png[] = $index;
-        // fwrite($fp, charsetToUTF8($row[0]));
-    } elseif(strpos($row[0], '.jpg')) {
-        // 第一次分割为 ‘		100	\|0\|	(\d+\.?)+\.jpg	’ 894
-        $jpg[] = $index;
-        // fwrite($fp, charsetToUTF8($row[0]));
-    } elseif(strpos($row[0], '.gif')) {
-        // 第一次分割为 ‘		100	\|0\|	(\d+\.?)+\.gif	’ 56
-        $gif[] = $index;
-        // fwrite($fp, charsetToUTF8($row[0]));
-    } else { // 图片为空
-        // 第一次分割为 ‘		100	\|0\|	0?	’ 93
-        $oth[] = $index;
-        // fwrite($fp, charsetToUTF8($row[0]));
+        $now = time();
+        $sql_arr[] = $sql_s .' '. "(\"{$name}\", 0, '{$feature_img}', '{$feature_img}', '', \"{$description}\", 0.00, 0.00, 0.00, '0', '0', {$now}, 231, 'zh_CN', -1, -1, '1', '{member}{admin}{guest}', '0', NULL, NULL);\r\n";
     }
-    // 存入sql数组
-    // $description = setDescription($name, $xlh, $enname, $cas, $cpcd, $cpgg, $cpbz = '', $other);
-    // $now = time();
-    // $sql_arr[] = "('{$name}', 4, '{$feature_img}', '{$feature_img}', '', '{$description}', 0.00, 0.00, 0.00, '0', '0', {$now}, 231, 'zh_CN', -1, -1, '1', '{member}{admin}{guest}', '0', NULL, NULL)";
 }
 
-    
-echo 'png';
-var_dump(count($png));
-echo 'jpg';
-var_dump(count($jpg));
-echo 'gif';
-var_dump(count($gif));
-echo 'oth';
-var_dump(count($oth));
+$sql = implode('', $sql_arr);
 
-
-// fclose($fp);
+$fp = fopen('./test.sql', 'a+');
+fwrite($fp, $sql);
+fclose($fp);

@@ -16,7 +16,6 @@
 		this.makeHtml();
 		// 注册点击事件
 		new Somevent(document.getElementById(options.ele.name), 'tap', function(e) {
-			console.log(e);
 			if( e.target.className == 'select-selected-value' ) {
 				e.target.nextElementSibling.style.display = e.target.nextElementSibling.style.display == 'none' ? 'block' : 'none';
 			} else if( [].slice.call(e.target.classList).indexOf('cancel') != -1 ) {
@@ -32,11 +31,14 @@
 		})
 		// 注册滑动事件
 		new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
-			// console.log(e);
-			if(e.target.nodeName == 'li' && e.target.path[1].className == 'wrapper') {
+			if(e.target.nodeName.toLowerCase() == 'li' && e.path[3].className == 'wrapper') {
 				// 滑动当前列
 				console.log(123);
 			}
+		})
+
+		document.getElementById(options.ele.name).addEventListener('click', function(e) {
+			console.log('click');
 		})
 	}
 	// 继承Picker

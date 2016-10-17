@@ -36,7 +36,7 @@
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
 			toucher = e.type == 'touchstart' ? e.touches[0] : e;
-			// e.preventDefault();
+			e.preventDefault();
 		})
 	}
 	// 触摸移动
@@ -49,7 +49,6 @@
 				self.dispatch('pan');
 				isPan = true;
 			}
-			// e.preventDefault();
 		})
 	}
 	// 触摸结束
@@ -62,6 +61,7 @@
 			self.eventName == 'tap' && isPan == false && self.dispatch(self.eventName);
 			isTouchEnd = true;
 			isPan = false;
+			e.cancelable = false;
 			e.preventDefault();
 		})
 	}
