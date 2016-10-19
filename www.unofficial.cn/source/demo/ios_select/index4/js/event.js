@@ -36,6 +36,7 @@
 			// 第一触摸点 时间 位置
 			isTouchEnd = false;
 			toucher = e.type == 'touchstart' ? e.touches[0] : e;
+			self.eventName == 'pan' && self.pos(toucher);
 			e.preventDefault();
 		})
 	}
@@ -64,6 +65,13 @@
 			e.cancelable = false;
 			e.preventDefault();
 		})
+	}
+	// 触发元素的位置
+	Somevent.prototype.pos = function() {
+		this.posInfoStart = {
+			x: toucher.clientX,
+			y: toucher.clientY
+		}
 	}
 
 	// 派发事件

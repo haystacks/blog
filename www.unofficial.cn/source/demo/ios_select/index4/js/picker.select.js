@@ -30,15 +30,11 @@
 			}
 		})
 		// 注册滑动事件
-		new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
-			if(e.target.nodeName.toLowerCase() == 'li' && e.path[3].className == 'wrapper') {
+		var somevent = new Somevent(document.getElementById(options.ele.name), 'pan', function(e) {
+			if(e.path[1].className == 'wrapper' && e.target.nodeName.toLowerCase() == 'li') {
 				// 滑动当前列
-				console.log(123);
+				console.log(e);
 			}
-		})
-
-		document.getElementById(options.ele.name).addEventListener('click', function(e) {
-			console.log('click');
 		})
 	}
 	// 继承Picker
