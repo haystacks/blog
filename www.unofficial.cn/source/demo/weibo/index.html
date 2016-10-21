@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <!--http://jssdk.sinaapp.com/api.php-->
+    <div id="wb_connect_btn"></div>
+    <script>
+        // WB2.anyWhere(function (W) {
+        //     W.widget.connectButton({
+        //         id: "wb_connect_btn",
+        //         type: '3,2',
+        //         callback: {
+        //             login: function (o) { //登录后的回调函数
+        //                 console.log(o);
+        //             },
+        //             logout: function () { //退出后的回调函数
+        //                 alert('logout');
+        //             }
+        //         }
+        //     });
+        // });
+        var config = WB2._config;
+        var status = WB2.checkLogin();
+        var loginEle = document.getElementById('wb_connect_btn');
+        if(status === 'true') {
+            loginEle.addEventListener('click', function() {
+                WB2.logout();
+            })
+            loginEle.innerText = '退出';
+
+            // 查询用户信息
+            WB2.anyWhere(function(W){
+                //数据交互
+                W.parseCMD('/statuses/friends_timeline.json', function(oResult, bStatus) {
+                    console.log(oResult);
+                }, {"uid" : config.uid}, {method: 'get', cache_time: 0});
+            });
+        } else {
+            
+            loginEle.addEventListener('click', function() {
+                WB2.login();
+            })
+            loginEle.innerText = '退出';
+        }
+    </script>
+    <!--<wb:login-button type="3,2" onlogin="login" onlogout="logout"></wb:login-button>-->
+</body>
+</html>
