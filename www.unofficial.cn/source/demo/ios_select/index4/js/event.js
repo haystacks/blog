@@ -68,7 +68,7 @@
 	}
 	// 触发元素的位置
 	Somevent.prototype.pos = function() {
-		this.posInfoStart = {
+		return {
 			x: toucher.clientX,
 			y: toucher.clientY
 		}
