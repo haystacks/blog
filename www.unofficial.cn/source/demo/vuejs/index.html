@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weibo-vue</title>
+</head>
+<body>
+    <div id="connect">
+        <div v-if="startFun()" class="status" v-bind:title="loginStatus">
+            {{ loginStatus }}
+        </div>
+        <div v-else @click="login" class="status">
+            {{ loginStatus }}
+        </div>
+        
+        <div v-if="isLogin" v-once>
+            {{ userInfo.name }}
+        </div>
+    </div>
+    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3605782540"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+    <script>
+        
+        // 常量
+        const CONFIG = WB2._config;
+        const STATUS = WB2.checkLogin();
+        const VM = new Vue({
+            el: '#connect',
+            data: {
+                loginStatus: '登录了吗？',
+                isLogin: false,
+                status: false,
+                userInfo: ''
+            },
+            methods: {
+                startFun: function() {
+                    this.loginStatus = STATUS ? '退出' : '登录';
+                    STATUS && this.getUserInfo();
+                },
+                login: function() {
+                    var self = this;
+                    WB2.login(function() {
+                        self.loginStatus = '退出';
+                    });
+                },
+                getUserInfo: function() {
+                    var self = this;
+                    WB2.anyWhere(function(W){
+                        var self = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/users/show.json', function(oResult, bStatus) {
+                                self.userInfo = oResult;
+                                console.log(oResult);
+                                self.isLogin = true;
+                            }, {"uid" : CONFIG.uid}, {method: 'get', cache_time: 0});
+                        });
+                        // fetch('http://m.weibo.cn/index/feed?format=cards').then(function(res) {
+                        //     console.log(res);
+                        // })
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
