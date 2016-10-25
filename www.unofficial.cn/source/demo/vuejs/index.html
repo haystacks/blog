@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Weibo-vue</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="connect">
-        <div v-if="startFun()" class="status" v-bind:title="loginStatus">
-            {{ loginStatus }}
+    <div @load="startFun" id="login" class="page" v-cloak>
+        <div v-if="isLogin" class="userinfo">
+            <a href="javascript:;" @click="logout">{{ this.loginStatus }}</a>
         </div>
-        <div v-else @click="login" class="status">
-            {{ loginStatus }}
-        </div>
-        
-        <div v-if="isLogin" v-once>
-            {{ userInfo.name }}
+        <div v-else @click="login" class="login-btn">
         </div>
     </div>
-    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3605782540"></script>
+    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
     <script>
         
@@ -25,22 +21,29 @@
         const CONFIG = WB2._config;
         const STATUS = WB2.checkLogin();
         const VM = new Vue({
-            el: '#connect',
+            el: '#login',
             data: {
                 loginStatus: '登录了吗？',
-                isLogin: false,
                 status: false,
-                userInfo: ''
+                userInfo: '',
+                isLogin: false
             },
             methods: {
                 startFun: function() {
-                    this.loginStatus = STATUS ? '退出' : '登录';
-                    STATUS && this.getUserInfo();
+                    STATUS && (this.loginStatus = '退出') && this.getUserInfo();
+                    return STATUS;
                 },
                 login: function() {
                     var self = this;
                     WB2.login(function() {
+                        self.isLogin = true;
                         self.loginStatus = '退出';
+                    });
+                },
+                logout: function() {
+                    var self = this;
+                    WB2.logout(function() {
+                        self.isLogin = false;
                     });
                 },
                 getUserInfo: function() {
@@ -52,12 +55,8 @@
                             W.parseCMD('/users/show.json', function(oResult, bStatus) {
                                 self.userInfo = oResult;
                                 console.log(oResult);
-                                self.isLogin = true;
                             }, {"uid" : CONFIG.uid}, {method: 'get', cache_time: 0});
                         });
-                        // fetch('http://m.weibo.cn/index/feed?format=cards').then(function(res) {
-                        //     console.log(res);
-                        // })
                     });
                 }
             }
