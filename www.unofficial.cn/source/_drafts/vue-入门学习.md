@@ -313,4 +313,144 @@ tags:
     ![data function](/assets/imgs/20161026/counter_2.gif)  
 
     * 构成组件
-    
+    父子组件之间的关系是，父组件通过props给子组件传递参数，子组件通过events给父组件发送消息。
+
+### props
+* 使用props传递数据
+组件实例之间的作用域是孤立的，子组件中需要使用父组件中数据的时候，需要通过在自定义属性来传递参数，子组件中通过props来接受自定义属性名传递的数据。props可以是数组也可以是对象。  
+```
+    // 局部代码 []
+    props: ['msg']
+
+    // 局部代码 {} 检测类型 + 默认值 + 必须 + 验证
+    props: {
+        msg: {
+            type: String,
+            default: 'message',
+            required: true,
+            validator: function (value) {
+                return value;
+            }
+            
+        }
+    }
+
+```
+* 驼峰命名与中杠命名法
+HTML 特性不区分大小写。在非字符串模板中使用驼峰命名，模板中使用 `-` 命名。
+```
+<div id="component">
+    <my-msg></my-msg>
+</div>
+<script>
+new Vue({
+    el: '#component',
+    components: {
+        'myMsg': {
+            data: function() {
+                return {
+					msg: 'message'
+				}
+            },
+			template: '<div>{{ msg }}</div>'
+        }
+    }
+})
+</script>
+```
+
+* 动态props
+绑定动态输入或者动态数据到html属性上。  
+```
+<div id="propsDemo">
+    <input v-model="myMsg" />
+    <the-msg :my-msg="myMsg" :init-my-msg="initMyMsg"></the-msg>
+</div>
+<script>
+    new Vue({
+        el: '#propsDemo',
+        data: {
+            myMsg: null,
+            initMyMsg: '初始化信息'
+        },
+        components: {
+            'theMsg': {
+                props: {
+                    myMsg: String,
+                    initMyMsg: String
+                },
+                template: '<div>{{initMyMsg}}{{myMsg}}</div>'
+            }
+        }
+    })
+</script>
+```
+
+* 字面量 vs 动态绑定
+```
+    <div id="propsDemo1">
+        <msg msg-info="'1'"></msg>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#propsDemo1',
+            components: {
+                'msg': {
+                    props: ['msgInfo'],
+                    template: '<div>{{ msgInfo }}</div>'
+                }
+            }
+        })
+    </script>
+```
+
+解析后的HTML是  
+
+```
+<div id="propsDemo1">
+    <div>'1'</div>
+</div>
+```
+如果动态绑定后呢？ 把 ` msg-info=" '1' " ` 修改为 ` :msg-info=" '1' " `  
+
+解析后的HTML是  
+
+```
+<div id="propsDemo1">
+    <div>1</div>
+</div>
+```
+
+* 单向数据绑定
+父组件数据变动后会影响子组件数据的变动，相反，如果子组件变动后也会影响父组件的变动，但是在vue中提示报错。父组件传递的参数是何子组件接收的参数是指向同一个内存地址。传递一个对象过去更改对象的属性值。  
+```
+<div id="propsDemo2">
+	<p v-for="msg in msgs">{{msg.text}}</p>
+    <div2 v-for="msg in msgs" :msg="msg"></div2>
+</div>
+
+<script>
+    new Vue({
+        el: '#propsDemo2',
+        data: {
+            msgs: [{
+                text: 'text1'
+            }, {
+                text: 'text2'
+            }]
+        },
+        components: {
+            'div2': {
+                props: ['msg'],
+                template: '<div @click="changeVal(msg)"> {{msg.text}} </div>',
+				methods: {
+					changeVal: function(msg) {
+						msg.text = '新内容';
+					}
+				}
+            }
+        }
+    })
+</script>
+```
