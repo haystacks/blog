@@ -94,34 +94,60 @@ for(let i = 1; i < 6; i++) {
 ### arrow function
 arrow function箭头函数，主要解决的问题就是 ` this `，在这之前有一个经典的问题。  
 ```
-var a = 123;
 var bar = {
-	b: function() {
-		console.log(this.a); // undefined
+	fun: function() {
+		console.log(this); // bar
 	}
 }
-bar.b();
+bar.fun();
 ```
 
-```
-var a = 123;
-var bar = {
-	b: function() {
-		console.log(this.a); // 123
-	}
-}
-var b = bar.b;
-b();
-```
+// this所在的环境是bar对象中，this即指bar
 
 ```
 var bar = {
-	a: 123,
-	b: () => {
-		console.log(this.a); // 123
+	fun: () => {
+		console.log(this); // window
 	}
 }
-var b = bar.b;
-b();
+bar.fun();
 ```
-栗子不合适，还要重新修改才行
+
+// 箭头函数的this取决于上下文，上下文中的this是window
+* 几种arrow function的写法
+	* () => {} // 空函数
+	* x => x * x // function(x) { return x * x; }
+	* () => x * x
+	* x => { x++; return x * x; }
+	* () => { var x = 3; return x * x; }
+
+### String
+String新增两个方法 ` includes `， ` repeat `。  
+` includes `判断一个字符串是否包含在另外一个字符串中，第一个参数是要检测的字符串，第二个参数是从什么位置开始。如果存在返回true，否在返回false。  
+```
+	'unofficial'.includes('official'); // true
+	'unofficial'.includes('official', 3); // false
+```
+在这之前我们一直使用indexOf来判断是否存在返回下标，不存在返回-1。  
+```
+	'unofficial'.indexOf('hello'); // -1
+	'unofficial'.indexOf('un'); // 0
+```
+
+` repeat `返回重复当前字符串多次的字符串  
+```
+	'unofficial'.repeat(3);
+```
+如果是以前的话需要自定义一个repeat方法。  
+```
+	function repeat(string, count) {
+		// 创建一个容器数组
+		var strings = [];
+		while(strings.length < count) {
+			strings.push(string);
+		}
+		return strings.join('');
+	}
+	repeat('unofficial', 3);
+```
+到此就暂时先休息了
