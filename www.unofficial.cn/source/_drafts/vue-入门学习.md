@@ -454,3 +454,117 @@ new Vue({
     })
 </script>
 ```
+
+* prop数据验证
+props可以为对象，内容的prop数据作为对象使用的时候，可以通过设置属性约定prop的 `type`， ` default `， ` required `，` validator `。  
+```
+<div id="propsDemo3">
+    <div2 msg="message"></div2>
+</div>
+
+<script>
+    new Vue({
+        el: '#propsDemo3',
+        components: {
+            'div2': {
+                props: {
+                    'msg': {
+                        type: String,
+                        default: 'abc'
+                    }
+                },
+                template: {
+                    '<div>{{msg}}</div>'
+                }
+            }
+        }
+    })
+</script>
+```
+
+* 自定义事件
+父组件通过props给子组件传递参数，子组件通过event把参数回传给父组件。  
+```
+<div id="propsDemo3">
+	<div>{{counter}}</div>
+    <div2 @total="total"></div2>
+	<div2 @total="total"></div2>
+	<div2 @click.native="doTheThing"></div2>
+</div>
+
+<script>
+    new Vue({
+        el: '#propsDemo3',
+		data: {
+			counter: 0
+		},
+		methods: {
+			total: function() {
+				this.counter++;
+			},
+            doTheThing: function() {
+                this.counter--;
+            }
+		},
+        components: {
+            'div2': {
+				data: function() {
+					return {
+						counter: 0
+					}
+				},
+				methods: {
+					some: function() {
+						this.counter++;
+						this.$emit('total');
+					}
+				},
+                template: '<div @click="some">{{counter}}</div>'
+            }
+        }
+    })
+</script>
+```
+在子组件上注册一个原生事情` .native `，子组件内部执行点击事件后会触发` doTheThing `。  
+
+* 使用自定义事件的表单输入事件
+对于v-model的理解  
+```
+    <p>{{message}}</p>
+    <input type="text" v-model="message">
+    // 这个只是语法糖写法 原版写法应该是
+    <input type="text" :input="value = $event.target.value" :value="value">
+    // 缩写成
+    <input type="text" :input="value = arguments[0]" :value="value">
+```
+
+完善一个例子：  
+```
+    <div id="propsDemo4">
+        <p>{{ message }}</p>
+        <my-input label="Message" v-model="message"></my-input>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#propsDemo4',
+            data: {
+                message: 'hello'
+            },
+            components: {
+                'myInput': {
+                    props: ['value', 'label'],
+                    template: '\
+                        <label :for="label">{{label}}</label>\
+                        <input :id="label" type="text" :input="onInput">\
+                    ',
+                    methods: {
+                        'onInput': function(event) {
+                            this.$emit('input', event.target.value);
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+```
