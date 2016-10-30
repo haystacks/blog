@@ -568,3 +568,5 @@ props可以为对象，内容的prop数据作为对象使用的时候，可以�
         })
     </script>
 ```
+`Component template should contain exactly one root element:` 组件模板需要用一个根元素包裹起来。  
+<script async src="//jsfiddle.net/unofficial/7f2vcmfv/embed/js,html,result/"></script>
