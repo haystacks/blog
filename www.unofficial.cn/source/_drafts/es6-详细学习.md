@@ -6,10 +6,10 @@ categories:
 tags:
 - ES6
 ---
-ES6规范出来也一年了，却始终不是那么认真的玩过，偶尔用一下部分ES6的写法，终究还是浏览器支持不足的原因，但是有工具babel，又有配置webpack的难度的在里面，也就一直搁置着。  
+ES6规范出来也一年了，却始终不是那么认真的玩过，偶尔用一下部分ES6的写法，终究还是浏览器支持不足的原因，但是有工具babel，又有配置webpack的难度的在里面，也就一直搁置着。	
 <!-- more -->
 ### let and const
-在这之前，我们声明变量用的是 ` var ` ，现在又多了一个 ` let ` 和 ` const `。  
+在这之前，我们声明变量用的是 ` var ` ，现在又多了一个 ` let ` 和 ` const `。	
 * 变量声明提升
 ```
 	// var 变量提升
@@ -28,7 +28,7 @@ ES6规范出来也一年了，却始终不是那么认真的玩过，偶尔用�
 ```
 
 * 作用域
-只有函数有自己的作用域，于是用了一个自执行函数。  
+只有函数有自己的作用域，于是用了一个自执行函数。	
 ```
 	var bar = 123;
 	(function() {
@@ -49,14 +49,14 @@ ES6规范出来也一年了，却始终不是那么认真的玩过，偶尔用�
 	// 或者const
 	const bar = 123; // error 同理
 ```
-let与const同名变量只能声明一次，都是块级作用域变量，let声明的变量可以重新赋值，const不能，const适合声明一个常量。  
-但如果是这样的一种情况又是可行的  
+let与const同名变量只能声明一次，都是块级作用域变量，let声明的变量可以重新赋值，const不能，const适合声明一个常量。	
+但如果是这样的一种情况又是可行的	
 ```
 	const bar = [];
 	bar.push(123);
 	console.log(bar); // [123]
 ```
-如此是不是可以用 ` block `来替代 ` IIFE ` ，对于一下  
+如此是不是可以用 ` block `来替代 ` IIFE ` ，对于一下	
 IIFE
 ```
 (function() {
@@ -92,7 +92,7 @@ for(let i = 1; i < 6; i++) {
 ```
 
 ### arrow function
-arrow function箭头函数，主要解决的问题就是 ` this `，在这之前有一个经典的问题。  
+arrow function箭头函数，主要解决的问题就是 ` this `，在这之前有一个经典的问题。	
 ```
 var bar = {
 	fun: function() {
@@ -122,23 +122,23 @@ bar.fun();
 	* () => { var x = 3; return x * x; }
 
 ### String
-String新增两个方法 ` includes `， ` repeat `。  
-` includes `判断一个字符串是否包含在另外一个字符串中，第一个参数是要检测的字符串，第二个参数是从什么位置开始。如果存在返回true，否在返回false。  
+String新增两个方法 ` includes `， ` repeat `。	
+` includes `判断一个字符串是否包含在另外一个字符串中，第一个参数是要检测的字符串，第二个参数是从什么位置开始。如果存在返回true，否在返回false。	
 ```
 	'unofficial'.includes('official'); // true
 	'unofficial'.includes('official', 3); // false
 ```
-在这之前我们一直使用indexOf来判断是否存在返回下标，不存在返回-1。  
+在这之前我们一直使用indexOf来判断是否存在返回下标，不存在返回-1。	
 ```
 	'unofficial'.indexOf('hello'); // -1
 	'unofficial'.indexOf('un'); // 0
 ```
 
-` repeat `返回重复当前字符串多次的字符串  
+` repeat `返回重复当前字符串多次的字符串	
 ```
 	'unofficial'.repeat(3);
 ```
-如果是以前的话需要自定义一个repeat方法。  
+如果是以前的话需要自定义一个repeat方法。	
 ```
 	function repeat(string, count) {
 		// 创建一个容器数组
@@ -151,7 +151,7 @@ String新增两个方法 ` includes `， ` repeat `。
 	repeat('unofficial', 3);
 ```
 ### Template literals
-字符串模板字面量，在字符串中使用引号的问题可以不用再转义。  
+字符串模板字面量，在字符串中使用引号的问题可以不用再转义。	
 ```
 // Old
 var str = "你知道\"你好吗的意思\"？我不知道"; // 外单内双
@@ -176,4 +176,76 @@ let str = `你是${username}吗？`;
 
 	// new
 	let [a, b, c] = arr;
+
+	// Object
+	var obj = {a: 1, b: 2};
+	var a = obj.a;
+	var b = obj.b;
+
+	// new
+	let {a, b} = {a: 1, b: 2};
 ```
+### Modules
+ - AMD - Asynchronous Module Definition
+ 	- AMD - 异步模块定义规范
+ 	- require.js
+ ```
+define('foo', ['bar'], function () {
+	return {
+		method: function () {
+			return 'food method result';
+		}
+	}
+});
+ ```
+ - CommonJS
+ 	- nodejs
+ ```
+ 	// foo.js 模块导出
+ 	module.exports = foo; // foo 可以是常量/数组/对象/函数
+ 	// 引入模块
+ 	const foo = require('foo');
+ ```
+ - ES6 Modules
+ import 用于从外部模块/其他脚本中导入函数/对象/或者原型。这些导入的模型必须从其他的模块或者脚本中被导出。  
+ 	- 导入整个模块的内容
+ 	```
+ 		import * as myModule from "my-module";
+ 	```
+ 	- 导入模块的单个成员
+ 	```
+ 		import {myModuleMember} from "my-module";
+ 	```
+ 	- 导入模块的多个成员
+ 	```
+ 		import {foo, bar} from "my-module";
+ 	```
+ 	- 导入整个模块的内容，其中一些被显式命名。
+	以下代码将myModule，foo，bar插入到当前作用域。注意，foo和myModule.foo是完全相同的，bar和myModule.bar也是如此。  
+	```
+		import myModule, {foo, bar} from "my-module";
+		// myModule.foo === foo; myModule.bar === bar;
+	```
+	- 如果导入的成员的名称比较长或者不够简洁
+	```
+		import {myModuleMemberNameIsVeryLong as shortName} from "my-module";
+	```
+export 导出一个函数或者对象或者常量等，用于外部模型导入使用
+	```
+		export { myFun };
+		export const foo = Math.PI * 3;
+		export default myFunOrClass // import myFunOrClass from "my-module"
+	```
+
+### Parameters
+- 参数默认值
+```
+	function addTwoNumber(x=0, y=0) {
+		return x+y;
+	}
+	addTwoNumber(1, 2); // 3
+	addTwoNumber(1); // 1
+	addTwoNumber(); // 0
+```
+- 参数不确定
+
