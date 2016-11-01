@@ -150,4 +150,30 @@ String新增两个方法 ` includes `， ` repeat `。
 	}
 	repeat('unofficial', 3);
 ```
-到此就暂时先休息了
+### Template literals
+字符串模板字面量，在字符串中使用引号的问题可以不用再转义。  
+```
+// Old
+var str = "你知道\"你好吗的意思\"？我不知道"; // 外单内双
+var str = '你\'好\'吗？' // 你'好'吗？
+// New
+let str = `你知道\"你好吗的意思\"？我不知道`;
+let str = `你'好'吗？`;
+// 字符串中变量
+// Old
+const username = 'unofficial';
+var str = '你是' +username+ '吗？';
+// New
+let str = `你是${username}吗？`;
+```
+### Destructuring
+```
+	// Array
+	var arr = [1, 2, 3];
+	var a = arr[0];
+	var b = arr[1];
+	var c = arr[2];
+
+	// new
+	let [a, b, c] = arr;
+```
