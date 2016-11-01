@@ -481,7 +481,7 @@ props可以为对象，内容的prop数据作为对象使用的时候，可以�
     })
 </script>
 ```
-
+### 自定义事件
 * 自定义事件
 父组件通过props给子组件传递参数，子组件通过event把参数回传给父组件。  
 ```
@@ -570,3 +570,118 @@ props可以为对象，内容的prop数据作为对象使用的时候，可以�
 ```
 `Component template should contain exactly one root element:` 组件模板需要用一个根元素包裹起来。  
 <script async src="//jsfiddle.net/unofficial/7f2vcmfv/embed/js,html,result/"></script>
+* 非父子组件通信
+具体实际应用场景还没用到，仅仅学习一下方法。  
+```
+
+var say = new Vue();
+say.$emit('welcome');
+say.$on('webcome', function() {
+    console.log('webcome you');
+})
+
+```
+### 使用slots分发内容
+* 单个slot
+其实一开始看到slots是完全懵逼的状态的。 但看到实际的demo后这个好像是见过的。  
+```
+// video
+<video src="movie.ogg" controls="controls">
+您的浏览器不支持 video 标签。
+</video>
+
+// vue
+<div id="app">
+    <welcome>
+        <p>父组件中的“欢迎方式”</p>
+    </welcome>
+</div>
+<script>
+    Vue.component('welcome', {
+        data: function() {
+            return {
+                isShow: false,
+                you: 'unofficial'
+            }
+        },
+        template: '<div><div v-if="isShow">{{ you }}</div><slot>欢迎欢迎热烈欢迎</slot></div>'
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```
+如果父组件作用域welcome内无内容，子组件无输出内容，那么显示的就是子组件内部的slot内容；如果welcome内有内容，那么输出的就是welcome内的内容；如果子组件有输出内容，那么输出的就是子组件中的内容+slot内容。  
+
+* 具名slot
+父组件内标签上添加slot属性，属性值对应子组件中slot标签的name属性值，标签中的内容作为子组件slot的替换内容。  
+```
+// vue
+<div id="app">
+    <welcome>
+        <p slot="header">header</p>
+        <p slot="welc">默认欢迎语</p>
+        <p slot="footer">footer</p>
+    </welcome>
+</div>
+<script>
+    Vue.component('welcome', {
+        data: function() {
+            return {
+                isShow: false,
+                you: 'unofficial'
+            }
+        },
+        template: '<div><div v-if="isShow">{{ you }}</div><slot name="footer">footer</slot><slot name="header">header</slot><slot name="welc">welc</slot></div>'
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+### 动态组件
+多个组件绑定到同一个挂载点上，然后动态的在他们之间切换，使用保留的 `<component>` 标签，绑定到动态的 `is` 上。  
+```
+<div id="app">
+    <component :is="currentView"></component>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            currentView: 'home'
+        },
+        components: {
+            home: {
+                template: '<div>home</div>'
+            },
+            list: {
+                template: '<div>list</div>'
+            }
+        }
+    })
+
+    // 或者这么写
+
+    new Vue({
+        el: '#app',
+        data: {
+            currentView: {
+                template: '<div>home</div>'
+            }
+        }
+    })
+</script>
+```
+* keep-alive 
+把切换出去的动态组件保存在内存中，防止再次被渲染，保存他的状态。  
+```
+// eg
+<keep-alive>
+    <component :is="currentView"></component>
+</keep-alive>
+// 如果currentView = home, 就不能再更改currentView的值了
+```

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weibo-vue</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="test()">
+    <div id="login" @load="startFun" class="page" v-cloak>
+        <div v-if="isLogin" class="userinfo">
+            <a href="javascript:;" @click="logout">{{ this.loginStatus }}</a>
+        </div>
+        <div v-else @click="login" class="login-btn">
+        </div>
+    </div>
+    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+    <script>
+        // 常量
+        function test() {
+            console.log(456);
+        }
+        const CONFIG = WB2._config;
+        const STATUS = WB2.checkLogin();
+        const VM = new Vue({
+            el: '#login',
+            data: {
+                status: false,
+                userInfo: '',
+                isLogin: STATUS
+            },
+            methods: {
+                startFun: function() {
+                    console.log(123);
+                    // STATUS && this.getUserInfo();
+                },
+                login: function() {
+                    var self = this;
+                    WB2.login(function() {
+                        self.isLogin = true;
+                    });
+                },
+                logout: function() {
+                    var self = this;
+                    WB2.logout(function() {
+                        self.isLogin = false;
+                    });
+                },
+                getUserInfo: function() {
+                    WB2.anyWhere(function(W){
+                        //数据交互
+                        W.parseCMD('/users/show.json', function(oResult, bStatus) {
+                            console.log(oResult);
+                        }, {"uid" : CONFIG.uid}, {method: 'get', cache_time: 0});
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+</html>
