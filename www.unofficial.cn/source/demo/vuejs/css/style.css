@@ -9,3 +9,46 @@
     background: url(../images/login.png) no-repeat 50% 50%;
     cursor: pointer;
 }
+
+/* reset */
+body {
+    margin: 0;
+}
+/* header - component */
+.header {
+    height: 46px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.header .inner {
+    width: 1190px;
+    margin: 0 auto;
+}
+.header .profile_image {
+    width: 32px;
+    height: 32px;
+    display: block;
+    margin: 0 auto;
+    padding: 7px 0;
+}
+.header img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.items {
+    width: 588px;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #ccc;
+}
+.items li {
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+}
+
+.items li:last-child {
+    border-bottom: none;
+}
