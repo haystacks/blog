@@ -185,6 +185,25 @@ let str = `你是${username}吗？`;
 	// new
 	let {a, b} = {a: 1, b: 2};
 ```
+对象的解构赋值  
+```
+var {a, b} = {a: 1, b: 2};
+console.log(a, b); // 1 2
+// 用新变量赋值
+var {a: foo, b: bar} = {a: 1, b: 2};
+console.log(foo, bar); // 1 2
+// 局部解构
+var {b} = {a: 1, b: 2};
+console.log(b, a); // ReferenceError a is not defined
+// 默认值或者局部解构
+var {a=123, b} = {a: 1, b: 2};
+console.log(a, b); // 1 2
+var {a=123, b} = {b: 2};
+console.log(a, b); // 123 2
+var {a=123, b=2} = {};
+console.log(a, b); // 123 2
+```
+解构赋值，值存在是使用存在的值进行赋值，否则检查默认值，默认值不存在报错  
 ### Modules
  - AMD - Asynchronous Module Definition
  	- AMD - 异步模块定义规范
@@ -248,4 +267,14 @@ export 导出一个函数或者对象或者常量等，用于外部模型导入�
 	addTwoNumber(); // 0
 ```
 - 参数不确定
+使用rest操作符，可以给函数传递一个不确定数量的参数列表  `…`
 
+```
+function log(...args) {
+	for(let arg of args) {
+		console.log(arg); // 1, 2, 3
+	}
+	console.log(arg);
+}
+log(1, 2, 3);
+```
