@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pm1</title>
+    <script src="js/a.js"></script>
+</head>
+<body>
+    <iframe src="pm2.html" frameborder="0"></iframe>
+    <iframe src="//sinaapp.com:4000/demo/postmessage/pm2.html" frameborder="0"></iframe>
+    <script>
+        window.onload = function() { // 必须等待文档加载结束才能获取
+            document.domain = 'http://unofficial.sinaapp.com:4000';
+            var iframe = document.getElementsByTagName('iframe');
+            console.log(iframe[0].contentDocument); // 同源
+            console.log(iframe[1].contentDocument); // 不同源
+        }
+    </script>
+</body>
+</html>
