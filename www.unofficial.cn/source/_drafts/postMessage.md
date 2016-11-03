@@ -53,6 +53,8 @@ api.weibo.com/2/oauth2/authorize?client_id=2199529438&response_type=token&d…an
     // pm1.html:12 Uncaught DOMException: Failed to read the 'contentDocument' property from 'HTMLIFrameElement': Blocked a frame with origin "http://www.unofficial.cn" from accessing a cross-origin frame.(…)
 
     ```
+    如果需要在跨域的情况下传递参数怎么操作呢？  
+    可以理解的是
     - ajax
     同域可读可写，跨域请求不能检查到 Access-Control-Allow-Origin 的情况下会被拦截。  
 ```

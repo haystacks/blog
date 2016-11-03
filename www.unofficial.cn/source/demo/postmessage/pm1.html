@@ -6,14 +6,19 @@
     <script src="js/a.js"></script>
 </head>
 <body>
-    <iframe src="pm2.html" frameborder="0"></iframe>
-    <iframe src="//sinaapp.com:4000/demo/postmessage/pm2.html" frameborder="0"></iframe>
+    <iframe src="pm2.html#qq" frameborder="0"></iframe>
+    <iframe src="//localhost:4000/demo/postmessage/pm2.html" frameborder="0"></iframe>
+    <div onclick="fun()">测试</div>
     <script>
         window.onload = function() { // 必须等待文档加载结束才能获取
-            document.domain = 'http://unofficial.sinaapp.com:4000';
             var iframe = document.getElementsByTagName('iframe');
             console.log(iframe[0].contentDocument); // 同源
             console.log(iframe[1].contentDocument); // 不同源
+        }
+
+        var fun = function() {
+            var iframe = document.getElementsByTagName('iframe');
+            console.log(iframe[0].src="pm2.html#qqq");
         }
     </script>
 </body>
