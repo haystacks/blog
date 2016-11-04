@@ -11,7 +11,10 @@
         <button type="submit">提交</button>
     </form>
     <script>
+        // document.domain = "192.168.25.137";
+        document.cookie = "name=unofficial;domain=192.168.25.137";
         var http = new XMLHttpRequest();
+        // http.withCredentials = true;
         var url = "http://192.168.25.137/demo.php";
         var params = "lorem=ipsum&name=binny";
         http.open("POST", url, true);
@@ -21,6 +24,8 @@
 
         http.onreadystatechange = function() {//Call a function when the state changes.
             if(http.readyState == 4 && http.status == 200) {
+                // Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma
+                console.log(http.getResponseHeader('Content-Type'));
                 alert(http.responseText);
             }
         }

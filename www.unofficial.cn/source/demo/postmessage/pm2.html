@@ -7,17 +7,18 @@
     <script src="js/b.js"></script>
 </head>
 <body onhashchange="fun1()">
-    <a href="#abc" onclick="fun()">123</a>
+    <a id="test" href="#abc" onclick="fun()">123</a>
     <script type="text/javascript">
-    	var fun = function() {
-    		console.log(window.location, window.parent.document.getElementsByTagName('iframe'));
-    	}
+    	// var fun = function() {
+    	// 	console.log(window.location, window.parent.document.getElementsByTagName('iframe'));
+    	// }
 
-    	var fun1 = function() {
+    	// var fun1 = function() {
     		
-    		// window.parent.location.href="pm2.html"
-    		alert(123);
-    	}
+    	// 	// window.parent.location.href="pm2.html"
+    	// 	alert(window.location.href);
+    	// }
+        // console.log(window.parent.document.getElementById('test').innerText = 123);
     </script>
 </body>
 </html>
