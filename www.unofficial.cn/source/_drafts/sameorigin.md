@@ -114,6 +114,7 @@ Access-Control-Allow-Origin: http://www.unofficial.cn
 - Access-Control-Expose-Headers
 设置浏览器允许访问的服务器的头信息的白名单。如果没有设置白名单的，默认情况下只能获取 `Cache-Control`、`Content-Language`、`Content-Type`、`Expires`、`Last-Modified`、`Pragma`的值，没设置返回 `null`，否则会得到以下提示：  
 > Refused to get unsafe header "X-Powered-By"
+
 例如： 
 ```
 // 服务端设置
