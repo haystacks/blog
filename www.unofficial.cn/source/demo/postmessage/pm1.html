@@ -7,7 +7,8 @@
 </head>
 <body>
     <iframe src="pm2.html#qq" frameborder="0"></iframe>
-    <iframe src="//unofficial.sinaapp.com:4000/demo/postmessage/pm2.html" frameborder="0"></iframe>
+    <!-- <iframe src="form.html" frameborder="0"></iframe> -->
+    <a href="pm2.html">pm2.html</a>
     <div id="test" onclick="fun()">测试</div>
     <script>
         // window.onload = function() { // 必须等待文档加载结束才能获取
@@ -20,6 +21,7 @@
         //     var iframe = document.getElementsByTagName('iframe');
         //     console.log(iframe[0].src="pm2.html#qqq");
         // }
+        window.frames[0].postMessage('some message', '*');
     </script>
 </body>
 </html>
