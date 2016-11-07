@@ -81,9 +81,10 @@ api.weibo.com/2/oauth2/authorize?client_id=2199529438&response_type=token&d…an
     ```
 
 - ajax
+#### cors
     同域可读可写，跨域请求不能检查到 Access-Control-Allow-Origin 的情况下会被拦截。  
 ```
-    // localhost:4000
+    // www.unofficial.cn:4000
     // 跨域请求
     var url = "http://www.unofficial.cn/demo.php";
     var params = "lorem=ipsum&name=binny";
@@ -91,7 +92,7 @@ api.weibo.com/2/oauth2/authorize?client_id=2199529438&response_type=token&d…an
     var http = new XMLHttpRequest();
     http.open("POST", url, true);
     
-    // http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) {
@@ -127,9 +128,29 @@ Access-Control-Expose-Headers: X-Powered-By
     http.getResponseHeader('X-Powered-By'); // 
 ```
 - Access-Control-Max-Age
-设置预请求时间。[预请求](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS#预请求)。在chrome中的http的[timing](https://segmentfault.com/q/1010000002399481)  
+设置预请求时间。即是设置 `OPTION` 的时间。  
 - Access-Control-Allow-Methods
 设置允许的请求方法。
+
+#### jsonp
+cors的方式可以发起post请求，或者说其它形式的请求，但是jsonp只能使用get的方式获取数据。  
+```
+<script>
+    function abc(data) {
+        console.log(data);
+    }abc('{"abc":"123"}');
+</script>
+
+<script src="http://www.unofficial.cn/test/demo.php?callback=abc"></script>
+```
+简单说就是定义好回调处理方法，把回调函数的名称传递给后端，后端拿到数据名称后返回会的数据就是对于回调方法的执行。  
+```
+<script src="http://www.unofficial.cn/test/demo.js"></script>
+/**
+ * demo.js的内容
+ * abc({"abc":"123"});
+ */
+```
 
 ### 什么是postMessage
 postMessage是window对象的一个属性，widow.postMessage是一个安全的跨源通信协议。当且仅当执行脚本的页面使用相同的协议（通常都是 http）、相同的端口（http默认使用80端口）和相同的 host（两个页面的 document.domain 的值相同）时，才允许不同页面上的脚本互相访问。 window.postMessage 提供了一个可控的机制来安全地绕过这一限制，当其在正确使用的情况下。  
