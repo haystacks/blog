@@ -6,7 +6,7 @@
     <script src="js/a.js"></script>
 </head>
 <body>
-    <iframe src="pm2.html#qq" frameborder="0"></iframe>
+    <iframe src="//unofficial.sinaapp.com:4000/demo/postmessage/pm2.html#qq" frameborder="0"></iframe>
     <!-- <iframe src="form.html" frameborder="0"></iframe> -->
     <a href="pm2.html">pm2.html</a>
     <div id="test" onclick="fun()">测试</div>
@@ -21,7 +21,27 @@
         //     var iframe = document.getElementsByTagName('iframe');
         //     console.log(iframe[0].src="pm2.html#qqq");
         // }
-        window.frames[0].postMessage('some message', '*');
+        window.onload = function() {
+            // window.frames[0].postMessage('some message', '*');
+            document.getElementsByTagName('iframe')[0].contentWindow.postMessage('some messages', '*');
+        }
+        function fun() {
+            var openPage = window.open('//unofficial.sinaapp.com:4000/demo/postmessage/pm2.html#qq');
+            // openPage.onload = function() {
+                
+            //     console.log(new Date().getTime());
+            //     openPage.postMessage('test post data', 'http://unofficial.sinaapp.com:4000/demo/postmessage/pm2.html#qq');
+            // }
+                
+            console.log(1, new Date().getTime());
+            setTimeout(function() {
+                
+                console.log(2, new Date().getTime());
+                openPage.postMessage(new Date().getTime(), '*');
+                
+                console.log(3, new Date().getTime());
+            }, 100)
+        }
     </script>
 </body>
 </html>

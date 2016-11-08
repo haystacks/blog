@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>pm2</title>
-    <script src="js/a.js"></script>
-    <script src="js/b.js"></script>
+    <!--<script src="js/a.js"></script>
+    <script src="js/b.js"></script>-->
 </head>
 <body onhashchange="fun1()">
     <a id="test" href="#abc" onclick="fun()">123</a>
@@ -20,8 +20,11 @@
     	// }
         // console.log(window.parent.document.getElementById('test').innerText = 123);
         window.addEventListener('message', function(event) {
-            console.log(event);
-        }, false)
+            console.log(new Date().getTime());
+            if(/\/\/localhost/.test(event.origin)) {
+                console.log(event.data);
+            }
+        })
     </script>
 </body>
 </html>
