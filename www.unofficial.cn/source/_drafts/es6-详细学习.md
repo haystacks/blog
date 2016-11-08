@@ -278,3 +278,39 @@ function log(...args) {
 }
 log(1, 2, 3);
 ```
+- 命名参数
+```
+function init({width=100, height=100}={}) {
+	console.log(width, height);
+}
+init(); // 100 100
+init({width: 100, height: 50}); // 100 50
+```
+相当于
+```
+({width=100, height=100}={});
+let width = 100, height = 100;
+{width, height} = {};
+let width = width || 100, height = height || 100;
+// 如果传入的有参数
+{width, height} = {width: 100, height: 50};
+// 解构得到的结果应该就是 100, 50
+```
+- 展开操作符
+```
+Math.max(...[2, 99, 6, 1002]); // 1002
+```
+
+### Classes
+以前通过函数实现类的功能，通过原型扩展类。  
+```
+function User() {
+	this.name = 'unofficial';
+	this.blog = '//www.unofficial.cn/';
+}
+User.prototype.about = function() {
+	var aboutme = '大家好，我是' + this.name + '，我的博客是"' + this.blog + '"。';
+	return aboutme;
+}
+```
+如果现在还有一个会员类需要继承父类User类。  
