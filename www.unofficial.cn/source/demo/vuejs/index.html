@@ -6,61 +6,213 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div @load="startFun" id="login" class="page" v-cloak>
-        <div v-if="isLogin" class="userinfo">
-            <a href="javascript:;" @click="logout">{{ this.loginStatus }}</a>
+    <div id="weibo" class="page" v-cloak>
+        <div v-if="isLogin">
+            <!--<a href="javascript:;" @click="logout">退出</a>-->
+            <div v-if="userInfo">
+                <div class="header">
+                    <div class="inner">
+                        <a class="profile_image" href="javascript:;" :title="userInfo.name +'——'+ userInfo.description">
+                            <img :src="userInfo.profile_image_url" :alt="userInfo.name">
+                        </a>
+                    </div>
+                </div>
+                <ul class="items" v-if="favorites">
+                    <li v-for="favorite in favorites.favorites">
+                        <div>
+                            <a href="javascript:;" :id="favorite.status.id" data-type="favorites" @click="destroy"> × </a>
+                        </div>
+                        <p>
+                            {{favorite.status.text}}
+                        </p>
+                        <ol>
+                            <li v-for="tagInfo in favorite.tags" :id="tagInfo.id">{{tagInfo.tag}}</li>
+                            <!--<li v-for="tagInfo in myTag"></li>-->
+                        </ol>
+                        <div><span><input type="text" ></span><button :id="favorite.status.id" @click="favoriteTagUpdate">添加</button><button :id="favorite.status.id" @click="favoriteTagUpdate">取消</button></div>
+                    </li>
+                </ul>
+                <hr />
+                <ul class="items" v-if="userTimeline">
+                    <li v-for="status in userTimeline.statuses">
+                        <div>
+                            <a href="javascript:;" :id="status.id" data-type="statuses" @click="destroy"> × </a>
+                        </div>
+                        <p>
+                            {{status.text}}
+                        </p>
+                    </li>
+                </ul>
+                <hr />
+                <ul class="items" v-if="userTimelineIds">
+                    <li v-for="id in userTimelineIds.statuses">
+                        <div>
+                            <a href="javascript:;" :id="id" data-type="statuses" @click="destroy"> × </a>
+                        </div>
+                        <p>
+                            {{id}}
+                        </p>
+                    </li>
+                </ul>
+                <hr />
+                <ul class="items" v-if="friendsTimeline">
+                    <li v-for="status in friendsTimeline.statuses">{{status.text}}</li>
+                </ul>
+            </div>
         </div>
-        <div v-else @click="login" class="login-btn">
+        <div v-else @click="login" class="login-btn"></div>
+        
+        <div v-if="errorInfo" class="error">
+            {{errorInfo.error_code+":"+errorInfo.error}}
         </div>
     </div>
-    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438"></script>
+    <!-- 2199529438 -->
+    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3605782540"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
     <script>
-        
-        // 常量
-        const CONFIG = WB2._config;
-        const STATUS = WB2.checkLogin();
-        const VM = new Vue({
-            el: '#login',
-            data: {
-                loginStatus: '登录了吗？',
-                status: false,
-                userInfo: '',
-                isLogin: false
-            },
-            methods: {
-                startFun: function() {
-                    STATUS && (this.loginStatus = '退出') && this.getUserInfo();
-                    return STATUS;
+        (function() {
+            // 常量
+            const CONFIG = WB2._config;
+            const STATUS = WB2.checkLogin();
+            const VM = new Vue({
+                el: '#weibo',
+                data: {
+                    userInfo: '',
+                    userTimeline: '',
+                    userTimelineIds: '',
+                    friendsTimeline: '',
+                    favorites: '',
+                    errorInfo: '',
+                    isLogin: STATUS
                 },
-                login: function() {
-                    var self = this;
-                    WB2.login(function() {
-                        self.isLogin = true;
-                        self.loginStatus = '退出';
-                    });
+                created: function() {
+                    // 获取登录用户信息
+                    this.getUserInfo();
+                    // 获取登录用户关注好友的微博流
+                    // this.getFriendsTimeline();
+                    // 获取登录用户的微博流
+                    // this.getUserTimeline();
+                    // 获取登录用户的微博流ID
+                    // this.getUserTimelineIds();
+                    this.getFavorites();
                 },
-                logout: function() {
-                    var self = this;
-                    WB2.logout(function() {
-                        self.isLogin = false;
-                    });
-                },
-                getUserInfo: function() {
-                    var self = this;
-                    WB2.anyWhere(function(W){
-                        var self = this;
+                methods: {
+                    login: function() {
+                        WB2.login(function() {
+                            this.isLogin = true;
+                        }.bind(this));
+                    },
+                    logout: function() {
+                        WB2.logout(function() {
+                            this.isLogin = false;
+                        }.bind(this));
+                    },
+                    getUserInfo: function() {
+                        var _this = this;
                         WB2.anyWhere(function(W){
                             //数据交互
                             W.parseCMD('/users/show.json', function(oResult, bStatus) {
-                                self.userInfo = oResult;
-                                console.log(oResult);
+                                if(bStatus) {
+                                    _this.userInfo = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
                             }, {"uid" : CONFIG.uid}, {method: 'get', cache_time: 0});
+                        })
+                    },
+                    getFriendsTimeline: function() {
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/statuses/friends_timeline.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.friendsTimeline = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            }, {"uid" : CONFIG.uid}, {method: 'get', cache_time: 0});
+                        })
+                    },
+                    getUserTimeline: function() { // 获取用户发布的微博
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/statuses/user_timeline.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.userTimeline = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            }, {"count": 100}, {method: 'get', cache_time: 0});
+                        })
+                    },
+                    getUserTimelineIds: function() { // 获取用户发布的微博
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/statuses/user_timeline/ids.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.userTimelineIds = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            }, {"count": 100}, {method: 'get', cache_time: 0});
+                        })
+                    },
+                    show: function(id) { // 根据ID获取微博
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/statuses/show.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.showStatus = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            }, {"id": id}, {method: 'get', cache_time: 0});
+                        })
+                    },
+                    destroy: function(e) { // 根据微博ID删除指定微博
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            // 获取类型
+                            var type = e.target.dataset.type;
+                            // 数据交互
+                            W.parseCMD('/'+ type +'/destroy.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.destroyStatus = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            }, {"id" : e.target.id}, {method: 'POST', cache_time: 0});
+                        })
+                        // 从timeline中移除
+                        e.path[3].removeChild(e.path[2]);
+                    },
+                    getFavorites: function() { // 获取收藏微博的ID列表
+                        var _this = this;
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/favorites.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    _this.favorites = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            },{count: 3} , {method: 'get', cache_time: 0});
+                        })
+                    },
+                    favoriteTagUpdate: function(e) {
+                        var id = e.target.id;
+                        var value = e.target.previousElementSibling.lastElementChild.value;
+                        var valueArr = value.split(' ').filter(function(e) {
+                            return e != '';
                         });
-                    });
+                        console.log(valueArr);
+                    }
                 }
-            }
-        });
+            });
+        }())
     </script>
 </body>
 </html>
