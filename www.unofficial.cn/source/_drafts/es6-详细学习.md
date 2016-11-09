@@ -304,9 +304,9 @@ Math.max(...[2, 99, 6, 1002]); // 1002
 ### Classes
 以前通过函数实现类的功能，通过原型扩展类。  
 ```
-function User() {
-	this.name = 'unofficial';
-	this.blog = '//www.unofficial.cn/';
+function User(name, blog) {
+	this.name = name||'unofficial';
+	this.blog = blog||'//www.unofficial.cn/';
 }
 User.prototype.about = function() {
 	var aboutme = '大家好，我是' + this.name + '，我的博客是"' + this.blog + '"。';
@@ -314,3 +314,47 @@ User.prototype.about = function() {
 }
 ```
 如果现在还有一个会员类需要继承父类User类。  
+```
+function Vip() {
+	this.level = 1;
+}
+Vip.prototype = Object.create(User.prototype);
+Vip.prototype.constructor = Vip;
+```
+在es6中添加了class的概念，但是它由于我们了解的其他的类的概念有一些差别，他只是一个语法糖，本质还是基于原型的面向对象。对于上面原型的类的重写一下就是，以下均在严格模式下执行  
+```
+'use strict';
+class User {
+	constructor(name, blog) {
+		this.name = name||'unofficial';
+		this.blog = blog||'//www.unofficial.cn/';
+	}
+
+	about() {
+		var aboutme = '大家好，我是' + this.name + '，我的博客是"' + this.blog + '"。';
+		return aboutme;
+	}
+}
+// 实例化
+var user = new User('吴非');
+console.log(user.about()); // 大家好，我是吴非，我的博客是"//www.unofficial.cn/"。
+```
+对于 `class User{} ` 相当于就是 `User.prototype`   
+```
+User.prototype.constructor就是这里的constructor，构造函数指向函数本身
+User.prototype.about对应类中的about方法
+// 非严格模式下会提示User是undefined
+// 严格模式下是
+typeof User; // function
+typeof User.prototype; // object
+Object.keys(User.prototype); // []
+console.log(User.prorotype);
+/**
+ * {
+ 	about: function,
+ 	constructor: function,
+ 	__proto__: Object
+ * }
+ */
+Object.getOwnPropertyNames(User.prototype); // ['about', 'constuctor']
+```
