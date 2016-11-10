@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+    $.ajax({
+        url: 'http://localhost:3000/man',
+        method: 'POST',
+        success: function (data) {
+            console.log(data)
+        }
+    });
+    // $.ajax({
+    //     url: 'http://localhost:3000/service',
+    //     method: 'PUT',
+    //     success: function (data) {
+    //         console.log(data)
+    //     }
+    // });
+    </script>
+</body>
+</html>

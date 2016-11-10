@@ -66,8 +66,8 @@
             {{errorInfo.error_code+":"+errorInfo.error}}
         </div>
     </div>
-    <!-- 2199529438 -->
-    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3605782540"></script>
+    <!-- 3605782540 -->
+    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
     <script>
         (function() {
@@ -203,12 +203,23 @@
                         })
                     },
                     favoriteTagUpdate: function(e) {
+                        var _this = this;
                         var id = e.target.id;
                         var value = e.target.previousElementSibling.lastElementChild.value;
                         var valueArr = value.split(' ').filter(function(e) {
                             return e != '';
                         });
-                        console.log(valueArr);
+                        var tags = valueArr.join(',');
+                        WB2.anyWhere(function(W){
+                            //数据交互
+                            W.parseCMD('/favorites/tags/update.json', function(oResult, bStatus) {
+                                if(bStatus) {
+                                    // _this.favorites = oResult;
+                                } else {
+                                    _this.errorInfo = oResult;
+                                }
+                            },{id: id, tags: tags} , {method: 'post', cache_time: 0});
+                        })
                     }
                 }
             });
