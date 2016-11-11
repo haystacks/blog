@@ -5,7 +5,7 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script>
     $.ajax({
         url: 'http://localhost:3000/man',
@@ -21,6 +21,41 @@
     //         console.log(data)
     //     }
     // });
+    </script>-->
+    <!--<input type="file" id="file-id" name="file_name" onchange="fun(this)">
+    <img src="C:\fakepath\1.1.png" alt="">
+    <script>
+        function fun(e) {
+            console.log('%O', e);
+        }
+    </script>-->
+    <div id="app">
+        <ul class="list-unstyled">
+            <li v-for="(item, index) in items" :id="index" class="pull-left" @click="check">
+                {{item.name}}
+            </li>
+        </ul>
+        <input v-model='items[key].name'>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                items: [{
+                    name: 'a'
+                }, {
+                    name: 'b'
+                }],
+                key: 0
+            },
+            methods: {
+                check: function(e) {
+                    this.key = e.target.id;
+                }
+            }
+        })
     </script>
+    <script async src="//jsfiddle.net/b6sjwpb5/embed/js,html,result/"></script>
 </body>
 </html>
