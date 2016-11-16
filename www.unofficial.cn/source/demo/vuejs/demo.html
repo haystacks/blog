@@ -5,6 +5,15 @@
     <title>Document</title>
 </head>
 <body>
-    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <div id="app">
+        <p>{{msg}}</p>
+        <input type="text" v-model="msg">
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app'
+        })
+    </script>
 </body>
 </html>

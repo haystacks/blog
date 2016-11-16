@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<div id="app">
+		<my-item></my-item>
+	</div>
+	<template id="item">
+		<div>
+			<ol>
+				<li v-for="(list, index) in lists"  v-if="list.age >= 18">
+					<span>{{list.name}}</span>
+					<span>{{list.age}}</span>
+				</li>
+			</ol>
+		</div>
+	</template>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+	<script>
+		new Vue({
+			el: "#app",
+			components: {
+				myItem: {
+					template: '#item',
+					data: function() {
+						return {
+							lists: [{
+								name: 'a',
+								age: 10
+							},{
+								name: 'b',
+								age: 18
+							},{
+								name: 'c',
+								age: 12
+							}]
+						}
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
