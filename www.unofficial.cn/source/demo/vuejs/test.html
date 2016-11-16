@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rendlist</title>
+    <style>
+        .finished{
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<div id="app">
+    <ol v-if="videoList">
+        <li v-for="obj in videoList.data.custom_category_list">
+            {{obj.name}}
+        </li>
+    </ol>
+</div>
+<script src="http://cdn.bootcss.com/vue/2.0.0/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            videoList: ''
+        },
+
+    })
+</script>
+<!--fetch('http://qu.quhepai.com/square/video-list').then(function(e) {
+    e.json().then(function(e) {
+        vm.$data.lists = e.data.custom_category_list;
+    })
+})-->
+</body>
+</html>

@@ -74,6 +74,13 @@
             // 常量
             const CONFIG = WB2._config;
             const STATUS = WB2.checkLogin();
+            // weibo组件
+            Vue.component({
+                weibo: {
+                    name: '单条微博组件'
+                }
+            })
+
             const VM = new Vue({
                 el: '#weibo',
                 data: {
@@ -91,7 +98,7 @@
                     // 获取登录用户关注好友的微博流
                     // this.getFriendsTimeline();
                     // 获取登录用户的微博流
-                    // this.getUserTimeline();
+                    this.getUserTimeline();
                     // 获取登录用户的微博流ID
                     // this.getUserTimelineIds();
                     this.getFavorites();
@@ -140,10 +147,11 @@
                             W.parseCMD('/statuses/user_timeline.json', function(oResult, bStatus) {
                                 if(bStatus) {
                                     _this.userTimeline = oResult;
+                                    console.log(_this.userTimeline.statuses[0]);
                                 } else {
                                     _this.errorInfo = oResult;
                                 }
-                            }, {"count": 100}, {method: 'get', cache_time: 0});
+                            }, {"count": 1}, {method: 'get', cache_time: 0});
                         })
                     },
                     getUserTimelineIds: function() { // 获取用户发布的微博
