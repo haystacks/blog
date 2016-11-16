@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		data: {
+			a: 1,
+			b: 2,
+			c: 3
+		},
+		methods: {
+			someMethod: function(old, oldVal) {
+				console.log(old+oldVal);
+			}
+		},
+		watch: {
+			'a': {
+				handler:function(val, oldVal){
+					if(this.b == 0) {
+						this.b = 1;
+					} else if(this.b == 1) {
+						this.b = 0;
+					}
+				},
+				deep: true
+			},
+			'b': {
+				handler: function(val, oldVal){
+					if(this.a == 0) {
+						this.a = 1;
+					} else if(this.a == 1) {
+						this.a = 0;
+					}
+
+				},
+				deep: true
+			},
+			c: 'someMethod'
+		},
+	})
+</script>
+</body>
+</html>
