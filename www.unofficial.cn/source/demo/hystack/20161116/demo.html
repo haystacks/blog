@@ -8,11 +8,21 @@
     <div id="app">
         <p>{{msg}}</p>
         <input type="text" v-model="msg">
+
+        <input type="text" :value="msg" @input="inputFun">
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
     <script>
         new Vue({
-            el: '#app'
+            el: '#app',
+            data: {
+                msg: 'message'
+            },
+            methods: {
+                inputFun: function(e) {
+                    this.msg = e.target.value;
+                }
+            }
         })
     </script>
 </body>

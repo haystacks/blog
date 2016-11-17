@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="delete">删除</div>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="layer-v3.0.1/layer/layer.js"></script>
+    <script>
+    $('#delete').on('click', function(e){
+
+      var id = '123';
+
+      layer.confirm('确定删除吗？', {
+          btn: ['确定','取消'] //按钮
+      }, function(){
+          $.ajax({
+              type: 'post',
+              url: 'http://localhost:3000/test', // 可以获取到id
+              dataType: 'json'
+          })
+          .done(function(data){
+              if(data.code === 1){
+                  console.log(id);
+                  layer.msg('删除成功', {icon: 1});
+              }else{
+                  layer.msg('删除失败', {icon: 1});
+              }
+          })
+          .fail(function(err){
+              layer.msg('删除失败', {icon: 1});
+          })
+      })
+
+    })
+    </script>
+</body>
+</html>
