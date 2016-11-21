@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ol>
+            <li :index="index" @dblclick="editSort">
+                <h4></h4>
+                <input type="text">
+            </li>
+        </ol>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                index: 1
+            },
+            methods: {
+                editSort: function(e) {
+                    var index = e.target.getAttribute('index');
+                    e.target.children[1].focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

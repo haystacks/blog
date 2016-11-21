@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" onchange="onChange(event)">
+    <script>
+        function onChange(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            var a = 1;
+            reader.onload = function(event) {
+            // The file's text will be printed here
+                console.log(a, event.target.result)
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
