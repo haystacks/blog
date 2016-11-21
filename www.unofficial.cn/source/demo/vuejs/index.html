@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<ul class="items" v-if="favorites">
-					<li v-for="favorite in favorites.favorites">
+					<li v-for="favorite in favorites.favorites" :tags="favorite.tags">
 						<div>
 							<a href="javascript:;" :id="favorite.status.id" data-type="favorites" @click="destroy"> × </a>
 						</div>
@@ -87,6 +87,7 @@
 					userTimelineIds: '',
 					friendsTimeline: '',
 					favorites: '',
+					tags:'',
 					errorInfo: '',
 					isLogin: STATUS
 				},
@@ -224,7 +225,7 @@
 							//数据交互
 							W.parseCMD('/favorites/tags/update.json', function(oResult, bStatus) {
 								if(bStatus) {
-									// _this.favorites = oResult;
+									_this.tags = oResult.tags;
 								} else {
 									_this.errorInfo = oResult;
 								}

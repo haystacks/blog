@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var str = 123456789.12345
+	function bar(str) {
+		var s = str.replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+		console.log(s);
+	}
+	bar();
+</script>
+</body>
+</html>
