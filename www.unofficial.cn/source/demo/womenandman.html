@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<div id="result" class="parent"> </div>
+	<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.js"></script> 
+	<script>
+		//es5, es6
+		var peolist = [], result = [];
+		for(var i = 0; i < 30; i ++) {
+			Math.random() > .5 ? peolist.push({ name: "Mr."+i, sex: 0 }) : peolist.push({ name: "Miss."+i, sex: 1 });
+			document.write( peolist[i].name +" --->>> " + (peolist[i].sex == 0 ? "男":"女") +"<br/>" );
+		}
+		document.write( " --->>> <<<<<---------<br/>" ); //对manlist和malelist排序
+		// 拆分男女
+		var man = [], women = [];
+		for(p in peolist) {
+			if(peolist[p].sex === 0) {
+				man[p] = peolist[p];
+			} else {
+				women[p] = peolist[p];
+			}
+		}
+		// 重新站队
+		var manLen = man.length, womenLen = women.length;
+		
+			
+	</script>
+</body>
+</html>
