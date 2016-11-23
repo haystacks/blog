@@ -7,7 +7,7 @@ categories:
 date: 2016-11-01 00:00:00
 ---
 
-问题起因是在使用weibo api的时候，发现有一个报错。weibo api是https协议，我本地是模拟的回调域名，然后进行数据通信，本地http协议，于是乎就报错了。出于对postMessage的不是很熟悉，借此机会学习晚上一些自己的知识储备。  
+问题起因是在使用weibo api的时候，发现有一个报错。weibo api是https协议，我本地是模拟的回调域名，然后进行数据通信，本地http协议，于是乎就报错了。出于对postMessage的不是很熟悉，借此机会学习完善一下自己的知识储备。  
 <!-- more -->
 ```
 api.weibo.com/2/oauth2/authorize?client_id=******&response_type=token&d…ansport=html5&referer=http://www.unofficial.cn/demo/vuejs/demo.html:1 Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.unofficial.cn') does not match the recipient window's origin ('http://www.unofficial.cn').

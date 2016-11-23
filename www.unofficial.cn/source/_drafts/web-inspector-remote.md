@@ -1,6 +1,6 @@
 ---
 title: web-inspector-remote
-date: 20161122
+date: 2016-11-22
 categories: 
 - 学习
 tags:
@@ -21,3 +21,59 @@ tags:
 ```
 npm i weinre -g
 ```
+
+### 怎么使用
+拿到一个工具不知所措的时候，都可以直接 `--help` 或者 `-h` 。你想知道的它都能告诉你。
+```
+weinre --help
+```
+
+![](http://ww2.sinaimg.cn/large/e6cd2709gw1fa21j19yedj20fm05naa3.jpg)
+
+
+- 运行weinre，默认设置什么也不修改，先测试一下本地的正在做的一个Demo
+    ```
+    weinre
+    ```
+
+    ![](http://ww4.sinaimg.cn/large/e6cd2709gw1fa21paidaij20f600vwea.jpg)
+
+    > 默认localhost:8080，浏览器打开 http://localhost:8080 可以参考文档介绍说明
+
+- 编辑正在做的demo
+
+    按照上一步的说明，在文档中添加这一句到Demo中  
+    `<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>` 
+
+- 开启Debug，运行Demo
+
+    打开debug工具页面： http://localhost:8080/client/#anonymous
+    打开Demo地址：http://localhost:8088 （这个是用 webpack-dev-server 开的一个开发服务）
+
+    Debug页就可以开启调试模式了
+    ![](http://ww4.sinaimg.cn/large/e6cd2709gw1fa24qby2kzg20jn08jwfl.gif)
+    
+    > PC上使用这个工具没有必要，因为你可以直接用 chrome 的 dev tool 啊。所以还是继续模拟真机
+
+- Mobile真机调试
+
+    手机上要怎么访问PC上的 http://localhost:8088 呢？公网访问一样的道理，通过IP，本机IP是 192.168.95.1，于是重新设置一下webpack-dev-server 的host。相应的 weinre 也绑定host到 192.168.95.1。不能忘记的是修改页面内的包含 script 。  
+    `<script src="http://192.168.95.1:8080/target/target-script-min.js#anonymous"></script>`
+
+    打开debug工具页面： http://192.168.95.1:8080/client/#anonymous
+    打开Demo地址：http://192.168.95.1:8088 （这个是用 webpack-dev-server 开的一个开发服务）
+
+    ![](http://ww2.sinaimg.cn/mw690/e6cd2709gw1fa2646d36qg208z0fot8i.gif)
+
+    > Mobile与PC在同一网络环境下
+
+- 调试在线网站与微信内置浏览器打开的网页
+    
+    同真机调试一样的道理，在同一网络环境下，在需要调试的页面内加入 weinre 的 script 监测脚本。借用今天 segmentfault 上的一道关于微信获取地址数据的题目来调试一下是否正常获取数据。参照真机调试中的配置。
+
+    微信内置浏览器访问我的一个测试页面 `http://unofficial.cn/demo.php`
+
+    ![](http://ww1.sinaimg.cn/mw690/e6cd2709gw1fa26fbpxhgg20h40fodj4.gif)
+
+### 准备来使用吧
+再也不用担心mobile没有dev tool了，weinre 我值得拥有。下一次应该不会忘记还有这个工具了吧？这一次我自己总结了一下，只为下一次不再重复搜索方法。

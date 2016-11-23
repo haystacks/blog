@@ -270,13 +270,20 @@ footer {
 	}
 	p {
 		margin: 0;
+		code {
+			padding: 0 3px;
+			border-radius: 3px;
+			display: inline-block;
+			font-family: "Noto Sans";
+		}
 	}
 	blockquote {
 		margin: 10px 0;
 		p {
 			border-left: 4px solid #ccc;
 			background: #eee;
-			padding-left: 5px;
+			padding: 10px;
+    		line-height: 30px;
 		}
 	}
 	ul {
@@ -284,7 +291,6 @@ footer {
 		list-style-type: square;
 		li {
 			margin-bottom: 5px;
-			line-height: 28px;
 			input {
 				vertical-align: middle;
 			}
@@ -306,6 +312,7 @@ footer {
 		margin: 10px 0;
 
 		pre {
+			margin: 0.5em 0;
 			font-family: Consolas, "Courier New";
 			.comment {
 				color: #8d8687;
@@ -367,11 +374,15 @@ footer {
 			}
 		}
 
+		tr {
+			display: flex;
+		}
+
 		.gutter {
 			color: #ccc;
 		}
 		.code {
-			padding-left: 20px;
+			width: 100%;
 		}
 	}
 }
