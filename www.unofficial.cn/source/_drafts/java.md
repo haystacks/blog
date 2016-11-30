@@ -16,3 +16,9 @@ tags:
 JAVA_HOME       配置JDK安装路径
 PATH            配置JDK命令文件位置 /bin
 CLASSPATH       配置类库文件的位置 /include
+
+
+严重: Error deploying web application directory DManager
+java.lang.UnsupportedClassVersionError: d/servlets/PackServletMix : Unsupported
+major.minor version 52.0 (unable to load class d.servlets.PackServletMix)
+
