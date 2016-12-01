@@ -1,0 +1,22 @@
+#header-logininfo {
+    height: 46px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+
+    .inner {
+        margin: 0 auto;
+    }
+    .profile_image {
+        width: 32px;
+        height: 32px;
+        display: block;
+        margin: 0 auto;
+        padding: 7px 0;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+}

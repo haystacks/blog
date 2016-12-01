@@ -1,0 +1,28 @@
+.items {
+    width: 588px;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #ccc;
+
+    li {
+        border-bottom: 1px solid #ccc;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .header {
+            div {
+                float: left;
+            }
+
+            li {
+                border: 0;
+            }
+        }
+    }
+
+    .profile_image {
+        border-radius: 25px;
+    }
+}
