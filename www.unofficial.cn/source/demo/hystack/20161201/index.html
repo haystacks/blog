@@ -3,20 +3,68 @@
 <head>
 	<title></title>
 	<style type="text/css">
-		div {
-			border: 1px solid #333;
-			height: 200px;
-			line-height: 200px;
+		body {
+			margin: 0;
+		}
+		.test {
+			/*outline: 1px solid #333;*/
+			position: relative;
+			z-index: 1;
+			color: #f00;
+			font-family: 'Microsoft Yahei';
+			margin-top: 60px;
+			font-size: 18px;
+			padding-top: 13px;
 		}
 
-		div img {
-			border: 1px solid #f00;
+		.test img {
+			width: 15px;
+			height: 15px;
+		}
+
+		.fourline {
+			position: absolute;
+			top: 60px;
+			left: 0;
+			width: 100%;
+		}
+		.fourline hr {
+			height: 1px;
+			border: 0;
+			background: #333;
+			margin: 10px 0;
+		}
+		.bg1, .bg2 {
+			position: absolute;
+			top: 60px;
+			left: 0;
+			width: 100%;
+		}
+
+		.bg1 {
+			background: rgba(255, 0, 0, .1);
+		}
+
+		.bg2 {
+			background: rgba(255, 0, 0, .5);
 		}
 	</style>
 </head>
 <body>
+	<!--<div class="test">
+		Abcdefghijklmnopqrstuvwx<img src="http://tva3.sinaimg.cn/crop.0.0.1080.1080.50/e6cd2709jw8f2wkplf8i0j20u00u040g.jpg">yz
+	</div>
+	<div class="fourline">
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+	</div>
+	<div class="bg1"></div>
+	<div class="bg2"></div>-->
 	<div>
-		Abcdefghijklmnopqrstuvwxyz<img src="http://tva2.sinaimg.cn/crop.0.0.180.180.50/d23c7564jw1e8qgp5bmzyj2050050aa8.jpg">
+		<img src="http://tva3.sinaimg.cn/crop.0.0.1080.1080.50/e6cd2709jw8f2wkplf8i0j20u00u040g.jpg">
+		<img src="http://tva3.sinaimg.cn/crop.0.0.1080.1080.50/e6cd2709jw8f2wkplf8i0j20u00u040g.jpg">
 	</div>
 </body>
 </html>

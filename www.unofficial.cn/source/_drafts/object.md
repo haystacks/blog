@@ -192,7 +192,105 @@ obj.a = 1; // obj对象的属性a就行赋值操作，调用set方法，对value
 console.log(obj); // Object {a: 1, get a: function, set a: function}
 ```
 
+<!-- 在[vue-入门学习2]()中的对于 `data` 数据的变化，也就是用的 `Object.defineProperty` 来追踪变化的。
+```
+class vueData {
+	constructor({data={}}=data) {
+		this.data = data;
+	}
+	show() {
+		console.log(this.data);
+	}
+}
+``` -->
+
+### Object.defineProperties
+Object.defineProperties 的作用和Object.defineProperty 的作用一样定义给对象上添加或者更改多个自有属性，并返回当前对象。
+
+#### 概念解释
+> Object.defineProperties(obj, properties)
+
+properties 是由对个属性与属性描述符的键值对构成
+
+#### 代码解释
+```
+var o = {};
+var value = 123;
+Object.defineProperties(o, {
+	a: {
+		value: 1,
+		writable: true
+	},
+	b: {
+		get: function() {
+			return value;
+		},
+		set: function(val) {
+			value = val;
+		}
+	}
+})
+```
+
 ### Object.getOwnPropertyDescriptor
+Object.getOwnPropertyDescriptor() 返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）
+
+#### 概念解释
+> Object.getOwnPropertyDescriptor(obj, prop)
+
+obj: 指定对象  
+prop: 指定对象的自由属性名  
+
+如果指定的属性存在于对象上，则返回其属性描述符（property descriptor），否则返回 undefined。  
+
+#### 代码解释
+```
+var o = {};
+console.log(Object.getOwnPropertyDescriptor(o, 'a'));
+// undefined
+
+o = {get a() {return 123;}}
+console.log(Object.getOwnPropertyDescriptor(o, 'a'));
+// Object {configurable: true, enumerable: true, get: function, set: undefined}
+
+o.a = 123456;
+console.log(o.a);
+// 123
+// 因为 set 方法未定义，所以值获取的时候，get 方法的返回值始终是 123
+
+o.b = 123;
+console.log(o.getOwnPropertyDescriptor(o, b));
+// Object {value: 123, writable: true, enumerable: true, configurable: true}
+
+var value = 123;
+Object.defineProperty(o, 'c', {
+	configurable: true,
+	enumerable: true,
+	get: function() {
+		return value;
+	},
+	set: function(val) {
+		value = val;
+	}
+})
+console.log(Object.getOwnPropertyDescriptor(o, 'c'));
+// Object {configurable: true, enumerable: true, get: function, set: function}
+```
+
+### Object.getOwnPropertyDescriptors
+同 Object.getOwnPropertyDescriptor ，只是这个是直接获取对象的所有描述符。
+
+> Object.getOwnPropertyDescriptors(obj)
+
+#### 代码解释
+```
+var o = {a: 1, b: 2};
+Object.getOwnPropertyDescriptors(o);
+// Object {
+	a: Object 数据描述符
+	b: Object 数据描述符
+}
+```
 
 ### prototype 和 property
 英语不是很好的我总是容易弄不清楚这两个单词的意思，总是写错，特意拿出来区分一下
