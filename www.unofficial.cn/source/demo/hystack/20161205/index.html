@@ -8,24 +8,27 @@
     请输入您的姓名：<input type="text" name="name" oninput="setVal(this)" /> <br />
     你好：<span id="name"></span>
     <script>
-        var userinfo = {name: 'unofficial'},
+        var userinfo = {name: 'unofficial', age: 18},
             nameSpanEle = document.getElementById('name'),
             nameInputEle = document.getElementsByTagName('input')[0];
+
         function def(key, value) {
             Object.defineProperty(userinfo, key, {
                 get: function() {
                     return value;
                 },
                 set: function(val) {
-                    initVal(val);
-                    getVal(val);
+                    if(key === 'name') {
+                        initVal(val);
+                        getVal(val);
+                    }
                     value = val;
                 }
             })
         }
 
         for(var key in userinfo) {
-            def(key, userinfo.key);
+            def(key, userinfo[key]);
         }
 
         function initVal(val) {

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    请输入您的姓名：<input type="text" name="name" oninput="setVal(this)" /> <br />
+    你好：<span id="name"></span>
+    <script>
+        var userinfo = {name: 'unofficial'},
+            nameSpanEle = document.getElementById('name'),
+            nameInputEle = document.getElementsByTagName('input')[0];
+
+        function setVal(e) {
+            userinfo.name = e.value;
+            getVal(e.value);
+        }
+
+        function getVal(val) {
+            nameSpanEle.innerText = val;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <input type="text" v-model="profile.name">
+        <p>{{profile.name}}</p>
+        <p>{{profile.age}}</p>
+    </div>
+    <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                profile: {
+                    name: 'unofficial'
+                }
+                
+            }
+        })
+        // Vue.set(vm.profile, 'age', 18);
+        vm.$set(vm.profile, 'age', 15);
+    </script>
+</body>
+</html>

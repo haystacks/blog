@@ -292,6 +292,13 @@ Object.getOwnPropertyDescriptors(o);
 }
 ```
 
+### Object.assign
+Object.assign() 方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。
+
+#### 概念解释
+> Object.assign(target, ...sources)
+
+
 ### prototype 和 property
 英语不是很好的我总是容易弄不清楚这两个单词的意思，总是写错，特意拿出来区分一下
 protorype：原型
