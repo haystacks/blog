@@ -9,7 +9,12 @@
 		"default_popup": "popup.html",
 		"default_title": "click here!"
 	},
-
+	"content_scripts": [  
+		{  
+			"matches": ["*://*/*"],  
+			"js": ["myscript.js"]  
+		}
+	],
 	"permissions": [
 		"activeTab",
 		"http://fanyi.baidu.com/"

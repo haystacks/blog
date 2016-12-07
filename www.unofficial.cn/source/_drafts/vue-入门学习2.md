@@ -101,3 +101,6 @@ vue实例时传入一个js对象，遍历对象的时候，通过 `Object.define
 上述例子中学习两点：
 - 如果Object是profile，即 `vm.$data.profile`，因为Vue 实例也代理了 data 对象上所有的属性，因此访问 vm.profile 等价于访问 vm.$data.profile。
 - vm.$set 是全局 Vue.set 的别名
+
+#### 异步更新队列
+对于数据不是立即更新这点的理解，观察到数据变化后，Vue会创建一个队列，将同一事件循环内的数据变化都缓存起来。如果一个watcher被多次触发，只会推入一次到队列中，然后，在接下来的事件循环中，Vue 刷新队列并仅执行必要的 DOM 更新。  

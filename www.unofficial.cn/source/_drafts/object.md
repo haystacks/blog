@@ -192,18 +192,6 @@ obj.a = 1; // obj对象的属性a就行赋值操作，调用set方法，对value
 console.log(obj); // Object {a: 1, get a: function, set a: function}
 ```
 
-<!-- 在[vue-入门学习2]()中的对于 `data` 数据的变化，也就是用的 `Object.defineProperty` 来追踪变化的。
-```
-class vueData {
-	constructor({data={}}=data) {
-		this.data = data;
-	}
-	show() {
-		console.log(this.data);
-	}
-}
-``` -->
-
 ### Object.defineProperties
 Object.defineProperties 的作用和Object.defineProperty 的作用一样定义给对象上添加或者更改多个自有属性，并返回当前对象。
 
@@ -292,12 +280,93 @@ Object.getOwnPropertyDescriptors(o);
 }
 ```
 
+### Object.create
+
 ### Object.assign
 Object.assign() 方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。
 
 #### 概念解释
 > Object.assign(target, ...sources)
 
++ target: 目标对象，存入多个源对象中的可枚举对象
++ sources：多个对象
+
+#### 代码解释
+```
+var obj = {};
+var objA = {
+	a: 1,
+	c: 3,
+	d: 'd',
+	e: 'a'
+};
+Object.defineProperty(objA, 'b', {
+	configurable: true,
+	enumerable: false,
+	value: 1
+});
+var objB = {
+	d: 4
+};
+Object.assign(obj, objA, objB);
+```
+可以复制源对象的可枚举数据到新的目标对象中，但是不能用于深复制，因为
+
+```
+var obj = {};
+var objA = {
+	a: 1,
+	c: 3,
+	d: 'd',
+	e: 'a'
+};
+Object.defineProperty(objA, 'b', {
+	configurable: true,
+	enumerable: false,
+	value: 1
+});
+var objB = {
+	d: 4,
+	e: {
+		f: 123
+	}
+};
+Object.assign(obj, objA, objB);
+
+// 如果我修改了源对象objB.e.f的值，obj中的值也会变化
+// 对象中可枚举属性是一个对象，对象中的属性只是拷贝source的引用
+
+objB.e.f = 123456;
+console.log(obj); // obj.e.f === 6
+```
+
+原始类型会被包装为Object
+```
+var a = 'abc';
+var b = 1;
+var c = false;
+var d = Symbol("foo");
+var obj = Object.assign({}, a, b, c, d, null, undefined);
+console.log(obj); // Object {0: "a", 1: "b", 2: "c"} 只有字符串是可枚举的，会直接忽略null和undefined
+```
+
+出错会中断拷贝
+```
+var a = 'abc';
+var b = {};
+Object.defineProperty(b, 'a', {
+	value: 123,
+	writable: false
+})
+var c = {
+	a: 456
+}
+var d = {
+	b: 123
+}
+var obj = Object.assign(b, d, c, a);
+console.log(obj); // undefined 由于b的a不可写，拷贝c的时候报错中断了拷贝，但是目标对象b中还是多了属性b。 Object { a: 123, b: 123 }
+```
 
 ### prototype 和 property
 英语不是很好的我总是容易弄不清楚这两个单词的意思，总是写错，特意拿出来区分一下

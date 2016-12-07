@@ -20,8 +20,6 @@ window.onload = function() {
 			result.innerText = res.trans_result.data[0].dst;
 		})
 	})
-
-	document.addEventListener('select', function(e) {
-		console.log(e);
-	})
 }
+
+chrome.tabs.executeScript(null, {file: "content_script.js"});
