@@ -18,7 +18,7 @@
 					</div>
 				</div>
 				<ul class="items" v-if="favorites">
-					<li v-for="favorite in favorites.favorites">
+					<li v-for="favorite in favorites.favorites" v-if="!favorite.status.deleted">
 						<div>
 							<a href="javascript:;" :id="favorite.status.id" data-type="favorites" @click="destroy"> × </a>
 						</div>
@@ -62,16 +62,8 @@
 					</li>
 				</ul>
 				<hr />
-				<ul class="items" v-if="userTimelineIds">
-					<li v-for="id in userTimelineIds.statuses">
-						<div>
-							<a href="javascript:;" :id="id" data-type="statuses" @click="destroy"> × </a>
-						</div>
-						<p>
-							{{id}}
-						</p>
-					</li>
-				</ul>
+				<button @click="destroyBatch">删除全部微博</button>
+				<button @click="friendshipDestroyBatch">删除全部关注的用户</button>
 				<hr />
 				<ul class="items" v-if="friendsTimeline">
 					<li v-for="status in friendsTimeline.statuses">{{status.text}}</li>
@@ -84,8 +76,11 @@
 			{{errorInfo.error_code+":"+errorInfo.error}}
 		</div>
 	</div>
-	<!-- 3605782540 -->
-	<script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2199529438"></script>
+	<!-- unofficial.sinaapp.com 2199529438 -->
+	<!-- www.ul.com.nu 837978536 未认证 -->
+	<!-- unofficial.cnblogs.com 3605782540 -->
+	<script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3605782540"></script>
+	<script src="js/promise_weibo.js"></script>
 	<script src="//cdn.bootcss.com/vue/2.1.3/vue.js"></script>
 	<script>
 		(function() {
@@ -110,9 +105,7 @@
 					// 获取登录用户关注好友的微博流
 					// this.getFriendsTimeline();
 					// 获取登录用户的微博流
-					// this.getUserTimeline();
-					// 获取登录用户的微博流ID
-					// this.getUserTimelineIds();
+					this.getUserTimeline();
 					this.getFavorites();
 				},
 				methods: {
@@ -170,19 +163,6 @@
 							}, {"count": 100}, {method: 'get', cache_time: 0});
 						})
 					},
-					getUserTimelineIds: function() { // 获取用户发布的微博
-						var _this = this;
-						WB2.anyWhere(function(W){
-							//数据交互
-							W.parseCMD('/statuses/user_timeline/ids.json', function(oResult, bStatus) {
-								if(bStatus) {
-									_this.userTimelineIds = oResult;
-								} else {
-									_this.errorInfo = oResult;
-								}
-							}, {"count": 100}, {method: 'get', cache_time: 0});
-						})
-					},
 					show: function(id) { // 根据ID获取微博
 						var _this = this;
 						WB2.anyWhere(function(W){
@@ -213,6 +193,9 @@
 						// 从timeline中移除
 						e.path[3].removeChild(e.path[2]);
 					},
+					// 删除全部微博
+					destroyBatch: statusDestroyBatch,
+					friendshipDestroyBatch: friendshipDestroyBatch,
 					getFavorites: function() { // 获取收藏微博的ID列表
 						var _this = this;
 						WB2.anyWhere(function(W){
