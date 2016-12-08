@@ -63,7 +63,6 @@
 				</ul>
 				<hr />
 				<button @click="destroyBatch">删除全部微博</button>
-				<button @click="friendshipDestroyBatch">删除全部关注的用户</button>
 				<hr />
 				<ul class="items" v-if="friendsTimeline">
 					<li v-for="status in friendsTimeline.statuses">{{status.text}}</li>
@@ -86,7 +85,7 @@
 		(function() {
 			// 常量
 			const CONFIG = WB2._config;
-			const STATUS = WB2.checkLogin();
+			const STATUS = false;
 			const VM = new Vue({
 				el: '#weibo',
 				data: {
@@ -107,6 +106,9 @@
 					// 获取登录用户的微博流
 					this.getUserTimeline();
 					this.getFavorites();
+				},
+				brforeCreate: function() {
+					STATUS = WB2.checkLogin();
 				},
 				methods: {
 					// 公共方法
@@ -195,7 +197,6 @@
 					},
 					// 删除全部微博
 					destroyBatch: statusDestroyBatch,
-					friendshipDestroyBatch: friendshipDestroyBatch,
 					getFavorites: function() { // 获取收藏微博的ID列表
 						var _this = this;
 						WB2.anyWhere(function(W){

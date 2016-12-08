@@ -25,7 +25,7 @@ function userTimelineIds() { // 获取用户发布的微博
     return weiboJs({
         url: '/statuses/user_timeline/ids.json',
         req: [
-            {"count": 5},
+            {count: 5},
             {method: 'get', cache_time: 0}
         ]
     })
@@ -37,7 +37,7 @@ function statusDestroy(e) {
     return weiboJs({
         url: '/statuses/destroy.json',
         req: [
-            {"id" : e.id},
+            {id: e.id},
             {method: 'POST', cache_time: 0}
         ]
     })
@@ -58,48 +58,6 @@ function statusDestroyBatch() {
         }
         total >= 200 && setTimeout(function() {
             statusDestroyBatch();    
-        }, 3000);
-    })
-}
-
-// 获取用户关注列表
-function friendshipFriends() {
-    return weiboJs({
-        url: '/friendships/friends.json',
-        req: [
-            {"count": 200},
-            {method: 'get', cache_time: 0}
-        ]
-    })
-}
-
-// 取消关注用户
-
-function friendshipDestroy(e) {
-    return weiboJs({
-        url: '/friendships/destroy.json',
-        req: [
-            {"id" : e.id},
-            {method: 'POST', cache_time: 0}
-        ]
-    })
-}
-
-// 批量取消关注用户
-
-function friendshipDestroyBatch() {
-    var total = 1; // 初始化假装至少有一条微博
-    friendshipFriends().then(function(e) {
-        total = e.total_number; // 更新实际微博数量
-        for(var i in e.users) {
-            friendshipDestroy({
-                id: e.users[i].id
-            }).catch(function(e) {
-                console.log(e.error);
-            })
-        }
-        total >= 50 && setTimeout(function() {
-            friendshipDestroyBatch();    
         }, 3000);
     })
 }
