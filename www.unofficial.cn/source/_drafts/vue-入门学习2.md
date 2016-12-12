@@ -104,3 +104,50 @@ vue实例时传入一个js对象，遍历对象的时候，通过 `Object.define
 
 #### 异步更新队列
 对于数据不是立即更新这点的理解，观察到数据变化后，Vue会创建一个队列，将同一事件循环内的数据变化都缓存起来。如果一个watcher被多次触发，只会推入一次到队列中，然后，在接下来的事件循环中，Vue 刷新队列并仅执行必要的 DOM 更新。  
+```
+    <div id="app" v-cloak>
+        <input type="text" v-model="profile.name">
+        <p>{{profile.name}}</p>
+        <p>{{profile.age}}</p>
+    </div>
+    <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                profile: {
+                    name: 'unofficial'
+                }
+                
+            }
+        })
+        // Vue.set(vm.profile, 'age', 18);
+        vm.$set(vm.profile, 'age', 15);
+        console.info('%O', vm.$el); // 如果不使用debugger，输出的文档对象可以看出textContent是unofficial 15；使用debugger调试会中止程序，可以看到textContent是unofficial
+        console.log(vm.$el.textContent, 1); // unofficial
+        //debugger;
+        vm.profile.name = '张三';
+        vm.$nextTick(function() {
+            console.log(vm.$el.textContent, 3);
+        })
+        //console.log(vm.$el);
+        //debugger;
+        console.log(vm.$el.textContent, 2);
+        //debugger;
+    </script>
+```
+
+### 总结
+知识按照文档大致理解了一下，其中还是有一些疑问
++ 为什么不直接使用赋值语句
+    ```
+    // 有差别吗？
+    vm.profile.name = '张三';
+    vm.$set(vm.profile, 'name', '张三');
+    ```
+
++ console.log对于执行结果的输出是最后结果
+  ```
+  vm.$set(vm.profile, 'name', 'abc');
+  console.log(vm.$el, vm.$el.textContent);
+  ```

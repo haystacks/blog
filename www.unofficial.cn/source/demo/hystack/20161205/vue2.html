@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <input type="text" v-model="profile.name">
+        <p>{{profile.name}}</p>
+        <p>{{profile.age}}</p>
+    </div>
+    <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                profile: {
+                    name: 'unofficial'
+                }
+            }
+        })
+        // vm.profile.name = '张三';
+        debugger;
+        console.log(vm.$set);
+        vm.$set(vm.profile, 'name', '张三');
+        debugger;
+        console.log(Object.getOwnPropertyDescriptor(vm.profile, 'name'));
+    </script>
+</body>
+</html>

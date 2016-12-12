@@ -28,19 +28,17 @@
         })
         // Vue.set(vm.profile, 'age', 18);
         vm.$set(vm.profile, 'age', 15);
-        console.log(vm.$el);
-        console.log('%O', vm.$el.textContent);
-        console.log('%O', vm.$el);
-        // vm.profile.name = '吴非';
-        // console.log('%O', vm.$el, vm.$el.textContent);
-        // Vue.nextTick(function() {
-        //     console.log('%O', vm.$el, vm.$el.textContent);
-        //     vm.profile.name = '张三';
-        // })
-        // setTimeout(function() {
-        //     console.log(vm.$el.textContent);
-        // }, 0)
-
+        console.info('%O', vm.$el); // 如果不使用debugger，输出的文档对象可以看出textContent是unofficial 15；使用debugger调试会中止程序，可以看到textContent是unofficial
+        console.log(vm.$el.textContent, 1); // unofficial
+        //debugger;
+        vm.profile.name = '张三';
+        vm.$nextTick(function() {
+            console.log(vm.$el.textContent, 3);
+        })
+        //console.log(vm.$el);
+        //debugger;
+        console.log(vm.$el.textContent, 2);
+        //debugger;
     </script>
 </body>
 </html>
