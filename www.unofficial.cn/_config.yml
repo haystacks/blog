@@ -72,5 +72,5 @@ theme: hexo-theme-custom
 deploy:  
   type: git
   repo: https://git.coding.net/unofficial/blog.git
-  branch: page
+  branch: coding-pages
  

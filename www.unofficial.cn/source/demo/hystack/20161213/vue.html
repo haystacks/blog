@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+        }
+        .fade-enter, .fade-leave-active {
+        opacity: 0
+        }
+    </style>
+    <div id="app">
+        <button v-on:click="show = !show">
+            Toggle
+        </button>
+        <transition name="fade">
+            <p v-if="show">{{word}}</p>
+        </transition>
+    </div>
+    <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                word: 'hello',
+                show: false
+            }
+        })
+    </script>
+</body>
+</html>
