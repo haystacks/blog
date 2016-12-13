@@ -14,6 +14,7 @@ tags:
 
 #### 单元素/组件的过渡
 vue封装了一个 `transition` 组件
+> line 5632 Transition
 ```
 
 ```

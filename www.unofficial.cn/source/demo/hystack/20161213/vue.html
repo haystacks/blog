@@ -14,7 +14,7 @@
         }
     </style>
     <div id="app">
-        <button v-on:click="show = !show">
+        <button v-on:click="ihow">
             Toggle
         </button>
         <transition name="fade">
@@ -27,7 +27,12 @@
             el: '#app',
             data: {
                 word: 'hello',
-                show: false
+                show: true
+            },
+            methods: {
+                ihow: function() {
+                    this.show = !this.show;
+                }
             }
         })
     </script>
