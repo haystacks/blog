@@ -368,7 +368,54 @@ var obj = Object.assign(b, d, c, a);
 console.log(obj); // undefined 由于b的a不可写，拷贝c的时候报错中断了拷贝，但是目标对象b中还是多了属性b。 Object { a: 123, b: 123 }
 ```
 
+### Object.freeze
+Object.freeze()是冻结一个对象，冻结后的不能不能被添加、修改、删除对象的属性，也不能修改对象属性描述符的属性内容（可配置性、可枚举性、可写性），该方法返回值的对象就是这个固定不变的对象。  
+
+数据属性的值不可更改，访问器属性（有getter和setter）也同样（但由于是函数调用，给人的错觉是还是可以修改这个属性）。如果一个属性的值是个对象，则这个对象中的属性是可以修改的，除非它也是个冻结对象。  
+
+#### 语法
+> Object.freeze(obj)
+
+#### 代码解释
+```
+var obj = {
+	a: 1,
+	b: 2,
+	c: {
+		a: 1,
+		b: 2
+	}
+}
+var newObj = Object.freeze(obj);
+newObj.b = 3; // 非严格模式下静默失败，严格模式下报错 Uncaught TypeError: Cannot assign to read only property 'b' of object '#<Object>'
+console.log(newObj);
+
+// 需要注意的是newObj只是对源对象的引用，例如修改obj队形中对象c的属性a的值
+obj.c.a = 1234;
+console.log(newObj);
+
+
+// 存值属性描述符的例子
+var obj = {};
+Object.defineProperties(obj, {
+	a: {
+		get: function() {
+			return 1;
+		},
+		configurable: true,
+		enumerable: true
+	}
+})
+Object.freeze(obj);
+obj.a = 123;
+console.log(obj);
+```
+
 ### prototype 和 property
 英语不是很好的我总是容易弄不清楚这两个单词的意思，总是写错，特意拿出来区分一下
 protorype：原型
 property：属性
+
+其它：  
+assign: 分配
+freeze: 冻结

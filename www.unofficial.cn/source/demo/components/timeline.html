@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>timeline</title>
+</head>
+<body>
+    <style>
+        .timeline {
+            margin: 0 0 0 105px;
+            padding-left: 25px;
+            position: relative;
+            color: #5e6d82
+        }
+
+        .timeline>li {
+            list-style: none;
+            position: relative;
+            line-height: 1.8
+        }
+
+        .timeline>li:not(:last-child) {
+            margin-bottom: 50px
+        }
+
+        .timeline>li:first-child {
+            margin-top: -10px
+        }
+
+        .timeline>li:first-child h3:before {
+            left: -33px;
+            top: 10px;
+            width: 17px;
+            height: 17px;
+            background-color: #20a0ff;
+            border: 0
+        }
+
+        .timeline ul {
+            padding-left: 0
+        }
+
+        .timeline li li {
+            font-size: 14px;
+            list-style: none;
+            padding-left: 0;
+            word-break: break-all
+        }
+
+        .timeline li li:before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #5e6d82;
+            margin-right: 5px;
+            display: inline-block;
+            vertical-align: middle
+        }
+
+        .timeline h3 {
+            margin: 0 0 10px
+        }
+
+        .timeline h3 a {
+            opacity: 1;
+            float: none;
+            margin-left: 0;
+            color: inherit
+        }
+
+        .timeline h3:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: -31px;
+            top: 13px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px solid #20a0ff;
+            box-sizing: border-box;
+            background-color: #fff
+        }
+
+        .timeline h4 {
+            margin: 50px 0 10px
+        }
+
+        .timeline p {
+            margin: 0
+        }
+
+        .timeline em {
+            position: absolute;
+            left: -127px;
+            font-style: normal;
+            top: 6px;
+            font-size: 14px;
+            color: #99a9bf
+        }
+
+        .timeline:before {
+            content: '';
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 10px;
+            background-color: #eaeefa
+        }
+    </style>
+    <ul class="timeline">
+        <li>
+            <h3>title</h3>
+            <p><em>date</em></p>
+            <ul>
+                <li>content</li>
+            </ul>
+        </li>
+        <li>
+            <h3>title</h3>
+            <p><em>date</em></p>
+            <ul>
+                <li>content</li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
