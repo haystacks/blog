@@ -13,7 +13,28 @@ tags:
 > Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。
 
 #### 单元素/组件的过渡
-vue封装了一个 `transition` 组件，源码中的平台组件。  
+vue封装了一个 `transition` 组件，源码中的平台组件，在一些情形中给元素和组件添加entering/leaving过渡。  
+- 条件渲染（v-if）
+- 条件展示（v-show)
+- 动态组件
+- 组件根节点
+
+一个例子：[demo](/demo/hystack/20161213/vue.html)  
+这个例子中的 toggle 会有一个插入元素与删除元素的动作，会在合适的时候给元素添加css类名，并且自动嗅探目标元素是否有css过渡或动画。如果过渡组件还有js钩子函数，会在适应的阶段调用钩子函数。如果没有找到js钩子与css过渡、动画。dom操作会立即执行。
+
+* 过渡的css类名 - css过渡
+enter/leave中存在四个状态，v-enter(准备进入), v-enter-active(进入过程中的过渡状态), v-leave(准备离开), v-leave-active(离开过程中的过渡状态)
+ - v-enter:定义元素进入过渡的开始状态，在元素插入时生效，下一帧移除
+ - v-enter-active:定义元素进入过渡的结束状态，在元素被插入时生效，在transition/animation完成之后移除
+ - v-leave：定义元素离开时的开始状态，在离开过渡时生效，在下一个帧移除
+ - v-leave-active：定义元素离开过渡的结束状态，在离开过渡被触发时生效，在transition/animation完成之后移除
+
+`v-`是前缀，和上面的例子对应起来，`v-`就是上面的`fade-`。  
+
+
+* css动画
+css动画也是使用类名来实现的，只是不是使用的css中的过渡变化的样式来实现，而是使用的animation动画来实现组件元素的过渡
+一个例子：[demo](/demo/hystack/20161213/vue.html) 
 ```
 var platformComponents = {
     Transition: Transition,

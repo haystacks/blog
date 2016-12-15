@@ -12,12 +12,55 @@
         .fade-enter, .fade-leave-active {
             opacity: 0;
         }
+
+        .ani-leave {
+            width: 60%;
+            margin: 0 auto;
+            border: 1px solid #f00;
+        }
+        .ani-enter-active {
+            animation: ani-enter 3s;
+        }
+        .ani-leave-active {
+            animation: ani-leave 3s;
+        }
+
+        @keyframes ani-enter {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes ani-leave {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
     </style>
     <div id="app">
         <button v-on:click="ihow">
             Toggle
         </button>
         <transition name="fade">
+            <p v-if="show">{{word}}</p>
+        </transition>
+        <transition name="ani">
             <p v-if="show">{{word}}</p>
         </transition>
     </div>
