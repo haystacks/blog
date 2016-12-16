@@ -7,9 +7,10 @@
 <body>
     <style>
         .fade-enter-active, .fade-leave-active {
-            transition: opacity 1.5s;
+            transition: all 5s;
         }
         .fade-enter, .fade-leave-active {
+            color: #fff;
             opacity: 0;
         }
 
@@ -63,7 +64,14 @@
         <transition name="ani">
             <p v-if="show">{{word}}</p>
         </transition>
+        <transition name="fade" type="transition" enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+            <p v-if="show">{{word}}</p>
+        </transition>
+        <transition v-on:before-enter="beforeEnter" v-on:before-leave="beforeLeave" v-on:enter="enter" v-on:leave="leave" v-on:after-enter="enterActive" v-on:after-leave="leaveActive">
+            <p v-if="show">{{word}}</p>
+        </transition>
     </div>
+    <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
     <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
     <script>
         var vm = new Vue({
@@ -75,6 +83,26 @@
             methods: {
                 ihow: function() {
                     this.show = !this.show;
+                },
+                beforeEnter: function(el) {
+                    el.style.transition = 'all 1s';
+                },
+                beforeLeave: function(el) {
+                    el.style.transition = 'all 1s';
+                },
+                enter: function(el, done) {
+                    el.style.color = '#f00';
+                    done();
+                },
+                leave: function(el, done) {
+                    el.style.color = '#ff0';
+                    done();
+                },
+                enterActive: function(el) {
+                    el.style = '';
+                },
+                leaveActive: function(el) {
+                    el.style = '';
                 }
             }
         })
