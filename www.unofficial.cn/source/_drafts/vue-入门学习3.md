@@ -37,18 +37,69 @@ css动画也是使用类名来实现的，只是不是使用的css中的过渡�
 一个例子：[demo](/demo/hystack/20161213/vue.html)  
 
 * 自定义过渡类名
-自定义类名的优先级高于普通的类名，方便直接使用动画库动画  
-- enter-class
-- enter-active-class
-- leave-class
-- leave-active-class
-一个组件同时存在自定义过渡类名元素与过渡的name为前缀的类名同时存在的时候，自定义类名的优先级更高。  
+  自定义类名的优先级高于普通的类名，方便直接使用动画库动画  
+  - enter-class
+  - enter-active-class
+  - leave-class
+  - leave-active-class
+  
+  一个组件同时存在自定义过渡类名元素与过渡的name为前缀的类名同时存在的时候，自定义类名的优先级更高。  
 
 * 同时使用Transition 和 Animation
 在例子中我同时使用了transition和animation的时候，元素可以设定type属性类默认一种动画优先方式
 一个例子：[demo](/demo/hystack/20161213/vue.html)  
 
 * js钩子
+内置了进入与离开时的事件，例如：beforeEnter/enter/afterEnter，beforeLeave/leave/afterLeave。  
+
+> 当只用 JavaScript 过渡的时候， 在 enter 和 leave 中，回调函数 done 是必须的 。 否则，它们会被同步调用，过渡会立即完成。
+推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css="false"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
+
+文档demo中使用了 `Velocity.js` 来做。  
+
+#### 初始渲染的过渡  
+可以通过 `appear` 来设置节点在初始渲染的过渡。  
+```
+<transition appear>
+  <!-- ... -->
+</transition>
+```
+
+默认进入时状态一直，可以使用appear-class，appear-active-class来自定义样式。同理事件与name也可以。  
+一个例子：[demo](/demo/hystack/20161213/vue.html)  
+
+#### 多元素的过渡
+开关切换的时候，我写了一个这样的 [例子](/demo/hystack/20161213/vue.html)：  
+```
+<transition name="fade">
+    <span v-if="show">off</span>
+    <span v-else>on</span>
+</transition>
+```
+例子实际上并没有实现渐隐渐现的效果，实际上只是值变化了一下。查看文档时有这样一段说明  
+> 当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。即使在技术上没有必要，给在 <transition> 组件中的多个元素设置 key 是一个更好的实践。
+
+修改后的代码：  
+```
+<transition name="fade">
+    <span v-if="show" key="off">off</span>
+    <span v-else key="on">on</span>
+</transition>
+```
+
+因为只是一个状态的变化，所以再修改一下：  
+```
+<transition name="fade">
+    <span :key="key">
+    {{key = show ? 'on' : 'off'}}  
+    </span>
+</transition>
+```
+
+- 过渡模式
+同时生效的进入和离开的过渡不能满足所有要求，所以 Vue 提供了 过渡模式
+  - in-out: 新元素先进行过渡，完成之后当前元素过渡离开。
+  - out-in: 当前元素先进行过渡，完成之后新元素过渡进入。
 
 ```
 var platformComponents = {

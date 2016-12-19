@@ -6,8 +6,16 @@
 </head>
 <body>
     <style>
+        span.fade-enter-active, span.fade-leave-active {
+            display: inline-block;
+            transform: translateX(-24px);
+            width: 24px;
+        }
+        span.fade-leave {
+            opacity: 0;
+        }
         .fade-enter-active, .fade-leave-active {
-            transition: all 5s;
+            transition: all 3s;
         }
         .fade-enter, .fade-leave-active {
             color: #fff;
@@ -59,7 +67,12 @@
             Toggle
         </button>
         <transition name="fade">
-            <p v-if="show">{{word}}</p>
+            <span :key="key">
+            {{key = show ? 'on' : 'off'}}  
+            </span>
+            <span v-if="state">
+                A
+            </span>
         </transition>
         <transition name="ani">
             <p v-if="show">{{word}}</p>
@@ -69,6 +82,9 @@
         </transition>
         <transition v-on:before-enter="beforeEnter" v-on:before-leave="beforeLeave" v-on:enter="enter" v-on:leave="leave" v-on:after-enter="enterActive" v-on:after-leave="leaveActive">
             <p v-if="show">{{word}}</p>
+        </transition>
+        <transition name="fade" appear>
+            <div v-if="show">hello haha.</div>
         </transition>
     </div>
     <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
