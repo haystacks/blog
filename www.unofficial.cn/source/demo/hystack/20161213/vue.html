@@ -86,6 +86,11 @@
         <transition name="fade" appear>
             <div v-if="show">hello haha.</div>
         </transition>
+        <input type="radio" name="val" value="v-a" v-model="view">A
+        <input type="radio" name="val" value="v-b" v-model="view">B
+        <transition name="fade">
+            <component :is="view"></component>
+        </transition>
     </div>
     <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
     <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
@@ -94,7 +99,8 @@
             el: '#app',
             data: {
                 word: 'hello',
-                show: true
+                show: true,
+                view: 'v-a'
             },
             methods: {
                 ihow: function() {
@@ -119,6 +125,14 @@
                 },
                 leaveActive: function(el) {
                     el.style = '';
+                }
+            },
+            components: {
+                'v-a': {
+                    template: '<a>A</a>'
+                },
+                'v-b': {
+                    template: '<a>B</a>'
                 }
             }
         })

@@ -101,6 +101,12 @@ css动画也是使用类名来实现的，只是不是使用的css中的过渡�
   - in-out: 新元素先进行过渡，完成之后当前元素过渡离开。
   - out-in: 当前元素先进行过渡，完成之后新元素过渡进入。
 
+- 组件过渡
+动态组件的使用例子，一个例子：[demo](/demo/hystack/20161213/vue.html)
+
+- 列表的进入与离开过渡
+
+
 ```
 var platformComponents = {
     Transition: Transition,
