@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>chess</title>
+	<meta content="text/html; charset=UTF-8">
+	<meta content="initial-scale=1; maximum-scale=1; user-scalable=no">
+	<style type="text/css">
+		body {
+			background: #eee;
+		}
+		#app {
+			text-align: center;
+			font-size: 0;
+		}
+
+		i {
+			position: relative;
+			display: inline-block;;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			text-align: left;
+		}
+		i::before, i::after {
+			content: '';
+			position: absolute;
+		}
+		i::before {
+			width: 40px;
+			height: 0;
+			top: 20px;
+			border-top: 1px solid #333;
+		}
+		i::after {
+			width: 0;
+			height: 40px;
+			left: 20px;
+			border-left: 1px solid #333;
+		}
+
+
+
+		i.b {
+			background-color: #333;
+		}
+		i.b::before {
+			border-top: 1px solid #333;
+		}
+		i.b::after {
+			border-left: 1px solid #333;
+		}
+
+
+		i.w {
+			background-color: #f00;
+		}
+		i.w::before {
+			border-top: 1px solid #f00;
+		}
+		i.w::after {
+			border-left: 1px solid #f00;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<template v-for="i in 11">
+			<template v-for="i in 11">
+				<i @click="tick">
+				</i>
+				<br v-if="i==11" >
+			</template>
+		</template>
+	</div>
+
+	<script src="//cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '#app',
+			data: {
+				borw: 'b'
+			},
+			methods: {
+				tick(e) {
+					e.target.className = 'b';
+				}
+			}
+		})
+	</script>
+</body>
+</html>
