@@ -5,9 +5,6 @@
 	<meta content="text/html; charset=UTF-8">
 	<meta content="initial-scale=1; maximum-scale=1; user-scalable=no">
 	<style type="text/css">
-		body {
-			background: #eee;
-		}
 		#app {
 			text-align: center;
 			font-size: 0;
@@ -37,8 +34,7 @@
 			left: 20px;
 			border-left: 1px solid #333;
 		}
-
-
+		
 
 		i.b {
 			background-color: #333;
@@ -64,13 +60,14 @@
 </head>
 <body>
 	<div id="app">
-		<template v-for="i in 11">
-			<template v-for="i in 11">
-				<i @click="tick">
+		<template v-for="(p, y) in boardWidth">
+			<template v-for="(p, x) in boardWidth">
+				<i :class="pieces[_cover(x)+_cover(y)]" @click="tick(x, y)">
 				</i>
-				<br v-if="i==11" >
+				<br v-if="x==(boardWidth-1)" >
 			</template>
 		</template>
+		<button @click="reStart">重新开始</button>
 	</div>
 
 	<script src="//cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
@@ -78,11 +75,92 @@
 		new Vue({
 			el: '#app',
 			data: {
-				borw: 'b'
+				boardWidth: 11,
+				player: '',
+				pieces: {},
+				pieceClass: {
+					b: 'b',
+					w: 'w'
+				},
+				last: '',
+				gameOver: false
+			},
+			created() {
+				this.init();
 			},
 			methods: {
-				tick(e) {
-					e.target.className = 'b';
+				init() {
+					// 初始化棋盘
+					this.gameOver = false;
+					this.player = '';
+					this.last = '';
+					let pieces = {};
+					const center = parseInt(this.boardWidth/2);
+					for(let y=0; y<this.boardWidth; y++) {
+						for(let x=0; x<this.boardWidth; x++) {
+							let player = '';
+							// 中间放置黑棋 -- 默认黑棋优先
+							(x == center && y == center) && (player = this.pieceClass.b);
+							pieces[this._cover(x)+this._cover(y)] = player;
+						}
+					}
+					this.pieces = pieces;
+				},
+				tick(x, y) {
+					const coordinate = this._cover(x)+this._cover(y);
+					if(!this.pieces[coordinate] && !this.gameOver) {
+						this.pieces[coordinate] = this.player ? this.pieceClass.b : this.pieceClass.w;
+						this.last = coordinate;
+						// 判断是否需要继续
+						if(!this.check(x, y)) {
+							this.player = !this.player;
+						} else {
+							setTimeout(function() {
+								alert('win');
+							}, 100)
+							this.gameOver = true;
+						}
+					}
+				},
+				_cover(v) {
+					return v < 10 ? `0${v}` : `${v}`;
+				},
+				check(x, y) {
+					// —— 
+					let count = 0;
+					const vx = this._cover(x);
+					const vy = this._cover(y);
+					const curClass = this.pieces[vx+vy];
+					
+					for(let x=0; x<this.boardWidth; x++) {
+						if(this.pieces[this._cover(x)+vy] == curClass) {
+							count++;
+						} else {
+							count = 0;
+						}
+
+						if(count == 5) {
+							return true;
+						}
+					}
+
+					// |
+					for(let y=0; y<this.boardWidth; y++) {
+						if(this.pieces[vx+this._cover(y)] == curClass) {
+							count++;
+						} else {
+							count = 0;
+						}
+
+						if(count == 5) {
+							return true;
+						}
+					}
+
+					return false;
+				},
+				reStart() {
+					this.init();
 				}
 			}
 		})
