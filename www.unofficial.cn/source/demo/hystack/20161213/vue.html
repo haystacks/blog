@@ -91,6 +91,9 @@
         <transition name="fade">
             <component :is="view"></component>
         </transition>
+        <transition-group name="fade" tag="ul">
+            <li v-for="(v, k) in lidata" :key="k">{{v}}</li>   
+        </transition-group>
     </div>
     <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
     <script src="//cdn.bootcss.com/vue/2.1.4/vue.js"></script>
@@ -100,7 +103,8 @@
             data: {
                 word: 'hello',
                 show: true,
-                view: 'v-a'
+                view: 'v-a',
+                lidata: [1,2,3]
             },
             methods: {
                 ihow: function() {
