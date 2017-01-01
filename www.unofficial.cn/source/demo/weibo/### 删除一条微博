@@ -1,0 +1,10 @@
+- 获取containerid
+GET http://m.weibo.cn/home/me?format=cards
+
+- 获取微博列表
+GET /container/getSecond?containerid=1005053872204553_-_WEIBO_SECOND_PROFILE_WEIBO
+
+- 删除一条微博
+POST /aj/mblog/del
+eg:
+mid: 4055850169259561
