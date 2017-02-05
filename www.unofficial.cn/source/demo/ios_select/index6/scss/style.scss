@@ -1,0 +1,130 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+/* 默认选择 */
+.picker-main {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #eee;
+    border-top: solid 1px #ccc;
+}
+.picker-header {
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    background: #fff;
+}
+
+.picker-title {
+    display: -webkit-flex;
+    display: flex;
+    h5 {
+        font-size: 14px;
+        font-weight: 400;
+        color: #8f8f94;
+        width: 100%;
+        margin: 0;
+        padding: 8px;
+        text-align: center;
+        border-top: solid 1px #ddd;
+        background-color: #f0f0f0;
+        border-bottom: solid 1px #ddd;
+    }
+}
+.picker-body {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    height: 190px;
+    -webkit-mask-box-image: -webkit-linear-gradient(bottom, transparent, transparent 10%, #fff 40%, #fff 60%, transparent 90%, transparent);
+    .picker {
+        width: 100%;
+        text-align: center;
+        position: relative;
+    }
+}
+
+.picker-rule, .picker ul {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 30px;
+    margin-top: -15px;
+}
+.picker-rule {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    background-color: #ddd;
+    box-sizing: border-box;
+}
+.picker ul {
+    line-height: 30px;
+    cursor: context-menu;
+    font-size: 12px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    li {
+        width: 100%;
+        height: 100%;
+        line-height: 30px;
+        color: #333;
+        position: absolute;
+        visibility: hidden;
+        &.visible {
+            visibility: visible;
+        }
+    }
+}
+
+.picker-bg {
+    position: fixed;
+    z-index: 998;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+}
+
+.picker-active {
+    display: block;
+}
+/* 按钮 */
+.btn {
+    display: block;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    cursor: pointer;
+}
+.btn-blue {
+    border: 1px solid #007aff;
+    background-color: #007aff;
+    color: #fff;
+}
+.btn-input {
+    width: 90%;
+    border: 1px solid #eee;
+    line-height: 30px;
+    margin: 5px auto;
+    text-align: center;
+    display: block;
+    background: #eee;
+}
+
+#result {
+    text-align: center;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <title> datepicker </title>
+    <link rel="stylesheet" href="index6/css/style.css" />
+</head>
+<body>
+    <button id="x" class="btn-input" data-options='{"startYear": 2012, "endYear": 2022, "value": "2017-02-04"}' data-type="date">请选择日期</button>
+    <div id="result"></div>
+    <script src="index6/js/picker.js"></script>
+    <script src="index6/js/picker.date.js"></script>
+    <script>
+        (function() {
+            var xEle = document.getElementById('x');
+            var optionsStr = xEle.dataset.options;
+            var options = JSON.parse(optionsStr);
+            var picker = new DatePicker(options);
+            xEle.addEventListener('click', function() {
+                picker.show(picker.ele);
+                picker.getDate(function(rs) {
+                    var rsEle = document.getElementById('result');
+                    rsEle.innerText = rs;
+                });
+            })
+        })()
+    </script>
+    <script src="http://192.168.0.5:8080/target/target-script-min.js#anonymous"></script>
+</body>
+</html>
