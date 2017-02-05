@@ -120,8 +120,13 @@ Object.defineProperty(Picker.prototype, 'constructor', {
 
 
 Picker.prototype.initBg = function() {
+    var self = this;
     var pickerBg = document.createElement('div');
     pickerBg.className = 'picker-bg';
+    
+    pickerBg.addEventListener('click', function() {
+        self.hiden(self.ele);
+    })
     // 追加到body中
     document.body.appendChild(pickerBg);
 }
