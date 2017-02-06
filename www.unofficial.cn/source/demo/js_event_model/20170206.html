@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <a href="#main">点击</a>
+    </div>
+    <p>
+        1111111111111111111111111
+    </p>
+    <script>
+        var bodyEle = document.getElementsByTagName('body')[0];
+        var divEle = document.getElementsByTagName('div')[0];
+        divEle.addEventListener('click', function(event) {
+            console.log(event.currentTarget, 'false');
+        }, false)
+        window.addEventListener('beforeunload', function(event) {
+            console.log(event.currentTarget, 'true');
+            alert(1);
+        })
+
+        bodyEle.addEventListener('click', function() {
+            console.log(event.currentTarget);
+            // event.stopImmediatePropagation();
+            // event.stopPropagation();
+            event.preventDefault();
+        }, true)
+
+        /**
+         * addEventListener 可以添加多个事件回调处理函数，回调函数中的this始终指向 event.currentTarget
+         * 事件流：捕获阶段 处理目标阶段 冒泡阶段
+         * true 捕获阶段
+         * false 冒泡阶段 默认情况
+         * event.preventDefault(); event.target 上的默认事件，比如a标签的链接
+         * event.stopPropagation(); 阻止事件继续往下传播。
+         * orientationonchange
+         * 触摸屏事件流程 touchstart mouserover mousemove mouserdown mouseup click touchend
+         */
+
+
+
+
+         // ajax
+         var xhr = new XMLHttpRequest();
+         xhr.open('get', 'http://192.168.0.5:4000/demo/js_event_model/20170206.html');
+         xhr.setRequestHeader('myHeader', 'myHeaderValue');
+         xhr.timeout = 3;
+         xhr.ontimeout = function() {
+             console.log('timeout');
+         }
+         xhr.send(null);
+         xhr.onreadystatechange = function() {
+             if(xhr.readyState == 4) {
+                 console.log(xhr.status);
+             }
+         }
+    </script>
+</body>
+</html>
