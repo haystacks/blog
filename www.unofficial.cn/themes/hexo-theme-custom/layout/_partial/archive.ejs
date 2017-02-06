@@ -5,7 +5,7 @@
 	<section class="recent-posts">
 		<ul>
 			<% lastYear = 0; lastMonth = 0; %>
-            <% page.posts.each(function(page) { %>
+            <% page.posts.sort('date', 'desc').each(function(page) { %>
 
                     <% year = page.date.year(); month = page.date.month();%>
 

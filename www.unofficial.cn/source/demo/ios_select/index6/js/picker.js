@@ -67,6 +67,7 @@ Picker.prototype = {
                     var endDeg = id*deg;
                     currentUlEle.style.webkitTransform = 'rotateX('+ endDeg +'deg)';
                     currentUlEle.style.transform = 'rotateX('+ endDeg +'deg)';
+                    self.update() & self.updateDays();
                 }
             })
         })
@@ -75,11 +76,6 @@ Picker.prototype = {
         var self = this;
         var okEle = self.ele.querySelector('#ok');
         okEle.addEventListener('click', function() {
-            // 获取值
-            [].slice.call(self.getPickers(self.ele)).forEach(function(ulEle, key) {
-                self.valueJson[key] = ulEle.children[self.ids[key]].innerText;
-            })
-            self.value = self.valueJson.join('-');
             self.callback(self.value);
             self.hiden(self.ele);
         })
@@ -109,6 +105,14 @@ Picker.prototype = {
                 break;
         }
         return key;
+    },
+    update: function() {
+        var self = this;
+        // 获取值
+        [].slice.call(self.getPickers(self.ele)).forEach(function(ulEle, key) {
+            self.valueJson[key] = ulEle.children[self.ids[key]].innerText;
+        })
+        self.value = self.valueJson.join('-');
     }
 }
 

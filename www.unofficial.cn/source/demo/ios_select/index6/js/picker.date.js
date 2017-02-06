@@ -82,8 +82,16 @@ DatePicker.prototype.initDateMonth = function(ulEle) {
 }
 
 DatePicker.prototype.initDateDay = function(ulEle) {
-    var days = 31;
+    var days = this.monthToDay(this.valueJson[0], this.valueJson[1]);
     this.setDate(ulEle, 1, days, 2);
+}
+
+DatePicker.prototype.updateDays = function() {
+    var ulEle = this.getPickers(this.ele)[2];
+    var days = this.monthToDay(this.valueJson[0], this.valueJson[1]);
+    ulEle.innerHTML = '';
+    this.setDate(ulEle, 1, days, 2);
+    this.setLiVisibility(ulEle, 2);
 }
 
 // 构建数据
@@ -139,7 +147,25 @@ DatePicker.prototype.fill = function(num) {
     }
     return num;
 }
+// 判断是不是闰年
+DatePicker.prototype.isLeapYear = function(year) {
+    return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+}
 
+DatePicker.prototype.monthToDay = function(year, month) {
+    var day;
+    var month = parseInt(month);
+    if([1, 3, 5, 7, 8, 10, 12].indexOf(month) !== -1) {
+        day = 31;
+    } else if([4, 6, 9, 11].indexOf(month) !== -1) {
+        day = 30;
+    } else if(this.isLeapYear(year)) {
+        day = 29;
+    } else {
+        day = 28;
+    }
+    return day;
+}
 // 
 DatePicker.prototype.getDate = function(callback) {
     this.callback = callback;
