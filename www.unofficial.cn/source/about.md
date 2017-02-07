@@ -1,6 +1,6 @@
 title: 吴非的简历
 date: 2015-10-23
-update: 2016-09-03
+update: 2016-02-07
 ---
 ### 自我介绍 / Personal Information
 姓名：吴非
