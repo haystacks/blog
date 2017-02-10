@@ -32,15 +32,37 @@
                 var username = auth.querySelector('input[name=username]').value;
                 var password = auth.querySelector('input[name=password]').value;
                 if(username && password) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('post', 'http://192.168.25.137:3000/');
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.send("username="+ username +"&password="+ password);
+                    var url = 'http://192.168.25.137:3000/qrcode';
+                    var data = {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        form: "username="+ username +"&password="+ password
+                    }
+                    ajax(url, data, function(res) {
+                        res && document.write('<img src="'+ res +'">');
+                    })
                 } else {
                     console.log('username and password must has value');
                 }
             })
         })
+
+        function ajax(url, data, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', url);
+            if(data.headers) {
+                for(var attr in data.headers) {
+                    xhr.setRequestHeader(attr, data.headers[attr]);
+                }
+            }
+            xhr.send(data.form);
+            xhr.addEventListener('readystatechange', function(e) {
+                if (this.readyState == 4 && this.status == 200) {
+                    callback(this.responseText);
+                }
+            })
+        }
         
     </script>
 </body>
