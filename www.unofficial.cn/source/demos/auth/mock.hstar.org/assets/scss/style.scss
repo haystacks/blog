@@ -9,6 +9,18 @@
     border-radius: 5px;
     box-sizing: border-box;
 
+    img {
+        max-width: 100%;
+    }
+
+    &-qrcode {
+        display: none;
+
+        &-status {
+            padding: 0 15px;
+        }
+    }
+
     &-field {
         margin: 10px auto;
         position: relative;

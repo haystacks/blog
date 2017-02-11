@@ -23,16 +23,26 @@
         </div>
         <button id="sub" class="auth-field-button">Login</button>
     </div>
+    <div class="auth auth-qrcode">
+        <div id="qrcode"></div>
+        <div id="status" class="auth-qrcode-status"></div>
+    </div>
+    <div class="auth home">
+        <input type="text" name="user_tag"> <button id="user_tag_btn">查询</button>
+    </div>
     <script>
         var sub = document.getElementById('sub');
         var auths = document.getElementsByClassName('auth');
+        var authQrcode = document.getElementsByClassName('auth-qrcode')[0]; // only one
+        var authQrcodeStatus = authQrcode.querySelector('#status');
         [].slice.call(auths).forEach(function(auth) {
             var sub = auth.querySelector('#sub');
-            sub.addEventListener('click', function() {
+            sub && sub.addEventListener('click', function() {
+                var self = this;
                 var username = auth.querySelector('input[name=username]').value;
                 var password = auth.querySelector('input[name=password]').value;
                 if(username && password) {
-                    var url = 'http://192.168.25.137:3000/qrcode';
+                    var url = 'http://192.168.0.5:3000/qrcode';
                     var data = {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -40,7 +50,18 @@
                         form: "username="+ username +"&password="+ password
                     }
                     ajax(url, data, function(res) {
-                        res && document.write('<img src="'+ res +'">');
+
+                        if(res.status) {
+                            var img = new Image();
+                            img.src = res.data;
+                            var qrcodeEle = authQrcode.querySelector('#qrcode');
+                            qrcodeEle.appendChild(img);
+                            self.parentElement.style.display = 'none';
+                            qrcodeEle.parentElement.style.display = 'block';
+                        }
+
+                        // 轮询
+                        ask();
                     })
                 } else {
                     console.log('username and password must has value');
@@ -48,18 +69,58 @@
             })
         })
 
+        // 用户查询
+        var userTagBtnEle = document.getElementById('user_tag_btn');
+        userTagBtnEle.addEventListener('click', user_tag);
+        function user_tag() {
+            var user_tag = userTagBtnEle.parentElement.querySelector('input[name=user_tag]').value;
+            var askurl = 'http://192.168.0.5:3000/search/user_tag';
+            var data = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                form: "user_tag="+ user_tag
+            }
+            ajax(askurl, data, function(res) {
+                console.log(res);
+            })
+        }
+
+        // 跳转home
+        function home() {
+            var askurl = 'http://192.168.0.5:3000/biglogin';
+            ajax(askurl, null, function(res) {
+                console.log(res);
+            })
+        }
+        // 轮询状态
+        function ask() {
+            var askurl = 'http://192.168.0.5:3000/ask';
+            ajax(askurl, null, function(res) {
+                if(res.status === 0) {
+                    setTimeout(ask, 5e3);
+                } else if(res.status === 4) {
+                    authQrcodeStatus.innerText = '扫描成功，请在微信上进行后续操作';
+                    setTimeout(ask, 5e3);
+                } else if(res.status === 1) {
+                    authQrcodeStatus.innerText = '确认成功';
+                    home();
+                }
+            })
+        }
         function ajax(url, data, callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('post', url);
-            if(data.headers) {
+            if(data && data.hasOwnProperty('headers')) {
                 for(var attr in data.headers) {
                     xhr.setRequestHeader(attr, data.headers[attr]);
                 }
             }
-            xhr.send(data.form);
+            var form = data ? data.form : null;
+            xhr.send(form);
             xhr.addEventListener('readystatechange', function(e) {
                 if (this.readyState == 4 && this.status == 200) {
-                    callback(this.responseText);
+                    callback(JSON.parse(this.responseText));
                 }
             })
         }
