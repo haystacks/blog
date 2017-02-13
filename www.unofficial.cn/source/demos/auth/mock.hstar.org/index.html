@@ -38,43 +38,47 @@
         [].slice.call(auths).forEach(function(auth) {
             var sub = auth.querySelector('#sub');
             sub && sub.addEventListener('click', function() {
-                var self = this;
-                var username = auth.querySelector('input[name=username]').value;
-                var password = auth.querySelector('input[name=password]').value;
-                if(username && password) {
-                    var url = 'http://192.168.0.5:3000/qrcode';
-                    var data = {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        form: "username="+ username +"&password="+ password
-                    }
-                    ajax(url, data, function(res) {
-
-                        if(res.status) {
-                            var img = new Image();
-                            img.src = res.data;
-                            var qrcodeEle = authQrcode.querySelector('#qrcode');
-                            qrcodeEle.appendChild(img);
-                            self.parentElement.style.display = 'none';
-                            qrcodeEle.parentElement.style.display = 'block';
-                        }
-
-                        // 轮询
-                        ask();
-                    })
-                } else {
-                    console.log('username and password must has value');
-                }
+                qrcode.call(this, auth);
             })
         })
 
+        // 二维码查询
+        function qrcode(auth) {
+            var self = this;
+            var username = auth.querySelector('input[name=username]').value;
+            var password = auth.querySelector('input[name=password]').value;
+            if(username && password) {
+                var url = '//'.concat(window.location.hostname, ':', '3000', '/qrcode');
+                var data = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    form: "username="+ username +"&password="+ password
+                }
+                ajax(url, data, function(res) {
+
+                    if(res.status) {
+                        var img = new Image();
+                        img.src = res.data;
+                        var qrcodeEle = authQrcode.querySelector('#qrcode');
+                        qrcodeEle.appendChild(img);
+                        self.parentElement.style.display = 'none';
+                        qrcodeEle.parentElement.style.display = 'block';
+                    }
+
+                    // 轮询
+                    ask();
+                })
+            } else {
+                console.log('username and password must has value');
+            }
+        }
         // 用户查询
         var userTagBtnEle = document.getElementById('user_tag_btn');
         userTagBtnEle.addEventListener('click', user_tag);
         function user_tag() {
             var user_tag = userTagBtnEle.parentElement.querySelector('input[name=user_tag]').value;
-            var askurl = 'http://192.168.0.5:3000/search/user_tag';
+            var askurl = '//'.concat(window.location.hostname, ':', '3000', '/search/user_tag');
             var data = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -88,14 +92,15 @@
 
         // 跳转home
         function home() {
-            var askurl = 'http://192.168.0.5:3000/biglogin';
+            var askurl = '//'.concat(window.location.hostname, ':', '3000', '/biglogin');
             ajax(askurl, null, function(res) {
                 console.log(res);
             })
         }
+
         // 轮询状态
         function ask() {
-            var askurl = 'http://192.168.0.5:3000/ask';
+            var askurl = '//'.concat(window.location.hostname, ':', '3000', '/ask');
             ajax(askurl, null, function(res) {
                 if(res.status === 0) {
                     setTimeout(ask, 5e3);
@@ -108,6 +113,7 @@
                 }
             })
         }
+
         function ajax(url, data, callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('post', url);

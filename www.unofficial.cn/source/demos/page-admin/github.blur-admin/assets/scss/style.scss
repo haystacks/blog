@@ -1,0 +1,118 @@
+@import './reset';
+$headerHeight: 60px;
+.admin {
+    &-bg {
+        background: url(../../assets/imgs/page-theme-bg1.jpg) 50% 50% no-repeat;
+        background-size: cover;
+    }
+
+    &-header {
+        padding: 0 32px 0 40px;
+        background-color: rgba(0,0,0,.5);
+        box-shadow: 2px 0 3px rgba(0,0,0,.5);
+        color: #fff;
+        line-height: $headerHeight;
+
+        &-logo {
+            font-size: 24px;
+            float: left;
+
+            span {
+                padding: 0 5px;
+                color: #209e91;
+                display: inline-block;
+            }
+        }
+        &-navbtn {
+            margin-left: 20px;
+            float: left;
+            
+            i {
+                font-size: 20px;
+            }
+        }
+        &-search {
+            margin-left: 20px;
+            float: left;
+            
+            input {
+                margin-left: 8px;
+                border: none;
+                background: none;
+                color: #fff;
+                outline: none;
+            }
+        }
+        &-user {
+            float: right;
+        }
+        &-message {
+            position: relative;
+            line-height: $headerHeight / 2;
+            margin: $headerHeight / 4 0;
+            display: inline-block;
+            
+            span {
+                display: inline-block;
+                min-width: 10px;
+                padding: 2px 4px;
+                color: #fff;
+                vertical-align: baseline;
+                white-space: nowrap;
+                text-align: center;
+                border-radius: 13px;
+                text-shadow: none;
+                line-height: 11px;
+                background-color: #e85656;
+                position: absolute;
+                top: -5px;
+                right: -14px;
+                font-size: 11px;
+                box-sizing: border-box;
+            }
+        }
+        &-profile {
+            $margin: 8px;
+            display: inline-block;
+            margin-left: $margin*2;
+            img {
+                max-width: $headerHeight - $margin * 2;
+                border-radius: ($headerHeight - $margin * 2) / 2;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &-aside {
+        padding-top: 10px;
+        width: 180px;
+        min-height: 100%;
+        position: fixed;
+        background-color: rgba(0,0,0,.5);
+        color: #fff;
+
+        ul {
+            li {
+                padding-left: 18px;
+                line-height: 42px;
+
+                &.active {
+                    background: #209e91;
+                }
+
+                i {
+                    margin-right: 18px;
+                }
+            }
+        }
+    }
+
+    &-main {
+        margin-left: 180px;
+        color: #fff;
+    }
+
+    &-content {
+        padding: 10px 32px 10px 40px;
+    }
+}
