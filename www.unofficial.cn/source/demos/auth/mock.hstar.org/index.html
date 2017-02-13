@@ -43,12 +43,44 @@
         })
 
         // 二维码查询
+        // function qrcode(auth) {
+        //     var self = this;
+        //     var username = auth.querySelector('input[name=username]').value;
+        //     var password = auth.querySelector('input[name=password]').value;
+        //     if(username && password) {
+        //         var url = '//'.concat(window.location.hostname, ':', '3000', '/qrcode');
+        //         var data = {
+        //             headers: {
+        //                 'Content-Type': 'application/x-www-form-urlencoded'
+        //             },
+        //             form: "username="+ username +"&password="+ password
+        //         }
+        //         ajax(url, data, function(res) {
+
+        //             if(res.status) {
+        //                 var img = new Image();
+        //                 img.src = res.data;
+        //                 var qrcodeEle = authQrcode.querySelector('#qrcode');
+        //                 qrcodeEle.appendChild(img);
+        //                 self.parentElement.style.display = 'none';
+        //                 qrcodeEle.parentElement.style.display = 'block';
+        //             }
+
+        //             // 轮询
+        //             ask();
+        //         })
+        //     } else {
+        //         console.log('username and password must has value');
+        //     }
+        // }
+
+        // cnblogs Login
         function qrcode(auth) {
             var self = this;
             var username = auth.querySelector('input[name=username]').value;
             var password = auth.querySelector('input[name=password]').value;
             if(username && password) {
-                var url = '//'.concat(window.location.hostname, ':', '3000', '/qrcode');
+                var url = '//'.concat(window.location.hostname, ':', '3000', '/cnblogs/login');
                 var data = {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -57,17 +89,8 @@
                 }
                 ajax(url, data, function(res) {
 
-                    if(res.status) {
-                        var img = new Image();
-                        img.src = res.data;
-                        var qrcodeEle = authQrcode.querySelector('#qrcode');
-                        qrcodeEle.appendChild(img);
-                        self.parentElement.style.display = 'none';
-                        qrcodeEle.parentElement.style.display = 'block';
-                    }
+                    console.log(res);
 
-                    // 轮询
-                    ask();
                 })
             } else {
                 console.log('username and password must has value');
