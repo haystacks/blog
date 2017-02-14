@@ -90,11 +90,21 @@
                 ajax(url, data, function(res) {
 
                     console.log(res);
-
+                    // 测试是否登录成功
+                    feedRecent();
                 })
             } else {
                 console.log('username and password must has value');
             }
+        }
+
+        // 最近动态 cnblogs login suc
+        function feedRecent() {
+            var url = '//'.concat(window.location.hostname, ':', '3000', '/feed/recent');
+            ajax(url, null, function(res) {
+
+                console.log(res);
+            })
         }
         // 用户查询
         var userTagBtnEle = document.getElementById('user_tag_btn');
