@@ -1,0 +1,18 @@
+@import './reset';
+
+ul {
+    li {
+        padding-left: 18px;
+        line-height: 42px;
+
+        &.active {
+            background: #209e91;
+        }
+
+        i {
+            margin-right: 18px;
+            width: 16px;
+            text-align: center;
+        }
+    }
+}

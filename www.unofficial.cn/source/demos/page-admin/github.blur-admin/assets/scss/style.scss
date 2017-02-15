@@ -114,5 +114,26 @@ $headerHeight: 60px;
 
     &-content {
         padding: 10px 32px 10px 40px;
+
+        header {
+            h3 {
+                float: left;
+            }
+            .breadcrumb {
+                float: right;
+
+                &-item {
+                    &-inner {
+                        // 文字部分
+                    }
+                    &:last-child {
+                        .breadcrumb-item-separator {
+                            // 分隔符
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
