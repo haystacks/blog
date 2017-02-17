@@ -28,6 +28,11 @@ npm i vue --save
 npm i weboack --save-dev
 ```
 
+- 安装vue-loader/css-loader/vue-template-compiler
+```
+npm i vue-loader css-loader vue-template-compiler --save-dev
+```
+
 ### 问题
 - Module build failed: TypeError: this._init is not a function
 loader: 'vue' => loader: 'vue-loader'
