@@ -10,11 +10,11 @@ defined('IN_IA') or exit('Access Denied');
 
 class FanliModule extends WeModule {
 
-    public function doWebRule() {
+    public function doWebNo() { // 暂时什么也不做
 
+        checklogin();
         // 声明为全局才可以访问到.
         global $_W, $_GPC;
-        echo 123;
 
     }
 

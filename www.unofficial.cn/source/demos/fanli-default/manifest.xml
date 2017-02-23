@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="false">
+		<name><![CDATA[饭粒淘宝客优惠券]]></name>
+		<identifie><![CDATA[fanli]]></identifie>
+		<version><![CDATA[0.0.1]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[淘宝客相关，商品链接查询内部优惠券]]></ability>
+		<description><![CDATA[淘宝客相关的一个吸粉工具，通过内部优惠券福利来吸引用户关注公众号，快速提升粉丝数量，还能利于淘宝客推广
+- 内部优惠券（个人订阅号、企业（认证）订阅号、企业（认证）服务号）
+- 淘宝客微站（企业认证订阅号、企业认证服务号）
+- 淘宝客链接转换工具]]></description>
+		<author><![CDATA[unofficial]]></author>
+		<url><![CDATA[http://fanli.unofficial.cn/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>
