@@ -1,10 +1,10 @@
-CREATE TABLE IF NOT EXISTS `fanli_api_store` (
+CREATE TABLE IF NOT EXISTS `fanli_api_app` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `apikey` varchar(256) NOT NULL,
+  `apisecrect` varchar(256) NOT NULL,
   `key` varchar(256) NOT NULL,
-  `secrect` varchar(256) NOT NULL,
-  `we7key` varchar(256) NOT NULL,
-  `we7token` varchar(256) NOT NULL,
-  `we7url` varchar(256) NOT NULL,
+  `token` varchar(256) NOT NULL,
+  `url` varchar(256) NOT NULL,
   `endtime` timestamp default CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10111 DEFAULT CHARSET=utf8;

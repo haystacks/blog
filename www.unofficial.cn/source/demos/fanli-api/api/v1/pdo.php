@@ -9,25 +9,36 @@ class IPDO {
         return new PDO("mysql:host={$db['host']};dbname={$db['db']};charset=UTF8", $db['root'], $db['pwd']);
     }
     // C
-    protected static function create($tablename, $data) {
-        $sql = 'insert into fanli_api_app values(:key, :secrect, :we7key, :we7token, :we7url)';
-        $db = self::connect();     
+    public static function create($sql, $data) {
+        $db = self::connect();
         $statement = $db->prepare($sql);
-        $statement->bindParam(':key', $data['key']);
-        $statement->bindParam(':secrect', $data['secrect']);
-        $statement->bindParam(':we7key', $data['we7key']);
-        $statement->bindParam(':we7token', $data['we7token']);
-        $statement->bindParam(':we7url', $data['we7url']);
+        self::bind($statement, $data);
         return $statement->execute();
     }
 
     // R
-    public static function retrieve($sid) {
-        $sql = 'select * from fanli_api_store where sid = :sid';
+    public static function retrieve($sql, $data) {
         $db = self::connect();
         $statement = $db->prepare($sql);
-        $statement->bindParam(':sid', $sid);
+        self::bind($statement, $data);
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // U
+    public static function update($sql, $data) {
+        $db = self::connect();
+        $statement = $db->prepare($sql);
+        self::bind($statement, $data);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    private static function bind($statement, $data) {
+        if(is_array($data) && !empty($data)) {
+            foreach($data as $key => $val) {
+                $statement->bindParam(':'.$key, $val);
+            }
+        }
     }
 }

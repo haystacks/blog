@@ -48,12 +48,15 @@ class FanLi {
      * @param url
      */
     public function register($param) {
-        $auth = array(
-            'key'     => '123',
-            'secrect' => '456'    
+        $data = array(
+            'apikey'     => '123',
+            'apisecrect' => '456',
+            'key'        => $param['key'],
+            'token'      => $param['token'],
+            'url'        => $param['url']    
         );
-        $data = array_merge($param, $auth);
-        $rs = IPDO::create($tablename, $data);
+        $sql = 'insert into fanli_api_app(`apikey`, `apisecrect`, `key`, `token`, `url`) values(:apikey, :apisecrect, :key, :token, :url)';
+        $rs = IPDO::create($sql, $data);
         if($rs) {
             $rsArray = array(
                 'status' => $auth,
@@ -69,11 +72,44 @@ class FanLi {
         }
     }
     /**
+     * 注销应用
+     * @param key
+     * @param token 
+     * @param url
+     */
+    public function logout($param) {
+        $sql = 'update fanli_api_app set apisecrect = :apisecrect, key = :key, token = :token where url = :url';
+        $data = array(
+            'apisecrect' => '',
+            'key'        => '',
+            'token'      => '',
+            'url'        => $param['url']
+        );
+        $rs = IPDO::update($sql, $data);
+        if($rs) {
+            $rsArray = array(
+                'status' => '注销成功',
+                'code'   => 1000
+            );
+            exit(json_encode($rsArray));
+        } else {
+            $rsArray = array(
+                'status' => '注销失败',
+                'code'   => 1004
+            );
+            exit(json_encode($rsArray));
+        }
+    }
+    /**
      * 优惠券查询
      * @param 商品ID
      */
     public function coupon($param) {
-        $rs = IPDO::retrieve($param['id']);
+        $sql = 'select * from fanli_api_store where sid = :sid';
+        $data = array(
+            'sid' => $param['id']
+        );
+        $rs = IPDO::retrieve($sql, $data);
         if($rs) {
             $rsArray = array(
                 'status' => $rs,

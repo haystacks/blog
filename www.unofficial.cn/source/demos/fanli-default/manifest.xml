@@ -27,7 +27,7 @@
 	</bindings>
 	<permissions>
 	</permissions>
-	<install><![CDATA[]]></install>
-	<uninstall><![CDATA[]]></uninstall>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
 	<upgrade><![CDATA[]]></upgrade>
 </manifest>
