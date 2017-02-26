@@ -4,11 +4,16 @@
  * - 模块数据接口注册
  */
 
+defined('IN_IA') or exit('Access Denied');
+defined('MODULE_ROOT') or define('MODULE_ROOT', __DIR__);
+
 class FanLiInstall {
 
-    private $url = 'http://fanli.unofficial.cn/api/v1/api.php';
+    private $url;
     public function __construct() {
         global $_W;
+        $config = require_once(MODULE_ROOT.'/data/config.php');
+        $this -> url = $config['url'];
         $site = $_W['setting']['site'];
         $site['do'] = 'register';
         $this -> site = $site;
@@ -33,9 +38,6 @@ class FanLiInstall {
     }
 
     protected function setting($appInfo) {
-        if(!defined('MODULE_ROOT')) {
-            define('MODULE_ROOT', __DIR__);
-        }
         $sql = file_get_contents(MODULE_ROOT.'/data/sql.sql');
         pdo_run($sql);
 

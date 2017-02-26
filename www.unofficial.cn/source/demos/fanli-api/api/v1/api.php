@@ -7,11 +7,14 @@ header('Content-Type: text/html; charset=utf-8');
 define('IN_API', true);
 require_once('pdo.php');
 class FanLi {
-
+    
+    private $salt = 'fanliapp';
     public function __construct() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $param = $this -> pParam($_POST);
             $do = $param['do'];
+            // 权限检测
+            
             $this -> $do($param);
         } elseif($_SERVER['REQUEST_METHOD'] === 'GET') {
             $param = $this -> gParam($_GET);
@@ -48,14 +51,18 @@ class FanLi {
      * @param url
      */
     public function register($param) {
-        $data = array(
-            'apikey'     => '123',
-            'apisecrect' => '456',
-            'key'        => $param['key'],
-            'token'      => $param['token'],
-            'url'        => $param['url']    
+        $auth = array(
+            'apikey'     => md5($this -> salt.$param['url'].time().rand(999, 9999)),
+            'apisecrect' => hash('sha256', $param['key'].$param['token'].$this -> salt)
         );
-        $sql = 'insert into fanli_api_app(`apikey`, `apisecrect`, `key`, `token`, `url`) values(:apikey, :apisecrect, :key, :token, :url)';
+        $data = array(
+            'apikey'     => $auth['apikey'],
+            'apisecrect' => $auth['apisecrect'],
+            'we7key'     => $param['key'],
+            'we7token'   => $param['token'],
+            'we7url'     => $param['url']    
+        );
+        $sql = 'insert into fanli_api_app(`apikey`, `apisecrect`, `we7key`, `we7token`, `we7url`) values(:apikey, :apisecrect, :we7key, :we7token, :we7url)';
         $rs = IPDO::create($sql, $data);
         if($rs) {
             $rsArray = array(
@@ -78,12 +85,9 @@ class FanLi {
      * @param url
      */
     public function logout($param) {
-        $sql = 'update fanli_api_app set apisecrect = :apisecrect, key = :key, token = :token where url = :url';
+        $sql = 'update fanli_api_app set apisecrect = NULL, we7key = NULL, we7token = NULL where we7url = :we7url';
         $data = array(
-            'apisecrect' => '',
-            'key'        => '',
-            'token'      => '',
-            'url'        => $param['url']
+            'we7url'     => $param['url']
         );
         $rs = IPDO::update($sql, $data);
         if($rs) {

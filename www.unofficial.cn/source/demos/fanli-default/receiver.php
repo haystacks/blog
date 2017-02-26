@@ -15,9 +15,7 @@ class FanliModuleReceiver extends WeModuleReceiver {
         global $_W;
         $data = var_export($this -> message, true);
         $path = IA_ROOT . '/data/fanli';
-        if(!is_dir($path)) {
-            mkdir($path);
-        }
+        is_dir($path) || mkdir($path);
         $dataLogPath = $path.'/receiver_'.date('Y-m-d', time()).'.txt';
         file_put_contents($dataLogPath, $data);
 
