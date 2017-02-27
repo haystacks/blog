@@ -20,7 +20,8 @@ class FanliModuleProcessor extends WeModuleProcessor {
         $message = $this -> message;
         // 获取商品ID sid
         preg_match('/(?<=id=)\d+/', $message['content'], $idInfo);
-        // $sid = $idInfo['1'];
+        $sid = $idInfo[0];
+        // 检索商品优惠信息
         return $this->respText('您触发了饭粒模块'.$idInfo[0]);
 
     }
