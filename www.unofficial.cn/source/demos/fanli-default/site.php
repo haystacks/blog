@@ -8,7 +8,7 @@
 
 defined('IN_IA') or exit('Access Denied');
 
-class FanliModule extends WeModule {
+class FanliModuleSite extends WeModuleSite {
 
     public function doWebNo() { // 暂时什么也不做
 
@@ -16,6 +16,11 @@ class FanliModule extends WeModule {
         // 声明为全局才可以访问到.
         global $_W, $_GPC;
 
+    }
+
+    public function doWebTest() {
+        echo 1234;
+        exit;
     }
 
 }

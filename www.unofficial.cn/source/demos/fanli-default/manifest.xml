@@ -24,6 +24,9 @@
 		<card embed="false" />
 	</platform>
 	<bindings>
+		<menu>
+			<entry title="初始化回复规则" do="ruleInit" state="" direct="false" />
+		</menu>
 	</bindings>
 	<permissions>
 	</permissions>
