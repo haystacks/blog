@@ -18,9 +18,10 @@ class FanliModuleSite extends WeModuleSite {
 
     }
 
-    public function doWebTest() {
-        echo 1234;
-        exit;
+    public function doWebRuleInit() {
+        global $_W, $_GPC;
+        var_dump($_GPC, $_W);
+        message('初始化成功','','success');
     }
 
 }

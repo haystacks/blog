@@ -25,7 +25,7 @@
 	</platform>
 	<bindings>
 		<menu>
-			<entry title="初始化回复规则" do="ruleInit" state="" direct="false" />
+			<entry title="创建回复规则" do="ruleInit" state="" direct="false" />
 		</menu>
 	</bindings>
 	<permissions>
