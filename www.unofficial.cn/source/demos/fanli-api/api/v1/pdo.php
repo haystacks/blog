@@ -39,7 +39,6 @@ class IPDO {
     private static function bind($data) {
         if(is_array($data) && !empty($data)) {
             foreach($data as $key => &$val) {
-                var_dump(':'.$key.', '.$val);
                 self::$statement -> bindParam(':'.$key, $val);
             }
         }

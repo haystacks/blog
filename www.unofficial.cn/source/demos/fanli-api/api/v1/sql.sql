@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `fanli_api_store` (
   `image` varchar(200) NOT NULL,
   `price1` float(6, 2) NOT NULL,
   `price2` float(6, 2) NOT NULL,
+  `coupon` varchar(50) NOT NULL,
   `url` varchar(300) NOT NULL,
   `starttime` char(10) NOT NULL,
   `endtime` char(10) NOT NULL,

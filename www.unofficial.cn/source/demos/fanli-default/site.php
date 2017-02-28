@@ -27,6 +27,7 @@ class FanliModuleSite extends WeModuleSite {
          * @uniacid      应用ID
          * @module title 模块名称
          */
+        checklogin();
         $this -> rule = '^https?://((item|h5\.m)\.taobao|detail\.(m\.)?tmall)\.com';
         $this -> ruleType = 3;
         $this -> rulename = '初始化的回复规则';
@@ -73,6 +74,23 @@ class FanliModuleSite extends WeModuleSite {
         );
         pdo_insert('rule_keyword', $ruleKeyword);
         message('初始化回复规则成功','','success');
+    }
+
+    public function doMobileJump() {
+        global $_W, $_GPC;
+        preg_match('/\d+/', $_GPC['sid'], $matches);
+        $sid = $matches[0];
+        if($sid) {
+            $sql = 'SELECT * FROM ' . tablename('fanli_store') . " WHERE `sid` = $sid";
+            $detail = pdo_fetch($sql);
+            if(!empty($detail)) {
+                include $this->template('jump');
+            } else {
+                include $this->template('index');
+            }
+        } else {
+            include $this->template('index');
+        }
     }
 
 }
