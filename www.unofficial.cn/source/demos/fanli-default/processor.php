@@ -24,7 +24,14 @@ class FanliModuleProcessor extends WeModuleProcessor {
     }
 
     public function respond() { // 必须重写
+        // 目前暂时是单一的url ID规则
         $this -> __initialize();
+        $site = $this -> site;
+        $sid = $site['id'];
+        if(!$sid) {
+            return $this->respText('链接不是商品链接');
+        }
+        if($this -> site)
         // 检索远程商品优惠信息
         $info = ($local = $this -> getLocalSidDetail()) ? $local : $this -> getRemoteSidDetail();
         if(is_array($info)) {
@@ -43,7 +50,7 @@ class FanliModuleProcessor extends WeModuleProcessor {
         $message = $this -> message;
         // 获取商品ID sid
         preg_match('/(?<=id=)\d+/', $message['content'], $idInfo);
-        return $idInfo[0];
+        return !empty($idInfo) ? $idInfo[0] : null;
     }
     
     private function getRemoteSidDetail() {

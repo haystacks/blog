@@ -2,9 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>jump</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>{$detail['name']} - 饭粒淘</title>
+    <link rel="stylesheet" href="{MODULE_URL}images/css/weui.min.css">
+    <style>
+        .detail img {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
-    {php var_dump($detail);}
+    <div class="page article button">
+        <div class="page__hd">
+            <h1 class="page__title">{$detail['coupon']}</h1>
+            <p class="page__desc">{$detail['name']}</p>
+        </div>
+        <div class="page__bd">
+            <article class="weui-article detail">
+                <!--<h1>大标题</h1>-->
+                <section>
+                    <img src="{$detail['image']}">
+                </section>
+                <section>
+                    <!--<h2 class="title">章标题</h2>-->
+                    <section>
+                        <h3>优惠券</h3>
+                        <p>
+                            {$detail['coupon']}
+                        </p>
+                    </section>
+                    <section>
+                        <h3>优惠价</h3>
+                        <p>
+                            ￥{$detail['price2']}
+                        </p>
+                    </section>
+
+                    <section>
+                        <h3>原价</h3>
+                        <s>
+                            ￥{$detail['price1']}
+                        </s>
+                    </section>
+                </section>
+            </article>
+        </div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary">领券购买</a>
+    </div>
 </body>
 </html>
