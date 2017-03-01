@@ -48,8 +48,17 @@ class FanliModuleProcessor extends WeModuleProcessor {
         // 声明为全局才可以访问到.
         global $_W;
         $message = $this -> message;
-        // 获取商品ID sid
-        preg_match('/(?<=id=)\d+/', $message['content'], $idInfo);
+        // 判断是不是手机淘宝链接
+        if(strpos($message['content'], '手机淘宝')) {
+            preg_match('/https?:\/\/.+/', $message['content'], $urlInfo);
+            if($urlInfo[0]) {
+                $rs = ihttp_get($urlInfo[0]);
+                preg_match('/i(\d+)\.htm/', $rs['content'], $idInfo);
+            }
+        } else {
+            // 获取商品ID sid
+            preg_match('/(?<=id=)\d+/', $message['content'], $idInfo);
+        }
         return !empty($idInfo) ? $idInfo[0] : null;
     }
     

@@ -84,7 +84,11 @@ class FanliModuleSite extends WeModuleSite {
             $sql = 'SELECT * FROM ' . tablename('fanli_store') . " WHERE `sid` = $sid";
             $detail = pdo_fetch($sql);
             if(!empty($detail)) {
-                include $this->template('jump');
+                if(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'micromessenger') === false) {
+                    header('location: '.$detail['url']);
+                } else {
+                    include $this->template('jump');
+                }
             } else {
                 include $this->template('index');
             }

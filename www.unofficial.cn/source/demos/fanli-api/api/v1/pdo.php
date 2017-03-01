@@ -7,7 +7,7 @@ defined('IN_API') or exit('404');
 class IPDO {
     private static $statement;
     private static function connect() {
-        $db = require_once('./db.config.php');
+        $db = require(__DIR__.'/db.config.php');
         return new PDO("mysql:host={$db['host']};dbname={$db['db']};charset=UTF8", $db['root'], $db['pwd']);
     }
     // C
