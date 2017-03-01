@@ -52,8 +52,9 @@ class FanliModuleProcessor extends WeModuleProcessor {
         if(strpos($message['content'], '手机淘宝')) {
             preg_match('/https?:\/\/.+/', $message['content'], $urlInfo);
             if($urlInfo[0]) {
+                load() -> func('communication');
                 $rs = ihttp_get($urlInfo[0]);
-                preg_match('/i(\d+)\.htm/', $rs['content'], $idInfo);
+                preg_match('/(?<=i)\d+(?=\.htm)/', $rs['content'], $idInfo);
             }
         } else {
             // 获取商品ID sid

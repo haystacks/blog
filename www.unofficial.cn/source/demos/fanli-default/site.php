@@ -28,7 +28,10 @@ class FanliModuleSite extends WeModuleSite {
          * @module title 模块名称
          */
         checklogin();
-        $this -> rule = '^https?://((item|h5\.m)\.taobao|detail\.(m\.)?tmall)\.com';
+        $this -> rule = array(
+            '^https?://((item|h5\.m)\.taobao|detail\.(m\.)?tmall)\.com',
+            '手机淘宝'
+        );
         $this -> ruleType = 3;
         $this -> rulename = '初始化的回复规则';
         $this -> checkRule();
@@ -36,43 +39,59 @@ class FanliModuleSite extends WeModuleSite {
     }
 
     private function checkRule() {
-        global $_W;
-        $sql = 'SELECT `rid` FROM ' . tablename('rule_keyword') . " WHERE `uniacid` = :uniacid  AND `content` = :content";
-        $result = pdo_fetchall($sql, array(':uniacid' => $_W['uniacid'], ':content' => $this -> rule));
+        global $_W, $_GPC;
+        $sql = 'SELECT `id`, `rid` FROM ' . tablename('rule_keyword') . " WHERE `uniacid` = :uniacid  AND `module` = :module";
+        $result = pdo_fetchall($sql, array(':uniacid' => $_W['uniacid'], ':module' => $_GPC['m']));
         if (!empty($result)) {
 			$keywords = array();
 			foreach ($result as $reply) {
-				$keywords[] = $reply['rid'];
+				$keywords[] = $reply['id'];
 			}
-			$rids = implode($keywords, ',');
-			$sql = 'SELECT `id`, `name` FROM ' . tablename('rule') . " WHERE `id` IN ($rids)";
-			$rules = pdo_fetchall($sql);
-			message('回复规则已经存在，创建失败！', '', 'error');
+			$ids = implode(',', $keywords);
+			$sql = 'SELECT `content` FROM ' . tablename('rule_keyword') . " WHERE `id` IN ($ids)";
+			$exsitedRule = pdo_fetchall($sql);
+            $exsitedRule = array_map(function($arr) {
+                return $arr['content'];
+            }, $exsitedRule);
+            $needAddRule = array();
+            foreach($this -> rule as $rule) {
+                if(!in_array($rule, $exsitedRule)) {
+                    $needAddRule[] = $rule;
+                }
+            }
+            
+            if(empty($needAddRule)) {
+                message('回复规则已经存在，创建失败！', '', 'error');
+            } else {
+                message('有问题', '', 'error');
+            }
 		}
     }
 
-    private function createRule() {
+    private function createRule($rules = array()) {
         global $_W, $_GPC;
-		$rule = array(
+		$ruleData = array(
 			'uniacid'      => $_W['uniacid'],
 			'name'         => $this -> rulename,
             'module'       => $_GPC['m'],
 			'status'       => 1,
 			'displayorder' => 0,
 		);
-        $result = pdo_insert('rule', $rule);
+        $result = pdo_insert('rule', $ruleData);
 		$rid = pdo_insertid();
-
-        $ruleKeyword = array(
-            'rid'          => $rid,
-            'uniacid'      => $_W['uniacid'],
-            'module'       => $rule['module'],
-            'content'      => $this -> rule,
-            'type'         => $this -> ruleType,
-            'status'       => $rule['status'],
-            'displayorder' => $rule['displayorder'],
-        );
-        pdo_insert('rule_keyword', $ruleKeyword);
+        $rules = $rules ? $rules : $this -> rule;
+        foreach($rules as $rule) {
+            $ruleKeyword = array(
+                'rid'          => $rid,
+                'uniacid'      => $_W['uniacid'],
+                'module'       => $ruleData['module'],
+                'content'      => $rule,
+                'type'         => $this -> ruleType,
+                'status'       => $ruleData['status'],
+                'displayorder' => $ruleData['displayorder'],
+            );
+            pdo_insert('rule_keyword', $ruleKeyword);
+        }
         message('初始化回复规则成功','','success');
     }
 
