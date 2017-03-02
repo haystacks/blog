@@ -2,7 +2,7 @@
 <manifest xmlns="http://www.we7.cc" versionCode="">
 	<application setting="false">
 		<name><![CDATA[饭粒淘宝客优惠券]]></name>
-		<identifie><![CDATA[fanli]]></identifie>
+		<identifie><![CDATA[fanli_coupon]]></identifie>
 		<version><![CDATA[0.0.1]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[淘宝客相关，商品链接查询内部优惠券]]></ability>

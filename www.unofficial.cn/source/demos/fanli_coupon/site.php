@@ -8,7 +8,7 @@
 
 defined('IN_IA') or exit('Access Denied');
 
-class FanliModuleSite extends WeModuleSite {
+class Fanli_couponModuleSite extends WeModuleSite {
 
     public function doWebNo() { // 暂时什么也不做
 

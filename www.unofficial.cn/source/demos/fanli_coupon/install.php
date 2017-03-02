@@ -7,7 +7,7 @@
 defined('IN_IA') or exit('Access Denied');
 defined('MODULE_ROOT') or define('MODULE_ROOT', __DIR__);
 
-class FanLiInstall {
+class Fanli_couponInstall {
 
     private $url;
     public function __construct() {
@@ -46,5 +46,5 @@ class FanLiInstall {
     }
 }
 
-$fli = new FanLiInstall();
+$fli = new Fanli_couponInstall();
 $fli -> start();

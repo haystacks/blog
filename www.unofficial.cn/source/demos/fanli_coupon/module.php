@@ -7,7 +7,7 @@
 
 defined('IN_IA') or exit('Access Denied');
 
-class FanliModule extends WeModule {
+class Fanli_couponModule extends WeModule {
 
     public function settingDisplay($settings) {
 

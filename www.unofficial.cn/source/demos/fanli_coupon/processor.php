@@ -11,7 +11,7 @@ defined('MODULE_ROOT') or define('MODULE_ROOT', __DIR__);
  * rule① ^https?://((item|h5\.m)\.taobao|detail\.(m\.)?tmall)\.com
  */
 
-class FanliModuleProcessor extends WeModuleProcessor {
+class Fanli_couponModuleProcessor extends WeModuleProcessor {
     private $url, $site;
     protected function __initialize() {
         global $_W;

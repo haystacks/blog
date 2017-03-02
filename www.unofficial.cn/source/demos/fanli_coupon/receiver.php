@@ -7,7 +7,7 @@
 
 defined('IN_IA') or exit('Access Denied');
 
-class FanliModuleReceiver extends WeModuleReceiver {
+class Fanli_couponModuleReceiver extends WeModuleReceiver {
 
     public function receive() { // 必须重写
 

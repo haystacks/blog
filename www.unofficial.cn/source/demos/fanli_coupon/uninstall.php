@@ -7,7 +7,7 @@
 defined('IN_IA') or exit('Access Denied');
 defined('MODULE_ROOT') or define('MODULE_ROOT', __DIR__);
 
-class FanLiUninstall {
+class Fanli_couponUninstall {
 
     private $url;
     public function __construct() {
@@ -31,5 +31,5 @@ class FanLiUninstall {
     }
 }
 
-$fli = new FanLiUninstall();
+$fli = new Fanli_couponUninstall();
 $fli -> start();
