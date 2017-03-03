@@ -50,11 +50,14 @@ class Fanli_couponModuleProcessor extends WeModuleProcessor {
         $message = $this -> message;
         // 判断是不是手机淘宝链接
         if(strpos($message['content'], '手机淘宝')) {
-            preg_match('/https?:\/\/.+/', $message['content'], $urlInfo);
+            preg_match('/https?:\/\/[\w\.\?&=\/]+/', $message['content'], $urlInfo);
             if($urlInfo[0]) {
                 load() -> func('communication');
                 $rs = ihttp_get($urlInfo[0]);
-                preg_match('/(?<=i)\d+(?=\.htm)/', $rs['content'], $idInfo);
+                file_put_contents(MODULE_ROOT.'/data/bug.log', $urlInfo[0]."\r\n", FILE_APPEND);
+                preg_match('/(?<=i|id=)\d+(?=\.htm)?/', $rs['content'], $idInfo);
+            } else {
+                file_put_contents(MODULE_ROOT.'/data/bug.log', $message['content']."\r\n", FILE_APPEND);
             }
         } else {
             // 获取商品ID sid

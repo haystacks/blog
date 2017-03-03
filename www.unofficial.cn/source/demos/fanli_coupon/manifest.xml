@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[饭粒淘宝客优惠券]]></name>
 		<identifie><![CDATA[fanli_coupon]]></identifie>
-		<version><![CDATA[0.0.1]]></version>
+		<version><![CDATA[0.0.2]]></version>
 		<type><![CDATA[activity]]></type>
 		<ability><![CDATA[淘宝客相关，商品链接查询内部优惠券]]></ability>
 		<description><![CDATA[淘宝客相关的一个吸粉工具，通过内部优惠券福利来吸引用户关注公众号，快速提升粉丝数量，还能利于淘宝客推广
@@ -14,9 +14,6 @@
 		<url><![CDATA[http://fanli.unofficial.cn/]]></url>
 	</application>
 	<platform>
-		<subscribes>
-			<message type="text" />
-		</subscribes>
 		<handles>
 			<message type="text" />
 		</handles>
