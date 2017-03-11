@@ -86,6 +86,7 @@ UA 的参数设置为空，提交登录成功了，但是没有相关的行为�
 
 ### 问题总结
 路漫漫，爬虫与反爬虫就是一直以来的冤家，而我所经历的只是冰山一点。未来的路还很长，继续前行…  
+
 * 模拟事件触发隐藏文本框值的变化
 ```
 // 主动点击按钮来改变
@@ -116,31 +117,47 @@ UA 的参数设置为空，提交登录成功了，但是没有相关的行为�
     }(window, document)
 </script>
 ```
-事实却不是上述的这么容易。  
+事实却不是上述的这么容易，会进行多次事件触发更新 UA，但是目前检测有效的事件仅仅是局部，后续还有其它识别，只是暂时没有开启。  
 ```
-function touchstart(el, x, y, number) {
+var i = 1;
+function touchstart(el, x, y, number, target) {
   var touch = new Touch({
-    identifier: 1,
-    target: el, //随便设置的
+    identifier: number,
+    target: target,
     clientX: x,
     clientY: y
   });
-  console.log('touchstart环境 x:' + x, 'y:' + y);
   var event = new TouchEvent('touchstart', {
     touches: [touch],
     targetTouches: [touch],
     changedTouches: [touch],
   });
-  el.dispatchEvent(event); //touchstart
+  el.dispatchEvent(event);
 }
 
-
-function creatTouchstartEventAndDispatch (el) { 
-    var event = document.createEvent('Events');
-    event.initEvent('touchstart', true, true); 
-    el.dispatchEvent(event); 
+function focus(el) {
+    var event = new Event('focus');
+    el.dispatchEvent(event);
 }
+
+setTimeout(function() {
+  //touchstart(document, 188, 306, i++, document.getElementById('username'));
+  focus($('#username')[0]);
+  $('#username').val('******');
+  $('#username').trigger('input');
+}, 3e3)
+setTimeout(function() {
+  //touchstart(document, 188, 402, i++, document.getElementById('password'));
+  focus($('#password')[0]);
+  $('#password').val('******');
+  $('#password').trigger('input');
+}, 5e3)
+setTimeout(function() {
+  //touchstart(document, 374, 648, i++, document.getElementById('submit-btn'));
+  $('#submit-btn').trigger('click');
+}, 7e3)
 ```
+通过上述代码能够实现登录成功了，接下来就是如何接口配合，把数据返回给饭粒淘的查询接口了。   
 
 ### 参考资料
 http://phantomjs.org/api/webpage/
