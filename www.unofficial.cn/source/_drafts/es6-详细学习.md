@@ -358,3 +358,16 @@ console.log(User.prorotype);
  */
 Object.getOwnPropertyNames(User.prototype); // ['about', 'constuctor']
 ```
+
+
+### Symbol
+
+### Set and Map
+Set: Set WeakSet
+Map: Map WeakMap
+	&keys
+	 values
+	 entries
+	 foreach
+
+### Proxy
