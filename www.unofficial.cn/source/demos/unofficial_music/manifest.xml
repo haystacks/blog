@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="true">
+		<name><![CDATA[点歌送祝福]]></name>
+		<identifie><![CDATA[unofficial_music]]></identifie>
+		<version><![CDATA[1.0.1]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[点歌送祝福]]></ability>
+		<description><![CDATA[给好友点一首歌，送一个祝福，让友谊长长久久]]></description>
+		<author><![CDATA[unofficial]]></author>
+		<url><![CDATA[http://www.unofficial.cn/]]></url>
+	</application>
+	<platform>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover></cover><!-- 活动封面 -->
+		<home></home><!-- 导航菜单 -->
+		<profile></profile><!-- 个人中心导航 -->
+		<menu><!-- 业务菜单 -->
+			<!--<entry title="创建回复规则" do="ruleInit" state="" direct="true" />-->
+		</menu>
+		<rule></rule>
+		<shortcut></shortcut>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>
