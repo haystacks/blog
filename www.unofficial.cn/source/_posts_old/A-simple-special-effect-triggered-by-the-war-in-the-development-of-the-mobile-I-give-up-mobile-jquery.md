@@ -32,28 +32,28 @@ jquery mobile是基于jquery，在应用jquery mobile前必须先引入jquery，
 ```
 ### 前前后后对比分析
 #### >>>对比一：页面
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170901371282887.png)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170901371282887.png)
 图一，原版，在这个版本中使用的是JQM，完全没有使用JQM的默认UI，相反使用了很多的独立IMG，也就自然而然增加了很多次请求，按照现在的要求，页面不能单一的设计成现在的banner，首页栏目导航。这个将自然而然增加更多的请求。  
 
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171210531909913.png)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171210531909913.png)
 图二，现版，在这个版本中使用了zepto，只是为了选择器方面方便一些，更好的我觉得还是使用原生的javascript，这就是做移动开发的好处，不用考虑蛋疼的IE低版本，对于基础知识的要求也就要更牢靠一些，也许习惯了使用工具，有时都很难分清楚到底原生中有没有这样一个方法，随着更新，也许现在正在使用就会被下一个取代，可是万变还是不离其中。还使用了一个老方法就是CSS Sprites，现在还有一些其它的方式，这里暂时不赘述了。  
 
 #### >>>对比二：首次加载
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170945164718396.png)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170945164718396.png)
 图三，原版  
 
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170944488622632.png)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170944488622632.png)
 图四，现版  
 
 #### >>>对比三：二次加载
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170945493787743.png)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170945493787743.png)
 图五，原版  
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170946029716391.png) 
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/170946029716391.png) 
 图六，现版  
 
 对比二与对比三不能作为绝对数据，但是从中我们也能看出一些问题，由于也是刚刚面对三星检测这个棘手的问题才现学现卖，关于网站的优化方面还有很多知识需要学习，希望能够与正在做相关工作的小伙伴一起交流交流。这里先不说其它因素，要不然就有扯远了，图三中JQM 与 JQ文件是73.9K(原文件还要大一些，具体的可以参见JQUERY官网)，耗时1S左右了，相反require 与 zepto 与 touch文件是17.6K，耗时52ms，数据应该能看出一些什么吧？最后我还是决定换掉JQM，使用现在的版本，插件也可以直接使用JQM的插件，更喜欢自己造轮子，主要还是希望在这过程中自我学习提升，工资不能再降了啊，再降就只好去让人打发点儿了，新闻说地铁口乞人日入多少多少，你不一定就可以，这中间涉及的问题太多，最简单的就是你没有这方面的工作经验。  
 ### baiyun.mobile.min.js 简单特效之Banner
-一个简单的banner特效效果图：![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171007092371107.gif)  
+一个简单的banner特效效果图：![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171007092371107.gif)  
 图片质量不是很高，还是用的是同一张图片，能不能看？不能看，不能看也就先将就着看吧。就是一个简单的几张图片轮播，这里有几点不一样，看完代码大家应该可以发现其中的问题。
 ##### HTML代码：
 ```
@@ -184,5 +184,5 @@ var option = {"name":"mbSlider","direction":"right","duration":".8","initVal":0}
 ```
 
 这中间其实有遇见一个问题，因为存在在PC中向客户大致展示一下，使用background只是为了部分浏览器中避免拖动时图片被拉出，却发现了一个问题，背景代码：background: url(http://www.pushself.com/noImage.jpg) 50% 50% / 100% 100% no-repeat;在chrome下可以直接解析使用，移动端的时候就被分解了，background-size: 100%;并非是background: 100% 100%;就会第一次进入页面时，或者刷新后出现一个不希望有的特效。
-![www.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171212088001414.gif)
+![blog.unofficial.cn](http://images.cnitblog.com/blog/622169/201409/171212088001414.gif)
 这次分享到此结束，希望能够与大家多多交流。 

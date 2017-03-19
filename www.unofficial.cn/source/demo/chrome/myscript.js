@@ -10,7 +10,7 @@ function fanyi(query) {
     }).then(function(res) {
         // 
         var options = {
-            icon: 'http://www.unofficial.cn/assets/imgs/avatar.jpg',
+            icon: 'http://blog.unofficial.cn/assets/imgs/avatar.jpg',
             body: res.trans_result.data[0].dst
         };
         // if (Notification.permission === "granted") {

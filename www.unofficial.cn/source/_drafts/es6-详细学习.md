@@ -306,7 +306,7 @@ Math.max(...[2, 99, 6, 1002]); // 1002
 ```
 function User(name, blog) {
 	this.name = name||'unofficial';
-	this.blog = blog||'//www.unofficial.cn/';
+	this.blog = blog||'//blog.unofficial.cn/';
 }
 User.prototype.about = function() {
 	var aboutme = '大家好，我是' + this.name + '，我的博客是"' + this.blog + '"。';
@@ -327,7 +327,7 @@ Vip.prototype.constructor = Vip;
 class User {
 	constructor(name, blog) {
 		this.name = name||'unofficial';
-		this.blog = blog||'//www.unofficial.cn/';
+		this.blog = blog||'//blog.unofficial.cn/';
 	}
 
 	about() {
@@ -337,7 +337,7 @@ class User {
 }
 // 实例化
 var user = new User('吴非');
-console.log(user.about()); // 大家好，我是吴非，我的博客是"//www.unofficial.cn/"。
+console.log(user.about()); // 大家好，我是吴非，我的博客是"//blog.unofficial.cn/"。
 ```
 对于 `class User{} ` 相当于就是 `User.prototype`   
 ```

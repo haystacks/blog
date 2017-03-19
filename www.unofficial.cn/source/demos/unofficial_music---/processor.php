@@ -3,7 +3,7 @@
  * 点歌送祝福模块处理程序
  *
  * @author unofficial
- * @url http://www.unofficial.cn/
+ * @url http://blog.unofficial.cn/
  */
 defined('IN_IA') or exit('Access Denied');
 

@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/haystacks/blog/issues"
   },
-  "homepage": "//www.unofficial.cn",
+  "homepage": "//blog.unofficial.cn",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.12",

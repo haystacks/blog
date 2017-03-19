@@ -24,9 +24,9 @@ date: 2017-03-16 06:09:06
 - sf 回答 vue 相关的新手问题
 
 相关链接：  
-[入门学习一](//www.unofficial.cn/2016/10/25/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0.html)
-[入门学习二](//www.unofficial.cn/2016/11/24/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02.html)
-[入门学习三](//www.unofficial.cn/2016/12/13/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03.html)
+[入门学习一](//blog.unofficial.cn/2016/10/25/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0.html)
+[入门学习二](//blog.unofficial.cn/2016/11/24/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02.html)
+[入门学习三](//blog.unofficial.cn/2016/12/13/vue-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A03.html)
 [sf问答](//segmentfault.com/u/unofficial/answers)
 
 **第二阶段：阅读项目**  

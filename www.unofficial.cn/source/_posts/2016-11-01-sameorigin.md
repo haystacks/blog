@@ -10,18 +10,18 @@ date: 2016-11-01 00:00:00
 问题起因是在使用weibo api的时候，发现有一个报错。weibo api是https协议，我本地是模拟的回调域名，然后进行数据通信，本地http协议，于是乎就报错了。出于对postMessage的不是很熟悉，借此机会学习完善一下自己的知识储备。  
 <!-- more -->
 ```
-api.weibo.com/2/oauth2/authorize?client_id=******&response_type=token&d…ansport=html5&referer=http://www.unofficial.cn/demo/vuejs/demo.html:1 Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://www.unofficial.cn') does not match the recipient window's origin ('http://www.unofficial.cn').
+api.weibo.com/2/oauth2/authorize?client_id=******&response_type=token&d…ansport=html5&referer=http://blog.unofficial.cn/demo/vuejs/demo.html:1 Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://blog.unofficial.cn') does not match the recipient window's origin ('http://blog.unofficial.cn').
 ```
 
 ### 同源策略
 在这之前需要先熟悉一下这个概念，同源指请求协议相同，主机名相同，端口相同，涉及安全的策略。  
 ```
     // 例如我的博客地址
-    http://www.unofficial.cn/demo/postMessage/pm1.html      同
-    http://www.unofficial.cn/demo/vuejs/index.html          同
-    https://www.unofficial.cn/demo/postMessage/pm1.html     不同 协议不同
+    http://blog.unofficial.cn/demo/postMessage/pm1.html      同
+    http://blog.unofficial.cn/demo/vuejs/index.html          同
+    https://blog.unofficial.cn/demo/postMessage/pm1.html     不同 协议不同
     http://blog.unofficial.cn/demo/postMessage/pm1.html     不同 主机名不同
-    http://www.unofficial.cn:8080/demo/postMessage/pm1.html 不同 端口不同
+    http://blog.unofficial.cn:8080/demo/postMessage/pm1.html 不同 端口不同
 ```
 
 #### 允许跨域写
@@ -37,12 +37,12 @@ api.weibo.com/2/oauth2/authorize?client_id=******&response_type=token&d…anspor
 - &lt;iframe src="……" frameborder="0"></iframe> 载入的任何资源。可以使用x-frame-options消息头来阻止这种形式的交互。
 
 #### 不允许跨域读
-> 需要注意的是，页面内的引入的文件的域并不重要，重要的是加载该文件的页面所在的域。例如说我在[博客](http://www.unofficial.cn/)的首页引入了 //cdn.bootcss.com/jquery/3.1.1/jquery.min.js 的jquery文件，这时 jquery.min.js 的源应该就是我的博客地址 http://www.unofficial.cn 。
+> 需要注意的是，页面内的引入的文件的域并不重要，重要的是加载该文件的页面所在的域。例如说我在[博客](http://blog.unofficial.cn/)的首页引入了 //cdn.bootcss.com/jquery/3.1.1/jquery.min.js 的jquery文件，这时 jquery.min.js 的源应该就是我的博客地址 http://blog.unofficial.cn 。
 
 ### iframe
 同域可读可写，跨域可读不可写  
 ```
-// 请求地址：//www.unofficial.cn/demo/postmessage/pm2.html
+// 请求地址：//blog.unofficial.cn/demo/postmessage/pm2.html
 <iframe src="pm2.html" frameborder="0"></iframe>
 <iframe src="//blog.unofficial.cn/demo/postmessage/pm2.html" frameborder="0"></iframe>
 <script>
@@ -53,7 +53,7 @@ api.weibo.com/2/oauth2/authorize?client_id=******&response_type=token&d…anspor
     }
 </script>
 // 不同源时使用contentWindow/contentDocument报错
-// pm1.html:12 Uncaught DOMException: Failed to read the 'contentDocument' property from 'HTMLIFrameElement': Blocked a frame with origin "http://www.unofficial.cn" from accessing a cross-origin frame.(…)
+// pm1.html:12 Uncaught DOMException: Failed to read the 'contentDocument' property from 'HTMLIFrameElement': Blocked a frame with origin "http://blog.unofficial.cn" from accessing a cross-origin frame.(…)
 ```
 
 - 同源
@@ -87,9 +87,9 @@ iframe内部操作，主要通过 `location.hash`
 #### cors
 同域可读可写，跨域请求不能检查到 Access-Control-Allow-Origin 的情况下会被拦截。  
 ```
-    // www.unofficial.cn:4000
+    // blog.unofficial.cn:4000
     // 跨域请求
-    var url = "http://www.unofficial.cn/demo.php";
+    var url = "http://blog.unofficial.cn/demo.php";
     var params = "lorem=ipsum&name=binny";
 
     var http = new XMLHttpRequest();
@@ -105,7 +105,7 @@ iframe内部操作，主要通过 `location.hash`
     http.send(params);
 ```
 
-> XMLHttpRequest cannot load http://www.unofficial.cn/demo.php. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://www.unofficial.cn:4000' is therefore not allowed access.
+> XMLHttpRequest cannot load http://blog.unofficial.cn/demo.php. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://blog.unofficial.cn:4000' is therefore not allowed access.
 
 
 上面错误提示可以设置 `Access-Control-Allow-Origin` ，于是在header中添加设置即可实现跨域请求。  
@@ -113,7 +113,7 @@ iframe内部操作，主要通过 `location.hash`
 - Access-Control-Allow-Origin
     origin参数指定一个允许向该服务器提交请求的URI.对于一个不带有credentials的请求,可以指定为'*',表示允许来自所有域的请求。  
     ```
-    Access-Control-Allow-Origin: http://www.unofficial.cn
+    Access-Control-Allow-Origin: http://blog.unofficial.cn
     ```
 
 - Access-Control-Allow-Credentials
@@ -153,12 +153,12 @@ cors的方式可以发起post请求，或者说其它形式的请求，但是jso
     }abc('{"abc":"123"}');
 </script>
 
-<script src="http://www.unofficial.cn/test/demo.php?callback=abc"></script>
+<script src="http://blog.unofficial.cn/test/demo.php?callback=abc"></script>
 ```
 
 简单说就是定义好回调处理方法，把回调函数的名称传递给后端，后端拿到数据名称后返回会的数据就是对于回调方法的执行。  
 ```
-<script src="http://www.unofficial.cn/test/demo.js"></script>
+<script src="http://blog.unofficial.cn/test/demo.js"></script>
 /**
  * demo.js的内容
  * abc({"abc":"123"});
@@ -178,7 +178,7 @@ postMessage是window对象的一个属性，widow.postMessage是一个安全的�
         }
     </script>
 
-    // www.unofficial.cn pm2.html中我们跨域监听 `message` 获取 `postmessage` 传过来的数据。  
+    // blog.unofficial.cn pm2.html中我们跨域监听 `message` 获取 `postmessage` 传过来的数据。  
     <script>
         window.addEventListener('message', function(event) {
             if(event.origin.test('//localhost/')) {
