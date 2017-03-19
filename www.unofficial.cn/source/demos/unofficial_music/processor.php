@@ -27,9 +27,14 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 		$message = $this -> message;
 		if(!$this -> inContext) { // 点歌触发
 			// 创建一条点歌送祝福记录
-			$this -> addRecord();
-			$reply = '请输入歌名？';
-            $this->beginContext(1800);
+			$rs = $this -> addRecord();
+			if(!empty($rs)) {
+				$reply = '请输入歌名？';
+            	$this -> beginContext(1800);
+			} else {
+				$reply = '系统故障，请稍候再试';
+			}
+			
 		} else {
 			// 回复了歌名
 			// 检查数据库歌名是否存在
@@ -49,11 +54,11 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 				// 搜索歌名，获得歌名ID，查询歌曲信息
 				$rs = $this -> idToLink($info['mid']);
 				// 更新歌曲库
-				$this -> updateMuiscDetail($rs);
+				$this -> addMusicDetail($rs);
 				return $this->respMusic(array(
 					'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
 					'Description' => $message['content'],
-					'MusicUrl'    => 'api.php?mid='.$rs['songinfo']['song_id']
+					'MusicUrl'    => 'api.php?id='.$info['id']
 				));
 			}
 		}
@@ -63,7 +68,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	// 数据库中查询用户是否点歌
 	public function getMusic() {
 		$message = $this -> message;
-		$sql = 'select * from '.tablename('unofficial_music').' order by time desc where :user = user';
+		$sql = 'select * from '.tablename('unofficial_music').' where user = :user order by time desc';
 		$data = array(
 			'user' => $message['from']
 		);
@@ -73,18 +78,16 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	// 添加一条新纪录
 	private function addRecord() {
 		$message = $this -> message;
-		$sql = 'insert into '.tablename('unofficial_music').' (`user`) values(":user")';
-		return $sql;
 		$data = array(
 			'user' => $message['from']
 		);
-		pdo_query($sql, $data);
+		return pdo_insert('unofficial_music', $data);
 	}
 
 	// 更新unofficial_music表的mid
 	private function updateMid($mid) {
 		$message = $this -> message;
-		$sql = 'update '.tablename('unofficial_music').' set mid = :mid where user = :user order by time desc limit 0, 1';
+		$sql = 'update '.tablename('unofficial_music').' set mid = :mid where user = :user order by time desc limit 1';
 		$data = array(
 			'mid'  => $mid,
 			'user' => $message['from']
@@ -95,7 +98,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	// 更新unofficial_music表的blessing
 	private function updateBlessing($blessing) {
 		$message = $this -> message;
-		$sql = 'update '.tablename('unofficial_music').' set blessing = :blessing where user = :user order by time desc limit 0, 1';
+		$sql = 'update '.tablename('unofficial_music').' set blessing = :blessing where user = :user order by time desc limit 1';
 		$data = array(
 			'blessing'  => $blessing,
 			'user' => $message['from']
@@ -104,21 +107,21 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	}
 
 	// 更新歌曲库
-	private function updateMusicDetail($rs) {
-		$sql = 'replace into '.tablename('unofficial_music_detail').' (`mid`, `title`, `author`, `link`) values(":mid", ":title", ":author", ":link")';
+	private function addMusicDetail($rs) {
 		$data = array(
 			'mid'    => $rs['songinfo']['song_id'],
 			'title'  => $rs['songinfo']['title'],
 			'author' => $rs['songinfo']['author'],
 			'link'   => $rs['bitrate']['file_link']
 		);
-		return pdo_query($sql, $data);
+		return pdo_insert('unofficial_music_detail', $data, true);
 	}
 	// 通过用户输入的歌名查询歌曲是否存在
 	private function getMid($keyword) {
+		load() -> func('communication');
 		$url = "http://music.baidu.com/search/{$keyword}";
 		$content = ihttp_get($url);
-		preg_match("/(?<=data-sid=\")\d+(?=\")/", $content['content'], $rs);
+		preg_match_all("/(?<=data-sid=\")\d+(?=\")/", $content['content'], $rs);
 		if(empty($rs[0][0])) {
 			return false;
 		} else {

@@ -5,9 +5,23 @@
 
      * Dalvik/2.1.0 (Linux; U; Android 5.1; m2 note Build/LMY47D) Built-in music  MicroMessenger/6.5.4.1000
      */ 
-    if(strpos($_SERVER['HTTP_USER_AGENT'], 'Dalvik') === 0) {
-        header('location: http://zhangmenshiting.baidu.com/data2/music/8908392c65597c5a86f76b65ca51abd9/537817997/537817997.mp3?xcode=5de7cb32471b34997ddf74b1a6ef6955');
+    defined('IA_ROOT') or define('IN_IA', true);
+    defined('MODULE_ROOT') or define('MODULE_ROOT', __DIR__);
+    defined('IA_ROOT') or define('IA_ROOT', dirname(dirname(dirname(__FILE__))));
+    require_once IA_ROOT . '/framework/bootstrap.inc.php';
+    $id = ihtmlspecialchars($_GET['id']);
+    $sql = 'SELECT * FROM '.tablename('unofficial_music').' AS um left join '.tablename('unofficial_music_detail').' AS umd on um.mid = umd.mid WHERE um.id = :id LIMIT 1';
+    $data = array(
+        ':id' => $id
+    );
+    $rs = pdo_fetch($sql, $data);
+    if(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'micromessenger') === false) {
+        header('location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=weixin');
     } else {
-        header('location: https://www.unofficial.cn/');
+        if(strpos($_SERVER['HTTP_USER_AGENT'], 'Dalvik') === 0) {
+            header('location: '.$rs['link']);
+        } else {
+            include MODULE_ROOT. '/template/mobile/do.tpl.php';
+        }
     }
 ?>
