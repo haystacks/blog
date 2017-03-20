@@ -12,12 +12,15 @@
             padding: 0;
         }
         div {
+            width: 98%;
             font-size: 18px;
             text-indent: 36px;
-            padding: 10px;
             position: absolute;
             top: 50%;
-            margin-top: -25%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            transform: translateY(-50%);
         }
     </style>
 </head>
