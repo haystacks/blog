@@ -16,11 +16,9 @@ class Unofficial_musicInstall {
         // 写入api.php
         $str = <<<EOF
 <?php
-    defined('IA_ROOT') or define('IN_IA', true);
-    defined('IA_ROOT') or define('IA_ROOT', dirname(dirname(__FILE__)));
-    require_once IA_ROOT . '/framework/bootstrap.inc.php';
-    \$url = url('site/entry/no', array('m' => 'unofficial_music', 'id' => \$_GET['id']));
-    header('Location： '.\$url);
+    \$id = \$_GET['id'];
+    \$url = base64_decode(\$id);
+    header('Location: '.\$url);
 ?>
 EOF;
         file_put_contents(MODULE_ROOT.'/../../attachment/api.php', $str);

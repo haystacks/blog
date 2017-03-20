@@ -24,6 +24,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	//B: 返回歌曲信息，动态链接，关联数据ID
 
 	public function respond() {
+		global $_W, $_GPC;
 		$message = $this -> message;
 		if(!$this -> inContext) { // 点歌触发
 			// 创建一条点歌送祝福记录
@@ -68,10 +69,12 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					$rs = $this -> idToLink($info['mid']);
 					// 更新歌曲库
 					$this -> addMusicDetail($rs);
+					$url = $_W['setting']['site']['url'].'/app/index.php?i='.$_GPC['id'].'&c=entry&do=no&m=unofficial_music&id='.$info['id'];;
+					$url = base64_encode($url);
 					return $this->respMusic(array(
 						'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
 						'Description' => $message['content'],
-						'MusicUrl'    => 'api.php?id='.$info['id'].'&i=3'
+						'MusicUrl'    => 'api.php?id='.$url
 					));
 				}
 			}
