@@ -373,3 +373,7 @@ Map: Map WeakMap
 ### Proxy
 
 ### Reflect
+
+### Promise
+
+### Iterator
