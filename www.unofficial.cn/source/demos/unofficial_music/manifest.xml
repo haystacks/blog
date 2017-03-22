@@ -3,7 +3,7 @@
 	<application setting="false">
 		<name><![CDATA[点歌送祝福]]></name>
 		<identifie><![CDATA[unofficial_music]]></identifie>
-		<version><![CDATA[1.0.2]]></version>
+		<version><![CDATA[1.0.3]]></version>
 		<type><![CDATA[services]]></type>
 		<ability><![CDATA[点歌送祝福]]></ability>
 		<description><![CDATA[给她/他(们)点一首歌，送一个祝福，让友谊的小船长长久久]]></description>

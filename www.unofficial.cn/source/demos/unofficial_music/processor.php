@@ -8,13 +8,7 @@
 defined('IN_IA') or exit('Access Denied');
 class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 
-	// qq
-	// ulr http://c.y.qq.com/v8/playsong.html?songmid=003uEbEr0jcW7c
-	// preg_match_all("/songlist=\[(.*)\];/", $content, $rs);
-	// $rsArr = json_decode($rs[1][0], true);
-
-	// 创建一个文件 /attachment/api.php
-	// require '../addons/unofficial_music/do.php';
+	// 音乐接口来源于 百度音乐接口；QQ音乐接口（FromQq）
 
 	//A: 点歌
 	//B: 请输入歌名？
@@ -33,7 +27,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 				// 如果能匹配到 ^点歌+内容
 				preg_match('/^点歌\+?(.*)/', $message['content'], $matches);
 				if(!empty($matches[1])) {
-					$mid = $this -> getMid($matches[1]);
+					$mid = $this -> getMidFromQq($matches[1]);
 					$this -> updateMid($mid);
 					$reply = '请输入祝福语？';
 				} else {
@@ -58,7 +52,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 				if(!$info['mid'] && !$info['blessing']) {
 					// 更新最新记录的歌名
 					// 查询歌曲ID 
-					$mid = $this -> getMid($message['content']);
+					$mid = $this -> getMidFromQq($message['content']);
 					$this -> updateMid($mid);
 					$reply = '请输入祝福语？';
 				} elseif($info['mid'] && !$info['blessing']) {
@@ -66,15 +60,17 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					// 更新最新记录的祝福
 					$this -> updateBlessing($message['content']);
 					// 搜索歌名，获得歌名ID，查询歌曲信息
-					$rs = $this -> idToLink($info['mid']);
+					$rs = $this -> idToLinkFromQq($info['mid']);
 					// 更新歌曲库
-					$this -> addMusicDetail($rs);
+					$this -> addMusicDetailFromQq($rs);
 					$url = $_W['setting']['site']['url'].'/app/index.php?i='.$_GPC['id'].'&c=entry&do=no&m=unofficial_music&id='.$info['id'];;
 					$url = base64_encode($url);
 					return $this->respMusic(array(
-						'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
+						// 'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
+						'Title'       => $rs['songname'].'-'.$rs['singername'],
 						'Description' => $message['content'],
-						'MusicUrl'    => 'api.php?id='.$url
+						'MusicUrl'    => 'api.php?id='.$url,
+						'HQMusicUrl'  => 'api.php?id='.$url
 					));
 				}
 			}
@@ -134,6 +130,17 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 		);
 		return pdo_insert('unofficial_music_detail', $data, true);
 	}
+
+	//更新歌曲库
+	private function addMusicDetailFromQq($rs) {
+		$data = array(
+			'mid'    => $rs['songmid'],
+			'title'  => $rs['songname'],
+			'author' => $rs['singername'],
+			'link'   => $rs['m4aUrl']
+		);
+		return pdo_insert('unofficial_music_detail', $data, true);
+	}
 	// 通过用户输入的歌名查询歌曲是否存在
 	private function getMid($keyword) {
 		load() -> func('communication');
@@ -147,12 +154,37 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 		}
 	}
 
+	// 通过QQ音乐查询Mid
+	private function getMidFromQq($keyword) {
+		load() -> func('communication');
+		$time = time();
+		$url = "https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&w={$keyword}&zhidaqu=1&catZhida=1&t=0&flag=1&ie=utf-8&sem=1&aggr=0&perpage=20&n=20&p=1&remoteplace=txt.mqq.all&_={$time}&jsonpCallback=jsonp";
+		$content = $this -> http_get($url);
+		preg_match("/(?<=jsonp\().*(?=\))/", $content, $rs);
+		$rs = json_decode($rs[0], true);
+		if(empty($rs[data])) {
+			return false;
+		} else {
+			return $rs['data']['song']['list'][0]['songmid'];
+		}
+		
+	}
+
 	// 通过 songid 查询歌曲
 	private function idToLink($songid) {
 		$url = "http://musicapi.qianqian.com/v1/restserver/ting?from=webapp_music&method=baidu.ting.song.playAAC&format=jsonp&callback=song_playAAC&songid={$songid}&s_protocol=&_={time()}";
 		$content = $this -> http_get($url);
 		preg_match("/\/\*\*\/song_playAAC\((.*)\);/", $content, $rs);
 		$rsArr = json_decode($rs[1], true);
+		return $rsArr;
+	}
+
+	// 通过QQ音乐查询歌曲
+	private function idToLinkFromQq($songid) {
+		$url = "http://c.y.qq.com/v8/playsong.html?songmid={$songid}";
+		$content = $this -> http_get($url);
+		preg_match_all("/songlist=\[(.*)\];/", $content, $rs);
+		$rsArr = json_decode($rs[1][0], true);
 		return $rsArr;
 	}
 
