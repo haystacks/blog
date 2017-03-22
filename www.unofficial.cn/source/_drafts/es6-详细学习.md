@@ -377,3 +377,5 @@ Map: Map WeakMap
 ### Promise
 
 ### Iterator
+
+### Generator
