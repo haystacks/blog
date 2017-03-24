@@ -1,34 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>点歌送祝福</title>
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        div {
-            width: 98%;
-            font-size: 18px;
-            text-indent: 36px;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            margin: 0 auto;
-            transform: translateY(-50%);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>您有一条未读祝福</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="stylesheet" href="<?php echo MODULE_URL.'template/mobile/'?>css/style.css" media="screen" type="text/css" />
 </head>
 <body>
-    <div>
-        <?php
-            echo $rs['blessing'];
-        ?>
+  <div class="container">
+    <div id="folder" class="folder">
+      <div id="paper" class="paper">
+        <h1>您有一条未读祝福</h1>
+        <div>
+          <?php echo trim($rs['blessing']);?>
+        </div>
+      </div>
+      <div id="cover" class="cover">
+        <div class="title">Don't open</div>
+      </div>
     </div>
+    <div class="copyright">
+      关注微信公众号 “微订阅” 你也可以 点歌送祝福
+    </div>
+  </div>
+  <script>
+    ~function() {
+      var folderEle = document.getElementById('folder'),
+          coverEle = document.getElementById('cover'),
+          paperEle = document.getElementById('paper'),
+          h1Ele = paperEle.querySelector('h1');
+
+      folderEle.addEventListener('touchstart', function() {
+        h1Ele.style.display = 'none';
+      })
+    }()
+  </script>
 </body>
 </html>

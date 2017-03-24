@@ -63,7 +63,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					$rs = $this -> idToLinkFromQq($info['mid']);
 					// 更新歌曲库
 					$this -> addMusicDetailFromQq($rs);
-					$url = $_W['setting']['site']['url'].'/app/index.php?i='.$_GPC['id'].'&c=entry&do=no&m=unofficial_music&id='.$info['id'];;
+					$url = $_W['setting']['site']['url'].'/app/index.php?i='.$_GPC['id'].'&c=entry&do=no&m=unofficial_music&logout=1&id='.$info['id'];
 					$url = base64_encode($url);
 					return $this->respMusic(array(
 						// 'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
