@@ -1,0 +1,17 @@
+<!--
+  index: int
+  msg: string
+  time: string
+-->
+<view class="fanli_page">
+  <view class="weui-cells weui-cells_after-title">
+			<view class="weui-cell">
+					<view class="weui-cell__bd">
+							<textarea class="weui-textarea" placeholder="输入需要查询优惠的链接" focus="true" />
+					</view>
+			</view>
+	</view>
+	<view class="weui-btn-area">
+			<button class="weui-btn" type="primary" bindtap="getCoupon">查询</button>
+	</view>
+</view>
