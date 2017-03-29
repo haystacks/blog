@@ -2,7 +2,7 @@
   <view class="weui-cells weui-cells_after-title">
 			<view class="weui-cell">
 					<view class="weui-cell__bd">
-							<textarea class="weui-textarea" value="{{ msg }}" placeholder="输入需要查询优惠的链接" focus="true" />
+							<textarea class="weui-textarea" value="{{ msg }}" placeholder="输入需要查询优惠的链接" bindinput="setMsg" focus="true" />
 					</view>
 			</view>
 			<view class="page">

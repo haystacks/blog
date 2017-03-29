@@ -9,18 +9,24 @@ Page({
             }
         });
     },
+    setMsg(event) {
+        this.setData({
+            msg: event.detail.value 
+        });
+    },
     getCoupon() {
         // 获取变化数据
-        let msg = this.msg;
+        let msg = this.data.msg;
+        console.log(this.data);
         wx.request({
-            url: 'http://fanli.unofficial.cn/api/app/index.php',
+            url: 'https://fanli.unofficial.cn/api/app/index.php',
             data: {
                 "msg": msg
             },
             header: {
                 "X-Requested-With": "XMLHttpRequest"
             },
-            msthod: 'post',
+            method: 'post',
             success(res) {
                 console.log(res.data);
             },
