@@ -1,0 +1,16 @@
+<view class="fanli-detail">
+    <view class="image">
+        <image src="{{detail.image}}"></image>
+    </view>
+    <view class="weui-article">
+        <view class="weui-article__h1">{{detail.name}}</view>
+        <view class="price">
+            <view class="classname">
+                <text>￥</text><text>{{detail.price1}}</text> 
+            </view>
+            <view class="classname">
+                <text>￥</text><text>{{detail.price2}}</text>
+            </view>
+        </view>
+    </view>
+</view>
