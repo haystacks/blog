@@ -1,16 +1,38 @@
-<view class="fanli-detail">
-    <view class="image">
-        <image src="{{detail.image}}"></image>
+<view class="page fanli-detail">
+    <view class="fanli-detail_image-container">
+        <image mode="aspectFit" src="{{detail.image}}"></image>
     </view>
-    <view class="weui-article">
-        <view class="weui-article__h1">{{detail.name}}</view>
-        <view class="price">
-            <view class="classname">
-                <text>￥</text><text>{{detail.price1}}</text> 
-            </view>
-            <view class="classname">
-                <text>￥</text><text>{{detail.price2}}</text>
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">{{detail.name}}</view>
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">淘口令</view>
+                    <view class="weui-media-box__desc fanli-detail_tpwd">{{detail.tpwd}}</view>
+                </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">优惠券</view>
+                    <view class="weui-media-box__desc fanli-detail_price">{{detail.coupon}}</view>
+                </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">优惠价</view>
+                    <view class="weui-media-box__desc fanli-detail_price">￥{{detail.price2}}</view>
+                </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">原价</view>
+                    <view class="weui-media-box__desc fanli-detail_delete">￥{{detail.price1}}</view>
+                </view>
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__title weui-media-box__title_in-text">购买方式</view>
+                    <view class="weui-media-box__desc">点击“优惠购买”按钮，打开淘宝领取达人专属优惠，即可优惠购买</view>
+                </view>
             </view>
         </view>
+    </view>
+    <view class="weui-footer" style="margin-bottom: 50px;">
+        <view class="weui-footer__text">Copyright © 2013-2017 fanli.unofficial.cn</view>
+    </view>
+    <view class="weui-footer weui-footer_fixed-bottom fanli-detail_fixed-button">
+        <button class="weui-btn" type="primary" bindtap="toBuy">优惠购买</button>
     </view>
 </view>

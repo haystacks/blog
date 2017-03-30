@@ -1,1 +1,29 @@
 /* pages/detail/index.wxss */
+
+.fanli-detail_image-container {
+    width: 100%;
+    text-align: center;
+}
+
+.fanli-detail_image-container {
+    max-width: 100%;
+}
+
+.fanli-detail_delete {
+    text-decoration:line-through;
+}
+
+.fanli-detail_tpwd {
+    padding: 8px 4px;
+    border: 1px dashed brown;
+    user-select: all;
+}
+
+.fanli-detail_price {
+    color: orangered;
+}
+
+.fanli-detail_fixed-button {
+    background: #fff;
+    bottom: 0;
+}
