@@ -57,3 +57,8 @@ sudo yum install certbot
 
 
 配置fanli.unofficial.cn，移动服务至新的服务器
+
+### centos 7 mysql 5.7.17 安装方法
+参考资料：  
+1. https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
+2. https://my.oschina.net/Laily/blog/713022
