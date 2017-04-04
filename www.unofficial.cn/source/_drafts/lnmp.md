@@ -53,3 +53,7 @@ http://rpm.pbone.net/index.php3/stat/4/idpl/31446026/dir/centos_7/com/pyOpenSSL-
 wget ftp://ftp.muug.mb.ca/mirror/centos/7.2.1511/cloud/x86_64/openstack-mitaka/common/pyOpenSSL-0.15.1-1.el7.noarch.rpm
 sudo rpm -Uvh pyOpenSSL-0.15.1-1.el7.noarch.rpm
 sudo yum install certbot
+
+
+
+配置fanli.unofficial.cn，移动服务至新的服务器
