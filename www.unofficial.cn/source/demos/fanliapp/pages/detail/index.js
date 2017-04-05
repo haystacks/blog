@@ -1,5 +1,6 @@
 Page({
     data: {
+        origin: '',
         detail: ''
     },
     onLoad(e) {
@@ -14,6 +15,7 @@ Page({
           success(res){
               let detail = JSON.parse(res.data);
                 self.setData({
+                    origin: detail.origin,
                     detail: detail.status
                 })
           },
