@@ -9,4 +9,5 @@
 	<view class="weui-btn-area">
 		<button class="weui-btn" type="primary" bindtap="getCoupon">查询</button>
 	</view>
+	<contact-button> 联系客服 </contact-button>
 </view>
