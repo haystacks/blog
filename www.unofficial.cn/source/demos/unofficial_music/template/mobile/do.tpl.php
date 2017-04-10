@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="copyright">
-      关注微信公众号 “微订阅” 你也可以 点歌送祝福
+      关注微信公众号 “<?php echo trim($_W['account']['name']);?>” 你也可以 点歌送祝福
     </div>
   </div>
   <script>
