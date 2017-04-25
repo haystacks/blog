@@ -72,7 +72,7 @@ GOOS=windows GOARCH=amd64 make release-client
 ### 服务端运行 ngrok
 * 启动服务器端ngrokd
 ```
-./bin/ngrokd -domain="ngrok.unofficial.cn" -httpAddr=":8081" -httpsAddr=":8082"
+./bin/ngrokd -tlsKey="server.key" -tlsCrt="server.crt" -domain="ngrok.unofficial.cn" -httpAddr=":8081" -httpsAddr=":8082"
 ```
 
 ### 客户端运行 ngrok
@@ -82,5 +82,44 @@ server_addr: "ngrok.unofficial.cn:4443"
 trust_host_root_certs: false
 ```
 
+* windows_amd64 目录下运行 ngrok.exe
+```
+# 3333 为自己本地应用端口
+ngrok -log=ngrok.log -config=ngrok.cfg 3333
+```
 
+### 自签名证书浏览器不认识
+准备尝试一下免费的证书
 
+### nginx ngrok 80
+按照上面的配置来看，tunnel 没有开在80端口上，微信上使用的时候，可能需要80端口，如何利用 nginx 使用的80端口来进行转发
+```
+map $scheme $proxy_port {
+    "http"  "8081";
+    "https" "8082";
+    default "8081";
+}
+
+server {
+    listen      80;
+    listen      [::]:80;
+    listen      443;
+    listen      [::]:443;
+    server_name ngrok.unofficial.cn *.ngrok.unofficial.cn;
+
+    location / {
+        proxy_pass  $scheme://127.0.0.1:$proxy_port;
+    }
+
+    ssl on;
+    ssl_certificate /root/www/ngrok/server.crt;
+    ssl_certificate_key /root/www/ngrok/server.key;
+
+    proxy_set_header    X-Real-IP $remote_addr;
+    proxy_set_header    Host $http_host:$proxy_port;
+    proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    access_log off;
+    log_not_found off;
+}
+```
