@@ -17,6 +17,10 @@ tags:
 ### 什么是 ngrok
 I want to expose a local server behind a NAT or firewall to the internet。详阅[ngrok](https://github.com/inconshreveable/ngrok)  
 
+### 用途说明
+* 微信公众号小程序等开发调试
+* 有常用地登录限制的模拟登录
+
 ### 安装前的硬件准备工作
 * 有公网服务能力的服务器一台
 * 有所有权的域名一个
@@ -57,7 +61,7 @@ cp server.crt assets/server/tls/snakeoil.crt
 cp server.key assets/server/tls/snakeoil.key
 ```
 
-备注：生成自签名证书与拷贝证书 均在 ngrok 项目目录下执行  
+备注：生成自签名证书与拷贝证书 均在 ngrok 项目目录下执行。自签名证书访问的时候还是会有提醒，这里可以找一下免费的 ssl 证书。  
 
 ### 编译服务端与客户端
 * 编译服务端
@@ -76,10 +80,18 @@ GOOS=windows GOARCH=amd64 make release-client
 ```
 
 ### 客户端运行 ngrok
-* 创建配置文件
+* 创建配置文件 ngrok.yml
 ```
 server_addr: "ngrok.unofficial.cn:4443"
 trust_host_root_certs: false
+```
+
+* 运行本地项目
+例如这里本地项目运行在端口 3333
+
+* 运行命令
+```
+ngrok -log=info.log -config=ngrok.yml 3333
 ```
 
 
