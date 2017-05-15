@@ -65,6 +65,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					$this -> addMusicDetailFromQq($rs);
 					$url = $_W['setting']['site']['url'].'/app/index.php?i='.$_GPC['id'].'&c=entry&do=no&m=unofficial_music&logout=1&id='.$info['id'];
 					$url = base64_encode($url);
+					$_W['setting']['remote']['type'] = 0;
 					return $this->respMusic(array(
 						// 'Title'       => $rs['songinfo']['title'].'-'.$rs['songinfo']['author'],
 						'Title'       => $rs['songname'].'-'.$rs['singername'],
