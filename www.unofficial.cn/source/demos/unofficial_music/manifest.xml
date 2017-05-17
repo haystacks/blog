@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns="http://www.we7.cc" versionCode="">
-	<application setting="false">
+	<application setting="true">
 		<name><![CDATA[点歌送祝福]]></name>
 		<identifie><![CDATA[unofficial_music]]></identifie>
 		<version><![CDATA[1.0.6]]></version>

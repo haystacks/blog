@@ -7,7 +7,18 @@
  */
 defined('IN_IA') or exit('Access Denied');
 class Unofficial_musicModuleProcessor extends WeModuleProcessor {
-
+    /**
+     * @获取模块配置信息
+     */
+    protected function getSetting() {
+        global $_W;
+        $tablename = tablename('uni_account_modules');
+        $module = 'unofficial_music';
+        $uniacid = $_W['uniacid'];
+        $sql = "SELECT `settings` FROM $tablename WHERE `module` = '$module' and `uniacid` = $uniacid";
+        $settings = pdo_fetch($sql);
+        return iunserializer($settings['settings']);
+    }
 	// 音乐接口来源于 百度音乐接口；QQ音乐接口（FromQq）
 
 	//A: 点歌
@@ -20,6 +31,9 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 	public function respond() {
 		global $_W, $_GPC;
 		$message = $this -> message;
+
+		$settings = $this -> getSetting();
+
 		if(!$this -> inContext) { // 点歌触发
 			// 创建一条点歌送祝福记录
 			$rs = $this -> addRecord();
@@ -29,9 +43,9 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 				if(!empty($matches[1])) {
 					$mid = $this -> getMidFromQq($matches[1]);
 					$this -> updateMid($mid);
-					$reply = '请输入祝福语？';
+					$reply = array_key_exists('blessing', $settings) ? $settings['blessing'] : '请输入祝福语？';
 				} else {
-					$reply = '请输入歌名？';
+					$reply = array_key_exists('song', $settings) ? $settings['song'] : '请输入歌名？';
 				}
             	$this -> beginContext(1800);
 			} else {
@@ -54,7 +68,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					// 查询歌曲ID 
 					$mid = $this -> getMidFromQq($message['content']);
 					$this -> updateMid($mid);
-					$reply = '请输入祝福语？';
+					$reply = array_key_exists('blessing', $settings) ? $settings['blesing'] : '请输入祝福语？';
 				} elseif($info['mid'] && !$info['blessing']) {
 					$this -> endContext();
 					// 更新最新记录的祝福

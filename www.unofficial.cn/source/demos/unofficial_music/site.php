@@ -9,9 +9,18 @@
 defined('IN_IA') or exit('Access Denied');
 
 class Unofficial_musicModuleSite extends WeModuleSite {
-
-    private $moduleName = 'Unofficial_music';
-
+    /**
+     * @获取模块配置信息
+     */
+    protected function getSetting() {
+        global $_W;
+        $tablename = tablename('uni_account_modules');
+        $module = 'unofficial_music';
+        $uniacid = $_W['uniacid'];
+        $sql = "SELECT `settings` FROM $tablename WHERE `module` = '$module' and `uniacid` = $uniacid";
+        $settings = pdo_fetch($sql);
+        return iunserializer($settings['settings']);
+    }
     public function doMobileNo() { // 暂时什么也不做
         // 声明为全局才可以访问到.
         global $_W, $_GPC;
@@ -31,6 +40,7 @@ class Unofficial_musicModuleSite extends WeModuleSite {
         if(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'micromessenger') === false) { // 微信外部打开
             header('location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=weixin', true, 301);
         } else { // 微信内部打开
+            $settings = $this -> getSetting();
             include MODULE_ROOT. '/template/mobile/do.tpl.php';
         }
     }

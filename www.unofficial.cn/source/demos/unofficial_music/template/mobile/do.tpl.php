@@ -20,7 +20,23 @@
       </div>
     </div>
     <div class="copyright">
-      关注微信公众号 “<?php echo trim($_W['account']['name']);?>” 你也可以 点歌送祝福
+      <?php if($settings['copyright']) {?>
+      <?php echo str_replace('{微信公众号}', trim($_W['account']['name']), $settings['copyright']);?>
+      <?php } else {?>
+      『点歌送祝福』功能由 微信公众号 “<?php echo trim($_W['account']['name']);?>” 提供
+      <?php } ?>
+    </div>
+  </div>
+  <div class="container">
+    <div id="qrcode" class="qrcode">
+      <img src="<?php echo $settings['qrcode'];?>" />
+    </div>
+    <div class="copyright">
+      <?php if($settings['copyright']) {?>
+      <?php echo str_replace('{微信公众号}', trim($_W['account']['name']), $settings['copyright']);?>
+      <?php } else {?>
+      『点歌送祝福』功能由 微信公众号 “<?php echo trim($_W['account']['name']);?>” 提供
+      <?php } ?>
     </div>
   </div>
   <script>
