@@ -43,9 +43,9 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 				if(!empty($matches[1])) {
 					$mid = $this -> getMidFromQq($matches[1]);
 					$this -> updateMid($mid);
-					$reply = array_key_exists('blessing', $settings) ? $settings['blessing'] : '请输入祝福语？';
+					$reply = array_key_exists('blessing', $settings) && $settings['blessing'] ? $settings['blessing'] : '请输入祝福语？';
 				} else {
-					$reply = array_key_exists('song', $settings) ? $settings['song'] : '请输入歌名？';
+					$reply = array_key_exists('song', $settings) && $settings['song'] ? $settings['song'] : '请输入歌名？';
 				}
             	$this -> beginContext(1800);
 			} else {
@@ -68,7 +68,7 @@ class Unofficial_musicModuleProcessor extends WeModuleProcessor {
 					// 查询歌曲ID 
 					$mid = $this -> getMidFromQq($message['content']);
 					$this -> updateMid($mid);
-					$reply = array_key_exists('blessing', $settings) ? $settings['blesing'] : '请输入祝福语？';
+					$reply = array_key_exists('blessing', $settings) && $settings['blessing'] ? $settings['blessing'] : '请输入祝福语？';
 				} elseif($info['mid'] && !$info['blessing']) {
 					$this -> endContext();
 					// 更新最新记录的祝福

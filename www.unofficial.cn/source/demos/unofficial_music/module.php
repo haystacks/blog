@@ -31,12 +31,12 @@ class Unofficial_musicModule extends WeModule {
 		global $_W, $_GPC;
 		if(checksubmit()) {
 			// $_GPC 可以用来获取 Cookies,表单中以及地址栏参数
-			$data = $_GPC['data'];
+			$data = $_GPC['data'];			
 			$data = array(
 				'song' => $data['song'] ? $data['song'] : '',
 				'blessing' => $data['blessing'] ? $data['blessing'] : '',
 				'copyright' => $data['copyright'] ? $data['copyright'] : '',
-				'qrcode' => $data['qrcode'] ? $data['qrcode'] : ''
+				'qrcode' => $data['qrcode'] ? (strpos($data['qrcode'], 'http') === 0 ? $data['qrcode'] : $_W['attachurl'].$data['qrcode']) : ''
 			);
 			//字段验证, 并获得正确的数据$dat
 			if (!$this->saveSettings($data)) {
