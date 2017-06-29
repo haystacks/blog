@@ -7,3 +7,5 @@ public/
 .deploy*/
 userinfo.json
 cookies
+package.json
+package-lock.json
