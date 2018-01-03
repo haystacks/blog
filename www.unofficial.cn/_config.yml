@@ -26,11 +26,14 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render: 
-- assets/**/*
-- demo/**/*
-- demos/**/*
-- baidu_verify_tuXJT8CIFK.html
-- baidu_verify_Lryyhy3Tf2.html
+  - assets/**/*
+  - demo/**/*
+  - demos/**/*
+  - plan/**/*
+  - tool/**/*
+  - sw.js
+  - baidu_verify_tuXJT8CIFK.html
+  - baidu_verify_Lryyhy3Tf2.html
 
 
 # Writing
@@ -74,7 +77,7 @@ theme: hexo-theme-custom
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:  
-  type: git
-  repo: https://git.coding.net/unofficial/blog.git
-  branch: coding-pages
+  - type: git
+  - repo: https://git.coding.net/unofficial/blog.git
+  - branch: coding-pages
  

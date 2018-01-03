@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>还原 fastclick 使用过程的 bug</title>
+    <style>
+        html, body {
+            height: 100%;
+            background: #eee;
+        }
+        body {
+            margin: 0;
+        }
+        .top, .wrapper-top {
+            height: 100px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #e96858;
+            color: #fff;
+            text-align: right;
+        }
+        .wrapper-top {
+            position: fixed;
+        }
+        .wrapper {
+            width: 50%;
+            height: 150%;
+            background: #333;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div onclick="topClickFunc()" class="top">
+        top
+    </div>
+    <div class="wrapper">
+        <div onclick="wrapperTopClickFunc()" class="wrapper-top">
+            wrapper top
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function() {
+                FastClick.attach(document.body);
+            }, false);
+        }
+        // top click
+        function topClickFunc() {
+            // todo
+            console.log(arguments.callee.name)
+        }
+
+        // top click in wrapper
+        function wrapperTopClickFunc() {
+            // todo
+            console.log(arguments.callee.name)
+        }
+    </script>
+</body>
+</html>

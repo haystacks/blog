@@ -57,15 +57,15 @@ rwx(1) 所属用户组
 rwx(2) 其它用户
 r/w/x 1*2*2 1*2*1 1*2*(1/2)
 强行终止当前程序
+
 ### docker
 1. 按照官网文档安装docker以后，运行命令报如下错误
 Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
 没有启动docker，运行命令启动一下 `systemctl start docker`
 2. [镜像商店](https://store.docker.com/)中拉取一个镜像 `docker pull ubuntu:16.04`
 3. 为什么不能使用 `sudo apt-get install -y nginx`?
-4. 运行 `apt-get install -y nginx` 提示 `E: Unable to locate package nginx`，执行更新 `apt-get update`
-
-5. 查看容器ID对应的IP docker inspect --format='{{.NetworkSettings.IPAddress}}' $CONTAINER_ID
+4. 运行 `apt-get install -y nginx` 提示 `E: Unable to locate package nginx`，执行更新 `apt-get update`  
+5. 查看容器ID对应的 `IP docker inspect --format='.NetworkSettings.IPAddress' $CONTAINER_ID`
 6. 退出容器的方式
   * 退出关闭容器 exit
   * 退出不关闭容器 ctrl+p+q
