@@ -14,13 +14,15 @@
         }
         .top, .wrapper-top {
             height: 100px;
-            position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             background: #e96858;
             color: #fff;
             text-align: right;
+        }
+        .top {
+            position: absolute;
         }
         .wrapper-top {
             position: fixed;
@@ -34,31 +36,24 @@
     </style>
 </head>
 <body>
-    <div onclick="topClickFunc()" class="top">
+    <div onclick="clickFunc()" class="top">
         top
     </div>
     <div class="wrapper">
-        <div onclick="wrapperTopClickFunc()" class="wrapper-top">
+        <div onclick="clickFunc()" class="wrapper-top">
             wrapper top
         </div>
     </div>
-    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.js"></script>
     <script>
         if ('addEventListener' in document) {
             document.addEventListener('DOMContentLoaded', function() {
                 FastClick.attach(document.body);
             }, false);
         }
-        // top click
-        function topClickFunc() {
-            // todo
-            console.log(arguments.callee.name)
-        }
-
-        // top click in wrapper
-        function wrapperTopClickFunc() {
-            // todo
-            console.log(arguments.callee.name)
+        
+        function clickFunc() {
+            console.trace();
         }
     </script>
 </body>
