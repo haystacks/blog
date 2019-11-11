@@ -1,0 +1,16 @@
+{
+  "name": "@unofficial/ec-canvas",
+  "version": "1.0.0",
+  "description": "非官方微信小程序 ec-canvas 组件",
+  "main": "echarts-for-weixin/ec-canvas",
+  "miniprogram": "npm",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "echart",
+    "ec-canvas"
+  ],
+  "author": "unofficial",
+  "license": "MIT"
+}

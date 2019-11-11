@@ -1,0 +1,13 @@
+{
+  "name": "@unofficial/vuepress-theme-pi",
+  "version": "0.0.1",
+  "description": "blog.unofficial.cn's theme",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "vuepress",
+    "theme"
+  ],
+  "author": "unofficial",
+  "license": "MIT"
+}

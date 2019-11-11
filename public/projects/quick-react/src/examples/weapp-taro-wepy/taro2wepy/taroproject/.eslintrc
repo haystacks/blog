@@ -1,0 +1,14 @@
+{
+    "extends": ["taro"],
+    "rules": {
+        "no-unused-vars": ["error", { "varsIgnorePattern": "Taro" }],
+        "react/jsx-filename-extension": [
+            1,
+            { "extensions": [".js", ".jsx", ".tsx"] }
+        ],
+        "react/jsx-indent-props": [1, 4],
+        "semi": [1, "always"],
+        "indent": [1, 4]
+    },
+    "parser": "babel-eslint"
+}

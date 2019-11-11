@@ -1,0 +1,6 @@
+{
+    "name": "vuepress-theme-pi",
+    "version": "0.0.1",
+    "main": "layouts/Layout.vue",
+    "license": "MIT"
+}

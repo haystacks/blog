@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+}
+
+// header, footer {
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+// }
+
+// header {
+//     top: 0;
+// }
+
+// footer {
+//     bottom: 0;
+// }
+
+#app, main {
+    height: 100%;
+}
+
+article {
+    min-height: calc(100% - 60px);
+}
+
+.default {
+    padding: 1px 15px 70px 80px;
+    max-width: 740px;
+}
+
+.header {
+    &-anchor {
+        font-size: 12px;
+        position: absolute;
+        left: -5px;
+        top: 0;
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 740px) {
+    .default {
+        padding: 1px 15px 70px;
+    }
+}

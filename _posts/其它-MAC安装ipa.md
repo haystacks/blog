@@ -1,0 +1,1 @@
+https://docs.monaca.io/en/products_guide/monaca_ide/deploy/non_market_deploy/

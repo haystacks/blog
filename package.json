@@ -1,0 +1,14 @@
+{
+    "name": "blog.unofficial.cn",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vuepress dev .",
+        "build": "vuepress build ."
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@vuepress/plugin-register-components": "^1.0.0-rc.1",
+        "vuepress": "^1.2.0"
+    }
+}

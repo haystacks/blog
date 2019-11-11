@@ -1,0 +1,16 @@
+{
+  "name": "@unofficial/component",
+  "scripts": {
+    "build": "umi-lib build",
+    "dev": "umi-lib build --watch",
+    "doc:dev": "umi-lib doc dev",
+    "test": "umi-test"
+  },
+  "devDependencies": {
+    "docz-plugin-css": "^0.11.0",
+    "umi-library": "^1.6.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  }
+}

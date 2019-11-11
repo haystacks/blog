@@ -1,0 +1,104 @@
+---
+name: Upload
+route: /upload
+---
+
+import Upload from './';
+import Thumb from './thumbnail';
+import { Playground } from 'docz';
+
+# 图片处理
+
+对于图片的选择处理从选择到上传这个过程中可能会有以下步骤需要我们操作，上传图片我们首先想到的是 `<input type="file" />`。https://html.spec.whatwg.org/#file-upload-state-(type=file)
+
+## 选择图片
+
+基于 `input[type=file]` 需要注意以下几个点
+
+- Content Attributes: 支持的图片类型 `accept="images/*"`，是否支持多选 `multiple`，form 表单中是否必须 `required`
+- Events: change and input
+- IDL Attributes: `files` 和 `value`
+- Methods: `select()`
+
+## 预览图片
+
+[图片如何压缩](https://stackoverflow.com/questions/2303690/resizing-an-image-in-an-html5-canvas)  
+[图片预设方向](https://stackoverflow.com/questions/7584794/accessing-jpeg-exif-rotation-data-in-javascript-on-the-client-side/20600869)  
+![ ](https://i.stack.imgur.com/VGsAj.gif)
+
+## 裁剪图片
+
+[]()
+
+# 演示
+
+## 选择
+
+<Playground>
+{
+  class Example extends React.Component {
+    beforeUpload(e) {
+      if (e.size > 10 || /images\//.test(e.type) && !/\.ico|gif/.test(e.type)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    onChange(file) {
+      /*Thumb.getImageOrientation(file)
+        .then(orientation => {
+          console.log(orientation);
+        })*/
+      /*const fr = new FileReader();
+      fr.onload = e => {
+        console.log(e.target.result)
+      };
+      fr.readAsDataURL(file);*/
+      URL = URL || webkitURL;
+      const url = URL.createObjectURL(file);
+      const img = document.createElement('img')
+      img.src = url;
+      img.onload = function() {
+        URL.revokeObjectURL(url);
+        console.log(url);
+      }
+      document.body.append(img);
+    }
+
+    render() {
+      return (<div>
+        <Upload accept="images/*" multiple onChange={ this.onChange } beforeUpload={ this.beforeUpload } />
+        <Thumb ref="thumb" />
+        上传文件
+      </div>)
+    }
+
+}
+}
+</Playground>
+
+# API
+
+| 参数         | 说明                                                                                                                           | 类型   | 默认值 | 版本 |
+| :----------- | :----------------------------------------------------------------------------------------------------------------------------- | :----- | :----- | :--- |
+| accept       | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) | string | 无     |      |
+| action       |                                                                                                                                |        |        | No   |
+| beforeUpload | 限制用户上传的图片格式和大小                                                                                                   |        |        |      |
+| directory    | [can i use](https://caniuse.com/#feat=input-file-directory)                                                                    |        |        | No   |
+| multiple     |                                                                                                                                |        |        |      |
+| onChange     | 上传中、完成、失败都会调用这个函数                                                                                             |        |        |      |
+| onPreview    |                                                                                                                                |        |        |      |
+| onRemove     |                                                                                                                                |        |        |      |
+
+# 扩展
+
+文件读取的几个相关 API
+
+- FileReader
+- FileReaderSync
+- File
+- Blob URLS URL.createObjectURL
+
+https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications#Example.3A_Using_object_URLs_to_display_images
+https://stackoverflow.com/questions/31742072/filereader-vs-window-url-createobjecturl

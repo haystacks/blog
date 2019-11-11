@@ -1,0 +1,16 @@
+{
+  "name": "@unofficial/react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "expo": "^32.0.6",
+    "react-native": "^0.59.1"
+  }
+}

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react component 1`] = `
+<div>
+  app component
+  <span>
+    3
+  </span>
+</div>
+`;

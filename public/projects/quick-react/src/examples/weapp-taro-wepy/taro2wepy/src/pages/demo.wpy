@@ -1,0 +1,15 @@
+<template>
+  <view>
+    <echart />
+  </view>
+</template>
+
+<script>
+import { page } from 'wepy';
+import { Echart } from 'ecahrts12/';
+export default class Demo extends page {
+  components = {
+    echart: Echart
+  };
+}
+</script>

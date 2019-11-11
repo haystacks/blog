@@ -1,0 +1,66 @@
+.inputerBg {
+    background-color: rgba(0, 0, 0, .3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    will-change: transform;
+    transform: translateX(-100%) translateZ(0);
+}
+
+.show {
+    transform: translateX(0) translateZ(0);
+}
+
+.editor {
+    display: flex;
+    height: 88px;
+    line-height: 88px;
+    align-items: center;
+    background: rgba(239,240,240,1);
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 100%;
+    img {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        max-width 56px;
+        flex-shrink: 0;
+        padding: 0 32px 0 30px;
+        cursor: pointer;
+    }
+    input {
+        height: 66px;
+        background: rgba(255,255,255,1);
+        border-radius: 4px;
+        border: 1px solid rgba(190,190,190,1);
+        width: 100%;
+        padding: 0 26px;
+        margin-right: 12px;
+        font-size: 28px;
+        opacity: 1;
+        z-index: auto;
+    }
+    button {
+        width: 140px;
+        height: 100%;
+        background: rgba(209,40,16,1);
+        font-size: 34px;
+        font-family: PingFang-SC-Bold;
+        font-weight: bold;
+        color: rgba(255,255,255,1);
+        border: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+    button, input {
+        // GET
+        -webkit-appearance: none;
+    }
+}

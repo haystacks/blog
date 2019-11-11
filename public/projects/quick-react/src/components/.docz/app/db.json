@@ -1,0 +1,103 @@
+{
+  "config": {
+    "title": "Component",
+    "description": "My awesome app using docz",
+    "menu": [],
+    "repository": false,
+    "native": false,
+    "codeSandbox": true,
+    "themeConfig": {},
+    "separator": "-",
+    "typescript": true,
+    "theme": "/Users/unofficial/www/learn/blog.unofficial.cn/quick-react/src/components/node_modules/docz-theme-umi/es/index.js",
+    "plugins": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  },
+  "props": [
+    {
+      "key": "src/Upload/upload.tsx",
+      "value": []
+    }
+  ],
+  "entries": [
+    {
+      "key": "src/index.mdx",
+      "value": {
+        "route": "/",
+        "id": "6576455a124f9aaefd860597f03a8fe4",
+        "filepath": "src/index.mdx",
+        "link": "",
+        "slug": "src-index",
+        "name": "Index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "组件库",
+            "depth": 2,
+            "value": "组件库"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/Upload/index.mdx",
+      "value": {
+        "name": "Upload",
+        "route": "/upload",
+        "id": "a9e457fcb83f46d1aa808d52dfb60388",
+        "filepath": "src/Upload/index.mdx",
+        "link": "",
+        "slug": "src-upload-index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "图片处理",
+            "depth": 1,
+            "value": "图片处理"
+          },
+          {
+            "slug": "选择图片",
+            "depth": 2,
+            "value": "选择图片"
+          },
+          {
+            "slug": "预览图片",
+            "depth": 2,
+            "value": "预览图片"
+          },
+          {
+            "slug": "裁剪图片",
+            "depth": 2,
+            "value": "裁剪图片"
+          },
+          {
+            "slug": "演示",
+            "depth": 1,
+            "value": "演示"
+          },
+          {
+            "slug": "选择",
+            "depth": 2,
+            "value": "选择"
+          },
+          {
+            "slug": "api",
+            "depth": 1,
+            "value": "API"
+          },
+          {
+            "slug": "扩展",
+            "depth": 1,
+            "value": "扩展"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+    "name": "unofficial",
+    "version": "0.0.1",
+    "private": true,
+    "bin": "index.js",
+    "devDependencies": {
+        "eslint": "^5.16.0",
+        "eslint-plugin-prettier": "^3.0.1",
+        "prettier": "^1.16.4"
+    },
+    "scripts": {
+        "eslint": "eslint --fix ./packages"
+    }
+}

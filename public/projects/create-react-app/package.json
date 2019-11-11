@@ -1,0 +1,15 @@
+{
+  "name": "@unofficial/create-react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "initapp": "node --inspect-brk=9229 node_modules/.bin/create-react-app my-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "create-react-app": "^2.1.8"
+  }
+}

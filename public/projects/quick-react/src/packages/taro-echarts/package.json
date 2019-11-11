@@ -1,0 +1,19 @@
+{
+    "name": "echarts11",
+    "version": "1.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "taro",
+        "echarts",
+        "微信小程序"
+    ],
+    "author": "unofficial",
+    "license": "MIT",
+    "dependencies": {
+        "echarts-for-weixin": "https://github.com/ecomfe/echarts-for-weixin"
+    }
+}
